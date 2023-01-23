@@ -8,39 +8,38 @@ export default function
 
 
    
-  <body class="text-center">
+  <div className="text-center">
     
-<main class="form-signin w-100 m-auto">
+<main className="form-signin w-100 m-auto">
   <form action="/" method="POST">
-    <img class="mb-4" src="" alt="LOGO"/>
-    <h1 class="h3 mb-3 fw-normal">Sign Up to find your match</h1>
+    <img className="mb-4" src="" alt="LOGO"/>
+    <h1 className="h3 mb-3 fw-normal">Sign Up to find your match</h1>
 
-    <div class="form-floating">
-      <input type="text" name = "fname" class="form-control" id="floatingInput" placeholder="First Name" />
-      <label for="floatingInput">First</label>
+    <div className="form-floating">
+      <input type="text" name = "fname" className="form-control" id="floatingInput" placeholder="First Name" />
+      <label htmlFor="floatingInput">First</label>
     </div>
-    <div class="form-floating">
-      <input type="text" name = "lname"  class="form-control" id="floatingPassword" placeholder="Last Name"/>
-      <label for="floatingPassword">second</label>
+    <div className="form-floating">
+      <input type="text" name = "lname"  className="form-control" id="floatingPassword" placeholder="Last Name"/>
+      <label htmlFor="floatingPassword">second</label>
     </div>
-    <div class="form-floating">
-      <input type="email" name = "email" class="form-control" id="floatingPassword" placeholder="name@example.com"/>
-      <label for="floatingPassword">email address</label>
+    <div className="form-floating">
+      <input type="email" name = "email" className="form-control" id="floatingPassword" placeholder="name@example.com"/>
+      <label htmlFor="floatingPassword">email address</label>
     </div>
 
-    <div class="checkbox mb-3">
+    <div className="checkbox mb-3">
       <label>
-        <input type="checkbox" value="remember-me"/> AVoT
+        <input type="checkbox" value="remember-me"/> I agree the terms & conditions.
       </label>
     </div>
-    <button class="w-100 btn btn-lg btn-primary" type="submit">Sign up</button>
-    <p class="mt-5 mb-3 text-muted">&copy; 2022–2025</p>
+    <button className="w-100 btn btn-lg btn-primary" type="submit">Sign up</button>
+    <p className="mt-5 mb-3 text-muted">&copy; 2022–2025</p>
   </form>
 </main>
 
 
-    
-  </body>
+  </div>
 
 
 </>
