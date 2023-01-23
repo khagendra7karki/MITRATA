@@ -17,27 +17,6 @@ app2.get("/", function(req,res){
         console.log(firstName, lastName , email)
     
 
-    const data = {
-        members: [
-            {
-                email_address: email,
-                status:"subscribed",
-                merge_fields:{
-                    FNAME : firstName,
-                    LNAME : lastName
-                }
-            }
-        ]
-    }
-
-
-    const jsonData = JSON.stringify(data)
-
-    const url = "https://us21.api.mailchimp.com/3.0/lists/f03acebd1c"
-    const options= {
-        method:"POST", 
-        auth: "raj1:bd5d60eb0c0fb709e7ebc4fc2afd7eb6-us21"
-    }
     const request = https.request(url,options, function(response){
        if(response.statusCode === 200){
         res.sendFile(__dirname + "/success.html");
@@ -46,13 +25,10 @@ app2.get("/", function(req,res){
        }
        
        
-        response.on("data",function(data){
-            console.log(JSON.parse(data));
-        })
+       
     })
     
-    request.write(jsonData);
-    request.end()
+  
 })
 
 app2.post("/failure", function(req,res){
@@ -62,5 +38,3 @@ app2.listen(3000, function() {
     console.log("Server is running on port 3000");
 })
 
-//bd5d60eb0c0fb709e7ebc4fc2afd7eb6-us21
-//f03acebd1c
