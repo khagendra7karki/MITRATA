@@ -1,13 +1,31 @@
+// src/App.js
 
-import './App.css';
-import LoginPage from './components/Login-page';
+import React from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Login from "./components/Login";
+import Signup from "./components/Signup";
+import PasswordReset from "./components/PasswordReset";
+import Dashboard from "./components/Dashboard";
+import Navbar from "./components/Navbar";
 
-function App() {
+
+export default function App() {
   return (
-    <div className="App">
-      <LoginPage/>
-    </div>
+    <Router>
+      <Navbar/>
+        <Routes>
+          <Route path="/" element={<Login/>}>
+          </Route>
+          <Route path="/signin" element={<Login/>}>
+          </Route>
+          <Route path="/reset" element = {<PasswordReset/>}>   
+          </Route>
+          <Route path="/dashboard" element={<Dashboard/>}>
+          </Route>
+          <Route path="/signup" element={<Signup/>}>
+          </Route>
+        </Routes>
+    </Router>
   );
 }
 
-export default App;
