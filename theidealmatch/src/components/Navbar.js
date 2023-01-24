@@ -5,13 +5,14 @@ import Navbar from 'react-bootstrap/Navbar';
 function ColorSchemesExample() {
   return (
     <>
-      <Navbar bg="dark" variant="dark">
+      <Navbar expand="lg" bg="dark"  variant="dark" className='py-4'>
         <Container>
           <Navbar.Brand href="/">Home</Navbar.Brand>
           <Nav className="me-auto">
             <Nav.Link href="/signin">SignIn</Nav.Link>
             <Nav.Link href="/signup">SignUp</Nav.Link>
             <Nav.Link href="/reset">Reset</Nav.Link>
+            <Nav.Link href="/dashboard">Dashboard</Nav.Link>
           </Nav>
         </Container>
       </Navbar>

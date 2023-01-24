@@ -2,6 +2,6 @@ import React from 'react'
 
 export default function Dashboard() {
   return (
-    <div>Dashboard</div>
+    <div className="hero"><h1> Divya is hero</h1> </div>
   )
 }
