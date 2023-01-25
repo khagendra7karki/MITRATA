@@ -9,9 +9,9 @@ function ColorSchemesExample() {
         <Container>
           <Navbar.Brand href="/">Home</Navbar.Brand>
           <Nav className="me-auto">
-            <Nav.Link href="/signin">SignIn</Nav.Link>
+            {/* <Nav.Link href="/signin">SignIn</Nav.Link>
             <Nav.Link href="/signup">SignUp</Nav.Link>
-            <Nav.Link href="/reset">Reset</Nav.Link>
+            <Nav.Link href="/reset">Reset</Nav.Link> */}
             <Nav.Link href="/dashboard">Dashboard</Nav.Link>
           </Nav>
         </Container>
