@@ -1,5 +1,5 @@
 // src/App.js
-
+import './App.css';
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Login from "./components/Login";
@@ -7,6 +7,7 @@ import Signup from "./components/Signup";
 import PasswordReset from "./components/PasswordReset";
 import Dashboard from "./components/Dashboard";
 import Navbar from "./components/Navbar";
+import Home from './components/Home';
 
 
 export default function App() {
@@ -14,7 +15,7 @@ export default function App() {
     <Router>
       <Navbar/>
         <Routes>
-          <Route path="/" element={<Login/>}>
+          <Route path="/" element={<Home/>}>
           </Route>
           <Route path="/signin" element={<Login/>}>
           </Route>

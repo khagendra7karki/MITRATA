@@ -1,55 +1,26 @@
-.App {
-  text-align: center;
-}
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.bgimage {
+  background-image: url("./assets/images/bg3.jpg");
+ 
+  height: 1000px;
+  /* background-position: center; */
+  background-repeat: no-repeat;
+  background-size: cover;
+  /* position: relative; */
 }
 
 /*login page css*/
-html,
-body {
-  height: 100%;
-}
+
+
 
 .text-center {
   display: flex;
   align-items: center;
-  padding-top: 40px;
+  padding-top: 30px;
  
   padding-bottom: 40px;
-  background-color: #f5f5f5;
+ 
 }
 
 .form-signin {
@@ -61,7 +32,7 @@ body {
   z-index: 2;
 }
 
-.form-signin input[type="email"] {
+/* .form-signin input[type="email"] {
   margin-bottom: -1px;
   border-bottom-right-radius: 0;
   border-bottom-left-radius: 0;
@@ -71,4 +42,20 @@ body {
   margin-bottom: 10px;
   border-top-left-radius: 0;
   border-top-right-radius: 0;
+} */
+
+.hero {
+  text-align: center;
+}
+
+.buttonpp{
+  padding: 45px 0 0 90%;
+}
+.buttonpp2{
+  padding: 0px 0 0 0;
+  text-align: center;
+}
+.text2{
+  text-align: center;
+  padding: 600px 0 0 0;
 }
