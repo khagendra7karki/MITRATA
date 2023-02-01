@@ -4,22 +4,25 @@ import { Typography, Avatar, Box, Stack } from '@mui/material'
 
 const userStyling = {
     backgroundColor: 'primary.main',
+    width: '60px',
+    height: '60px'
 }
-const UserNavBar = () => {
+const UserNavBar = ({sx}) => {
     
     return <>
-
-            <Stack spacing = { 2 } sx = { {paddingTop: 3}}>
+        <Box sx  = { sx }>
+            <Stack spacing = { 5 }>
                 <Avatar sx = { userStyling }> 
-                    <AccountCircleOutlined />
+                    <AccountCircleOutlined sx = {{ height: '50px', width: '50px'}}/>
                 </Avatar>
                 <Avatar sx = { userStyling }> 
-                    <MessageOutlined />
+                    <MessageOutlined sx = {{ height: '50px', width: '50px'}} />
                 </Avatar >
                 <Avatar sx = { userStyling }> 
-                    <NotificationsRounded />
+                    <NotificationsRounded sx = {{ height: '50px', width: '50px'}}/>
                 </Avatar>
             </Stack>
+        </Box>
     </>
 }
 

@@ -9,7 +9,7 @@ const CustomContainer = styled('box')(({theme}) =>({
     top: '0',
     right: '0',
     bottom: '0',
-    top: '0'
+    top: '0',
 }))
 
 export default CustomContainer
