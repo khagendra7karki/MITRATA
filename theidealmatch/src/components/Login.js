@@ -1,6 +1,6 @@
 import React from 'react'
-
-export default function Signup() {
+import Button from 'react-bootstrap/Button';
+export default function Signin() {
   return (
     <div className= "App">    
     <div className="text-center">
@@ -18,8 +18,8 @@ export default function Signup() {
         <input type="password" name = "Password" className="form-control" id="floatingPassword" placeholder="password"/>
         <label htmlFor="floatingPassword">Password</label>
       </div>
-      <button className="w-100 btn btn-lg btn-primary" type="submit">Sign In</button>
-      <p className="mt-5 mb-3 text-muted">&copy; 2022–2025</p>
+      <Button href="/dashboard" className="w-100 btn btn-lg btn-primary" type="submit">Sign In</Button>
+      <p className="mt-5 mb-3 text-muted"><a href="/reset">&copy;Forget password</a></p>
     </form>
   </main>
     </div>  
