@@ -1,9 +1,46 @@
 #include <iostream>
+#include<fstream>
 
+struct node{
+    int value;
+    char* name;
+    node* next;
+};
 class list{
-
+    node* start;
+public:
+    list():start(nullptr){}
+    void insertPhoto(){     //only inserting photos at beginning for now
+        node* ptr= new node;
+        ptr->next=start;
+        start=ptr;
+    }
+    void deletePhoto(node* item){ //deleting photo for considered node
+        node* ptr=start;
+        while(ptr->value != item->value){
+            ptr=ptr->next;
+        }
+        delete ptr;
+    }
+    void retrievePhoto(){ //Basic text file handling
+        std::ofstream file;
+        file.open("Photos/Description.txt");
+        if(!file)
+            std::cout<<"Error opening file!\n";
+        file<<"Khagendra Karki,18"<<std::endl;
+        file<<"Divya is not hero";
+        std::ifstream infile("Description.txt");
+        char ch;
+        while(infile){
+            infile.get(ch);
+            std::cout<<ch;
+        }
+    }
 };
 
+
+
+//for message
 class stack{
     int top,max;
     int *array;
@@ -47,7 +84,15 @@ public:
             exit (0);
     }
 };
+
+
+
 int main(){
+
+    list l1;
+    l1.retrievePhoto();
+
+   /*
     stack s1(10);
     s1.push(5);
     s1.push(9);
@@ -55,5 +100,6 @@ int main(){
     s1.display();
     s1.pop();
     s1.display();
+    */ 
     return 0;
 }
