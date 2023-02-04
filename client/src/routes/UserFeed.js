@@ -21,54 +21,56 @@ const UserFeed = () => {
                 <Grid item xs = { 7 } sx  ={{ display: 'flex', overflowY: 'hidden', height: '100%', alignSelf: 'center', justifyContent: 'center'}}>
                     <Box maxWidth='600px'maxHeight='500px'>
                         <Typography variant = 'h2' component = 'h2' color = 'white' sx = {{marginLeft: 3}}>Alisha  19</Typography>
-                        <Typography sx = {{ color: '#964c90', lineHeight: '1.1', m: 3}} variant = 'h5'>
+                        <Typography sx = {{ color: '#964c90', lineHeight: '1.2', fontSize: '24px', m: 3}} >
                             I'm a foodie, a beer snog , a dog lover, and a proud nerd. I'm not shallow , but you better know how to keep the conversation going, because I have more to offer than just my body . Feel free to drop me a line.
                         </Typography>
-                        <Grid container spacing = { 2 }> 
-                            <Grid item   sm = { 6 }  md = { 6 } xl = { 4 } sx = {{display: 'flex' , justifyContent: 'center', p: 0}}>
-                                <Card sx = {{width: '200px'}}>
-                                    <CardMedia component = 'img'
-                                                image = { image1 }
-                                                sx = {{width: '100%'}}
-                                                
-                                    >
-
-                                    </CardMedia>
-                                </Card>
-
-                            </Grid>
-                        
-                            <Grid item  sm = { 6 } md = { 6 } xl = { 4 } sx = {{display: 'flex' , justifyContent: 'center', p: 0}}>
-                                <Card sx = {{width: '200px'}}>
-                                    <CardMedia component = 'img'
-                                                    image = { image2 }
+                        <Box sx = {{ display: 'flex', justifyContent: 'center', borderRadius: '16px' , mx: 3}}>
+                            <Grid container> 
+                                <Grid item   sm = { 6 }  md = { 6 } xl = { 4 } sx = {{display: 'flex' , justifyContent: 'center', p: 0}}>
+                                    <Card sx = {{width: '200px'}}>
+                                        <CardMedia component = 'img'
+                                                    image = { image1 }
                                                     sx = {{width: '100%'}}
-                                                    >
-                                    </CardMedia>
-                                </Card>
-                            </Grid>
+                                                    
+                                        >
 
-                            <Grid item  sm = { 6 } md = { 6} xl = { 4 }  sx = {{display: 'flex' , justifyContent: 'center', p: 0}}>
-                                <Card sx = {{width: '200px'}}>
-                                    <CardMedia component = 'img'
-                                                    image = { image3 }
-                                                    sx = {{width: '100%'}}
-                                                    >
+                                        </CardMedia>
+                                    </Card>
 
-                                    </CardMedia>
-                                </Card>
-                            </Grid>
-                            <Grid item  sm = { 6 } md = { 6} xl = { 4 }  sx = {{display: 'flex' , justifyContent: 'center', p: 0}}>
-                                <Card sx = {{width: '200px'}}>
-                                    <CardMedia component = 'img'
-                                                    image = { Alexandria }
-                                                    sx = {{width: '100%'}}
-                                                    >
+                                </Grid>
+                            
+                                <Grid item  sm = { 6 } md = { 6 } xl = { 4 } sx = {{display: 'flex' , justifyContent: 'center', p: 0}}>
+                                    <Card sx = {{width: '200px'}}>
+                                        <CardMedia component = 'img'
+                                                        image = { image2 }
+                                                        sx = {{width: '100%'}}
+                                                        >
+                                        </CardMedia>
+                                    </Card>
+                                </Grid>
 
-                                    </CardMedia>
-                                </Card>
+                                <Grid item  sm = { 6 } md = { 6} xl = { 4 }  sx = {{display: 'flex' , justifyContent: 'center', p: 0}}>
+                                    <Card sx = {{width: '200px'}}>
+                                        <CardMedia component = 'img'
+                                                        image = { image3 }
+                                                        sx = {{width: '100%'}}
+                                                        >
+
+                                        </CardMedia>
+                                    </Card>
+                                </Grid>
+                                <Grid item  sm = { 6 } md = { 6} xl = { 4 }  sx = {{display: 'flex' , justifyContent: 'center', p: 0}}>
+                                    <Card sx = {{width: '200px'}}>
+                                        <CardMedia component = 'img'
+                                                        image = { Alexandria }
+                                                        sx = {{width: '100%'}}
+                                                        >
+
+                                        </CardMedia>
+                                    </Card>
+                                </Grid>
                             </Grid>
-                        </Grid>
+                        </Box>
                     </Box>
 
                     
