@@ -1,0 +1,61 @@
+
+
+.bgimage {
+  background-image: url("./assets/images/bg3.jpg");
+ 
+  height: 1000px;
+  /* background-position: center; */
+  background-repeat: no-repeat;
+  background-size: cover;
+  /* position: relative; */
+}
+
+/*login page css*/
+
+
+
+.text-center {
+  display: flex;
+  align-items: center;
+  padding-top: 30px;
+ 
+  padding-bottom: 40px;
+ 
+}
+
+.form-signin {
+  max-width: 330px;
+  padding: 15px;
+}
+
+.form-signin .form-floating:focus-within {
+  z-index: 2;
+}
+
+/* .form-signin input[type="email"] {
+  margin-bottom: -1px;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.form-signin input[type="password"] {
+  margin-bottom: 10px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+} */
+
+.hero {
+  text-align: center;
+}
+
+.buttonpp{
+  padding: 45px 0 0 90%;
+}
+.buttonpp2{
+  padding: 0px 0 0 0;
+  text-align: center;
+}
+.text2{
+  text-align: center;
+  padding: 600px 0 0 0;
+}
