@@ -16,7 +16,7 @@ const MyForm = ({updateChat, sendMessage}) => {
     
     return <>
         <form onSubmit = { handleSubmit }>
-            <input value = { text.content}
+            <input value = { text.content }
                     onChange = { handleChange }
             />
             <button type = 'submit'>Submit</button>

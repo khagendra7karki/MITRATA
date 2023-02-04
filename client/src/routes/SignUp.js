@@ -19,10 +19,7 @@ const SignUp = () =>{
     const handleSubmit = ( event ) => {
         event.preventDefault()
         const data = new FormData( event.currentTarget)
-        const socket =  new WebSocket('ws://localhost:8050')   
-        socket.onmessage = (event) =>{
-            console.log(event.data)
-        } 
+
     }
         
         

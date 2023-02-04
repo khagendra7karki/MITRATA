@@ -10,6 +10,10 @@ const CustomContainer = styled('box')(({theme}) =>({
     right: '0',
     bottom: '0',
     top: '0',
+    backgroundColor: '#3f304b',
+    display: 'flex',
+    alignItems: 'center'
+
 }))
 
 export default CustomContainer

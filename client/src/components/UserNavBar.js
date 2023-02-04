@@ -1,26 +1,34 @@
-import {AccountCircleOutlined, MessageOutlined, NotificationsRounded } from '@mui/icons-material';
+import {AccountCircleOutlined, MessageOutlined, NotificationsOutlined, EmailOutlined, HomeOutlined, SettingsOutlined } from '@mui/icons-material';
 import { Link } from 'react-router-dom'
 import { Typography, Avatar, Box, Stack } from '@mui/material'
+import { styled } from '@mui/system'
 
-const userStyling = {
-    backgroundColor: 'primary.main',
-    width: '60px',
-    height: '60px'
-}
+const CustomAvatar = styled( Avatar,{} )({
+        backgroundColor: '#b0b0b0',
+        width: '60px',
+        height: '60px',
+        margin: '20px !important',
+})
 const UserNavBar = ({sx}) => {
     
     return <>
         <Box sx  = { sx }>
             <Stack spacing = { 5 }>
-                <Avatar sx = { userStyling }> 
-                    <AccountCircleOutlined sx = {{ height: '50px', width: '50px'}}/>
-                </Avatar>
-                <Avatar sx = { userStyling }> 
-                    <MessageOutlined sx = {{ height: '50px', width: '50px'}} />
-                </Avatar >
-                <Avatar sx = { userStyling }> 
-                    <NotificationsRounded sx = {{ height: '50px', width: '50px'}}/>
-                </Avatar>
+                <CustomAvatar > 
+                    <HomeOutlined sx = {{ height: '60px', width: '60px', color: 'black'}}/>
+                </CustomAvatar>
+                <CustomAvatar > 
+                    <AccountCircleOutlined sx = {{ height: '60px', width: '60px', color: 'black'}}/>
+                </CustomAvatar>
+                <CustomAvatar> 
+                    <EmailOutlined sx = {{ height: '60px', width: '60px', color: 'black'}}/>
+                </CustomAvatar>
+                <CustomAvatar> 
+                    <NotificationsOutlined sx = {{ height: '60px', width: '60px', color: 'black'}}/>
+                </CustomAvatar>
+                <CustomAvatar> 
+                    <SettingsOutlined sx = {{ height: '60px', width: '60px', color: 'black'}}/>
+                </CustomAvatar>
             </Stack>
         </Box>
     </>
