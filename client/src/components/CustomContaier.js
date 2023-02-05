@@ -1,7 +1,7 @@
 import Box from '@mui/material/Box'
 import { styled } from '@mui/system'
 
-const CustomContainer = styled('box')(({theme}) =>({
+const CustomContainer = styled(Box, {} )(({theme}) =>({
     ...theme,
     position: 'absolute',
     height: '100vh',
