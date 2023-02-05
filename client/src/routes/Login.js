@@ -8,14 +8,14 @@ function Copyright(props){
                     color = 'text.seconodary' 
                     align = 'center'
                     {...props}>
-        { 'copyright © Khagendra Karki'}
+        { 'copyright © Divya Karki'}
         </Typography>
     )
 }
 
 const theme = createTheme();
 
-const SignUp = () =>{
+const SignIn = () =>{
     const handleSubmit = ( event ) => {
         event.preventDefault()
         const data = new FormData( event.currentTarget)
@@ -42,32 +42,12 @@ const SignUp = () =>{
                             <LockPersonOutlined />
                         </Avatar>
                         <Typography component = 'h1' variant = 'h5'>
-                            Sign Up
+                            Sign In
                         </Typography>
                             <Box component = 'form' noValidate onSubmit = { handleSubmit } sx = {{ mt: 3 }}>
                                 <Grid container spacing = { 2 }>
-                                    <Grid item xs = { 12 } sm = { 6 }>
-                                        <TextField
-                                                    autoComplete = 'given-name'
-                                                    name = 'firstName'
-                                                    required
-                                                    fullWidth
-                                                    id = 'firstName'
-                                                    label = 'First Name'
-                                                    autoFocus
-                                        />
-                                    </Grid>
-                                    <Grid item xs = { 12 } sm = { 6 }>
-                                        <TextField
-                                        required
-                                        fullWidth
-                                        id = 'lastName'
-                                        label = 'Last Name'
-                                        name = 'lastName'
-                                        autoComplete = 'family-name'
-                                        />
 
-                                    </Grid>
+                               
                                     <Grid item 
                                             xs = { 12 }>
                                                 <TextField 
@@ -107,13 +87,13 @@ const SignUp = () =>{
                                     sx = {{
                                         mt: 3, mb: 2
                                     }}>
-                                        Sign Up
+                                        Sign In
                                 </Button>
                                 
                                 <Grid container justifyContent = 'flex-end'>
                                     <Grid item>
-                                    Already have an account?<Link href = '/signin' varinat = 'body2'>
-                                             Sign in
+                                    Create a account?<Link href = '/signup' varinat = 'body2'>
+                                          Sign UP
                                         </Link>
                                     </Grid>
                                 </Grid>
@@ -128,4 +108,4 @@ const SignUp = () =>{
         
         
 }
-export default SignUp
+export default SignIn
