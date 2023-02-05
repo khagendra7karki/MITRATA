@@ -19,7 +19,7 @@ const Login = () => {
                 </Typography>
                 <TextField sx = {{background: 'gray', borderRadius: '12px', my: 2}} label = 'Email' />
                 <TextField  sx = {{background: 'gray', borderRadius: '12px', my: 2}} label = 'Password' />
-                <Typography variant = 'h6' color = 'white' align = 'right'>New User ?<Link to = '/signup'>Sign Up</Link></Typography>
+                <Typography align = 'center' variant = 'h6' color = 'white'>New User ?<Link to = '/signup'>Sign Up</Link></Typography>
                 
             </Stack>
 
