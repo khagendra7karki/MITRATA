@@ -112,8 +112,8 @@ const SignUp = () =>{
                                 
                                 <Grid container justifyContent = 'flex-end'>
                                     <Grid item>
-                                        <Link href = '/user' varinat = 'body2'>
-                                            Already have an account? Sign in
+                                    Already have an account?<Link href = '/signin' varinat = 'body2'>
+                                             Sign in
                                         </Link>
                                     </Grid>
                                 </Grid>
