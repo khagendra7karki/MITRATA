@@ -1,130 +1,75 @@
-import * as React from 'react'
-import { Avatar, Button, CssBaseline, TextField, FormControlLabel, Checkbox, Link , Grid, Box, Typography, Container} from '@mui/material'
-import{ LockPersonOutlined } from '@mui/icons-material'
-import { createTheme , ThemeProvider } from '@mui/material/styles'
-function Copyright(props){
-    return (
-        <Typography variant = 'body2'
-                    color = 'text.seconodary' 
-                    align = 'center'
-                    {...props}>
-        { 'copyright © Khagendra Karki'}
-        </Typography>
-    )
-}
+import { Container, Grid, Button, CardMedia, FormControlLabel, TextField, Typography , Checkbox,OutlinedInput, FormControl, InputLabel} from "@mui/material"
+import { Stack } from "@mui/system"
 
-const theme = createTheme();
 
+//custom imports
+import logo from '../assets/images/logo-with-name.png'
+import CustomLink from '../components/Link'
+import Input from "../components/Input"
 const SignUp = () =>{
-    const handleSubmit = ( event ) => {
-        event.preventDefault()
-        const data = new FormData( event.currentTarget)
+    return <>
+        <Container>
 
-    }
-        
-        
-        return (
-            <ThemeProvider theme = { theme }>
-                <Container component = 'main'
-                            maxWidth = 'xs'>
-                    <CssBaseline />
-                    <Box 
-                        sx = {{
-                            marginTop: 8,
-                            display: 'flex',
-                            flexDirection: 'column',
-                            alignItems: 'center',
-                        }}
-                    >
-                        <Avatar sx = {{
-                            m: 1, bgcolor: 'secondary.main'
-                        }}>
-                            <LockPersonOutlined />
-                        </Avatar>
-                        <Typography component = 'h1' variant = 'h5'>
-                            Sign Up
-                        </Typography>
-                            <Box component = 'form' noValidate onSubmit = { handleSubmit } sx = {{ mt: 3 }}>
-                                <Grid container spacing = { 2 }>
-                                    <Grid item xs = { 12 } sm = { 6 }>
-                                        <TextField
-                                                    autoComplete = 'given-name'
-                                                    name = 'firstName'
-                                                    required
-                                                    fullWidth
-                                                    id = 'firstName'
-                                                    label = 'First Name'
-                                                    autoFocus
-                                        />
-                                    </Grid>
-                                    <Grid item xs = { 12 } sm = { 6 }>
-                                        <TextField
-                                        required
-                                        fullWidth
-                                        id = 'lastName'
-                                        label = 'Last Name'
-                                        name = 'lastName'
-                                        autoComplete = 'family-name'
-                                        />
+            <Stack justifyContent  ='center' sx = {{borderBottom: '2px solid black', pb: 5}}>
+                <CardMedia component = 'img'
+                            image = { logo }
+                            sx = {{width: '175px', margin: 'auto', pb: 2, pt: 4}}                        >
 
-                                    </Grid>
-                                    <Grid item 
-                                            xs = { 12 }>
-                                                <TextField 
-                                                    required
-                                                    fullWidth
-                                                    id = 'email'
-                                                    name = 'email'
-                                                    label = 'Email'
-                                                    autoComplete = 'radom@gamil.com'
-                                                />
-                                    </Grid>
-                                    <Grid item xs = { 12 }>
-                                        <TextField 
-                                            required
-                                            fullWidth
-                                            name = 'password'
-                                            label = 'Password'
-                                            type = 'password'
-                                            id = 'password'
-                                            autoComplete = 'new-password'
-                                            />
-                                        
-                                    </Grid>
+                </CardMedia>    
+                <Typography align = 'center' variant = 'h5'>Sign up to Mitrata</Typography>
+                <Button variant = 'contained'
+                        sx = {{background: '#df2a2a',py: 2,px: 5, mx: 'auto', my: 4}}>
+                    <Typography variant = 'h5'>
+                        Sign up with Google
+                    </Typography>
+                </Button>
+                <form>
+                    <Grid container spacing = {3}>
+                            <Grid item sm = {6} xs = {12}sx = {{display: 'flex',justifyContent: 'center', px: 4}}>
+                                <Input placeholder = 'First Name' label = 'First Name'/>
 
-                                    <Grid item xs = { 12 }>
-                                        <FormControlLabel
-                                        control = { <Checkbox value = 'allowExtraEamils' color = 'primary' />}
-                                        label = 'I agree to the terms and conditions'
-                                        />
-                                    </Grid>
-                                    
-                                </Grid>
-                                <Button
-                                    type = 'submit'
-                                    fullWidth
-                                    variant = 'contained'
-                                    sx = {{
-                                        mt: 3, mb: 2
-                                    }}>
-                                        Sign Up
-                                </Button>
-                                
-                                <Grid container justifyContent = 'flex-end'>
-                                    <Grid item>
-                                    Already have an account?<Link href = '/signin' varinat = 'body2'>
-                                             Sign in
-                                        </Link>
-                                    </Grid>
-                                </Grid>
-                            </Box>
+                        </Grid>
+                        
+                        <Grid item sm = {6} xs = {12} sx = {{display: 'flex',justifyContent: 'center', px: 4}}>
+                            <Input placeholder = 'Last Name' label = 'Last Name'/>
+                        </Grid>
 
+                        <Grid item sm = {6} xs = {12} sx = {{display: 'flex',justifyContent: 'center', px: 4}}>
+                            <Input placeholder = 'email' label = 'Email'/>
 
-                    </Box>
-                    <Copyright sx = {{ mt: 5 }} />
-                </Container>
-            </ThemeProvider>
-        )
+                        </Grid>
+
+                        <Grid item sm = {6} xs = {12} sx = {{display: 'flex',justifyContent: 'center', px: 4}}>
+                            <Input placeholder = 'Nationality' label ='Nationality' />
+
+                        </Grid>
+
+                        <Grid item sm = {6} xs = {12} sx = {{display: 'flex',justifyContent: 'center', px: 4}}>
+                            <Input placeholder = 'Password' type = 'password' label = 'password'/>
+
+                        </Grid>
+
+                        <Grid item sm = {6} xs = {12} sx = {{display: 'flex',justifyContent: 'center', px: 4}}>
+                            <Input placeholder = 'Confirm Password' type = 'password' label = 'Confirm Password'/>
+                        </Grid>
+                    </Grid>
+                </form>
+                <FormControlLabel control = {<Checkbox />}
+                                    label = 'Agree to our terms and conditions'
+                sx = {{ my: 3 }}
+                />
+                <Grid container>
+                    <Button variant= 'contained' sx = {{ mx: 2, p: 2, background: '#1d84a6', color: 'white', fontWeight: '600', width: '180px'}}>Next</Button>
+                    <Button variant = 'contained' sx = {{ mx: 2,  p: 2, background: '#df2a2a', color: 'white', fontWeight: '600', width: '180px'}}>Cancel</Button>
+                    <Typography align = 'center' variant = 'h6' color = '#393f45' sx = {{ml: 'auto', alignSelf:'flex-end'}}>Already have an account ? <CustomLink to = '/' sx = {{ color: '#393f45' }}  text = 'Log In'/></Typography>
+                </Grid>
+
+            </Stack>
+            <Typography align = 'center' variant = 'h5' sx = {{ mt: 2}}>
+                Copyright @ The Gedes
+            </Typography>
+        </Container>
+    </>
         
         
 }

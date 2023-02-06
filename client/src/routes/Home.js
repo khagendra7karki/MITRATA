@@ -1,4 +1,5 @@
 import Login from "./Login"
+
 const Home = () =>{
     return (<>
       <Login />

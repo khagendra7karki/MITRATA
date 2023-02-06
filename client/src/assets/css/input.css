@@ -1,0 +1,31 @@
+.customInputWraper{
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.customInputLabel{
+    font-size: 16px;
+    font-weight: 500;
+    margin-left: 20px;
+}
+
+.customInput{
+    outline: none;
+    height: 40px;
+    padding-left: 20px;
+    border-radius: 8px;
+    border: 1px solid grey;
+    width: 100%;
+}
+
+.customInput:focus{
+    outline: none;
+    border-color: rgb(84, 117, 185);
+    background-color: #808080;
+    color: #393f45;
+}
+
+.customInput:focus::placeholder{
+    color: #393f45;
+}
