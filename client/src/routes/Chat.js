@@ -1,56 +1,87 @@
-import { useState } from 'react'
+import React, { useEffect, useState, useRef } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import { io } from "socket.io-client";
+import styled from "styled-components";
+import { allUsersRoute, host } from "../utils/APIRoutes";
+import ChatContainer from "../chat-components/ChatContainer";
+import Contacts from "../chat-components/Contacts";
+import Welcome from "../chat-components/Welcome";
 
-
-//form to take input text and submit
-const MyForm = ({updateChat, sendMessage}) => {
-    const [text, setText ] = useState({ id:0, content:''})
-    const handleSubmit = (e) =>{
-        e.preventDefault()
-        updateChat(text)
-        sendMessage( text )
-        setText({id: Math.floor(Math.random() * 10000) + 1, content : ''})
+export default function Chat() {
+  const navigate = useNavigate();
+  const socket = useRef();
+  const [contacts, setContacts] = useState([]);
+  const [currentChat, setCurrentChat] = useState(undefined);
+  const [currentUser, setCurrentUser] = useState(undefined);
+  useEffect( () => {
+    async function userdata(){
+    if (!localStorage.getItem("chat-app-user")) {
+      navigate("/signin");
+    } else {
+      setCurrentUser(
+        await JSON.parse(
+          localStorage.getItem("chat-app-user")
+        )
+      );
+    }}   //json.parse = convert return  string from ther  server into object 
+    userdata()
+}, []);
+  useEffect(() => {
+    if (currentUser) {
+      socket.current = io(host);
+      socket.current.emit("add-user", currentUser._id);
     }
-    const handleChange = (e) => {
-        setText({ ...text, content: e.target.value})
-    }
-    
-    return <>
-        <form onSubmit = { handleSubmit }>
-            <input value = { text.content }
-                    onChange = { handleChange }
-            />
-            <button type = 'submit'>Submit</button>
-        </form>
-    </>
-}
+  }, [currentUser]);
 
-//messge commponent
-const Message = ({message}) => {
-    return <>
-        <div key = {message.id}>{ message.content }</div>
-    </>
-}
-
-//wraper component for messgaes
-const ChatMessages = ({messages}) => {
-
-    return <div>
-                {messages.map( (message )=>{    
-                    return  <Message key = { message.id } message = { message }/>
-                })}
+  useEffect( () => {
+    async function userdata(){
+    if (currentUser) {
+    //   if (currentUser.isAvatarImageSet) {
+        const data = await axios.get(`${allUsersRoute}/${currentUser._id}`);
+        setContacts(data.data); // sets contacts with all the user of database
+    //   } else {
+    //     navigate("/setAvatar");
+     // }
+    }}
+    userdata();
+  }, [currentUser]);
+  const handleChatChange = (chat) => {
+    setCurrentChat(chat);
+  };
+  return (
+    <>
+      <Container>
+        <div className="container">
+          <Contacts contacts={contacts} changeChat={handleChatChange} />
+          {currentChat === undefined ? (
+            <Welcome />
+          ) : (
+            <ChatContainer currentChat={currentChat} socket={socket} />
+          )}
         </div>
-}        
-    
-const Chat = ({sendMessage}) =>{
-    const [chat, setChat ] = useState( [] )
-    const updateChat = (value) =>{
-        setChat( [...chat, value])
-    }
-    return <>
-        <h1> Hello World </h1>
-        <ChatMessages messages = { chat }/>    
-        <MyForm updateChat = { updateChat } sendMessage = { sendMessage }/>
+      </Container>
     </>
+  );
 }
 
-export default Chat
+const Container = styled.div`
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1rem;
+  align-items: center;
+  background-color: #131324;
+  .container {
+    height: 85vh;
+    width: 85vw;
+    background-color: #00000076;
+    display: grid;
+    grid-template-columns: 25% 75%;
+    @media screen and (min-width: 720px) and (max-width: 1080px) {
+      grid-template-columns: 35% 65%;
+    }
+  }
+`;

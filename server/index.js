@@ -1,27 +1,51 @@
-const http = require('http')
-const WebSocket = require('ws')
-const express = require('express')
+const express = require("express");
+const cors = require("cors");
+const mongoose = require("mongoose");
+const authRoutes = require("./routes/auth");
+const messageRoutes = require("./routes/messages");
+const app = express();
+const socket = require("socket.io");
+require("dotenv").config();
 
+app.use(cors());
+app.use(express.json());
 
-const  PORT = 6969
+mongoose
+  .connect(process.env.MONGO_URL, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
+  .then(() => {
+    console.log("DB Connetion Successfull");
+  })
+  .catch((err) => {
+    console.log(err.message);
+  });
 
-const server = http.createServer( express )
-const wss = new WebSocket.Server({ server })
+app.use("/api/auth", authRoutes);
+app.use("/api/messages", messageRoutes);
 
+const server = app.listen(process.env.PORT, () =>
+  console.log(`Server started on ${process.env.PORT}`)
+);
+const io = socket(server, {
+  cors: {
+    origin: "http://localhost:3000",
+    credentials: true,
+  },
+});
 
-wss.on( 'connection', (ws) =>{
-    ws.on('message', (data, isBinary) =>{
-        console.log( isBinary )
-        const message = isBinary ?data.toString() :  data
-        console.log(message)
-        wss.clients.forEach((client) =>{
-            if( client != ws && client.readyState == WebSocket.OPEN  ){
-                client.send(message, { binary: isBinary})
-            } 
-        })
-    })
-})
+global.onlineUsers = new Map();
+io.on("connection", (socket) => {
+  global.chatSocket = socket;
+  socket.on("add-user", (userId) => {
+    onlineUsers.set(userId, socket.id);
+  });
 
-server.listen( PORT , () =>{
-    console.log(`Server is running on ${PORT}`)
-})
+  socket.on("send-msg", (data) => {
+    const sendUserSocket = onlineUsers.get(data.to);
+    if (sendUserSocket) {
+      socket.to(sendUserSocket).emit("msg-recieve", data.msg);
+    }
+  });
+});

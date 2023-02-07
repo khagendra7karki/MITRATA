@@ -10,22 +10,6 @@ import UserFeed from './routes/UserFeed'
 import Chat from './routes/Chat'
 
 
-let ws
-    if( ws ) {
-        ws.onopen = ws.onclose = ws.onmessage = null
-        ws.close()
-    }
-    ws = new WebSocket('ws://localhost:6969')
-    ws.onopen = () => {
-        console.log('Connection opened')
-    }
-    ws.onmessage = ({message}) =>  { console.log( message )}
-    ws.onclose = () => {ws = null}
-    
-    const sendMessage = (message) => {
-        console.log( message )
-        ws.send(JSON.stringify(message))
-    }
 
 function App() {
   return (<>
@@ -35,7 +19,7 @@ function App() {
         <Route path = '/signin' element = { <Login /> } />
         <Route path = '/signup' element = { <SignUp /> } />
         <Route path = '/user' element = { <UserFeed /> } />
-        <Route path  = '/chat' element = { <Chat sendMessage = { sendMessage } />  } />
+        <Route path  = '/chat' element = { <Chat  />  } />
       </Routes>
     </Router>
     </>
