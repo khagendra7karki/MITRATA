@@ -1,5 +1,5 @@
-import { CardMedia, Typography, Stack, TextField } from '@mui/material'
-import { Link } from 'react-router-dom'
+import { CardMedia, Typography, Stack, TextField, Button } from '@mui/material'
+
 
 
 //custom import
@@ -20,6 +20,7 @@ const Login = () => {
                 </Typography>
                 <TextField sx = {{background: 'gray', borderRadius: '12px', my: 2}} label = 'Email' />
                 <TextField  sx = {{background: 'gray', borderRadius: '12px', my: 2}} label = 'Password' />
+                <Button variant = 'contained' sx = {{ borderRadius: '20px !important', py : 1}}><Typography variant = 'h5'>Login</Typography></Button>
                 <Typography align = 'center' variant = 'h6' color = 'white'>New User ? <CustomLink to = '/signup' sx = {{ color: 'white' }}  text = 'Sign Up'/></Typography>
 
             </Stack>
