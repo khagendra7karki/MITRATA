@@ -7,6 +7,7 @@ import UserNavBar from '../components/UserNavBar'
 import CustomContainer from '../components/CustomContaier'
 import Option from '../components/Option'
 //image
+import logo from '../assets/images/logo-with-name.png'
 import Alexandria from '../assets/images/alexandria_daddario.jpg'
 import image1 from '../assets/images/image1.jpg'
 import image2 from '../assets/images/image2.jpg'
@@ -26,8 +27,8 @@ const UserFeed = () => {
                         </Typography>
                         <Box sx = {{ display: 'flex', justifyContent: 'center', borderRadius: '16px' , mx: 3}}>
                             <Grid container> 
-                                <Grid item   sm = { 6 }  md = { 6 } xl = { 4 } sx = {{display: 'flex' , justifyContent: 'center', p: 0}}>
-                                    <Card sx = {{width: '200px'}}>
+                                <Grid item   sm = { 6 }  md = { 4 } sx = {{display: 'flex' , justifyContent: 'center', p: 0}}>
+                                    <Card sx = {{width: '200px', borderRadius: '0'}}>
                                         <CardMedia component = 'img'
                                                     image = { image1 }
                                                     sx = {{width: '100%'}}
@@ -39,8 +40,8 @@ const UserFeed = () => {
 
                                 </Grid>
                             
-                                <Grid item  sm = { 6 } md = { 6 } xl = { 4 } sx = {{display: 'flex' , justifyContent: 'center', p: 0}}>
-                                    <Card sx = {{width: '200px'}}>
+                                <Grid item  sm = { 6 } md = { 4 } sx = {{display: 'flex' , justifyContent: 'center', p: 0}}>
+                                    <Card sx = {{width: '200px', borderRadius: '0'}}>
                                         <CardMedia component = 'img'
                                                         image = { image2 }
                                                         sx = {{width: '100%'}}
@@ -49,8 +50,8 @@ const UserFeed = () => {
                                     </Card>
                                 </Grid>
 
-                                <Grid item  sm = { 6 } md = { 6} xl = { 4 }  sx = {{display: 'flex' , justifyContent: 'center', p: 0}}>
-                                    <Card sx = {{width: '200px'}}>
+                                <Grid item  sm = { 6 } md = { 4 }  sx = {{display: 'flex' , justifyContent: 'center', p: 0}}>
+                                    <Card sx = {{width: '200px', borderRadius: '0'}}>
                                         <CardMedia component = 'img'
                                                         image = { image3 }
                                                         sx = {{width: '100%'}}
@@ -59,8 +60,8 @@ const UserFeed = () => {
                                         </CardMedia>
                                     </Card>
                                 </Grid>
-                                <Grid item  sm = { 6 } md = { 6} xl = { 4 }  sx = {{display: 'flex' , justifyContent: 'center', p: 0}}>
-                                    <Card sx = {{width: '200px'}}>
+                                <Grid item  sm = { 6 } md = { 4 }  sx = {{display: 'flex' , justifyContent: 'center', p: 0}}>
+                                    <Card sx = {{width: '200px', borderRadius: '0'}}>
                                         <CardMedia component = 'img'
                                                         image = { Alexandria }
                                                         sx = {{width: '100%'}}
@@ -85,7 +86,7 @@ const UserFeed = () => {
                                         image = {Alexandria}
                                         sx = {{
                                             height: '100%',
-                                            alighItems: 'center'
+                                            alighItems: 'center',
                                         }}
                                         >
 
@@ -93,12 +94,21 @@ const UserFeed = () => {
                         </Card>
                         <Option sx = {{backgroundColor: '#b0b0b0', borderRadius: '20px' , py: 1.5, mx: 2}}/>
                     </Box>
-                    <Avatar sx = {{background: 'white', marginLeft: 2, marginBottom: 8}}>
-                            <ChevronRightSharp  color=  'disabled' sx = {{height: '70px', width: '70px'}} />
+                    <Avatar sx = {{background: 'none', marginLeft: 2, marginBottom: 8}}>
+                            <ChevronRightSharp  color=  'disabled' sx = {{height: '90px', width: '90px'}} />
                     </Avatar>
                 </Grid>
             </Grid>
         </Container>
+
+        <Card sx = {{background: 'none', position: 'absolute', bottom: '20px', left: '50%', transform: 'translateX(-50%)'}}>
+            <CardMedia component = 'img'
+                        image = {logo}
+                        sx = {{width: '150px', border: '0'}}
+                        >
+
+            </CardMedia>
+        </Card>
     </CustomContainer>
     </>
 } 
