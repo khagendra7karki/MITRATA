@@ -41,10 +41,19 @@ const ChatMessages = ({messages}) => {
         </div>
 }        
     
-const Chat = ({sendMessage}) =>{
+const Chat = ({sendMessage, wsObject}) =>{
     const [chat, setChat ] = useState( [] )
     const updateChat = (value) =>{
+        // console.log( 'i have been called')
         setChat( [...chat, value])
+    }
+    wsObject.onmessage = ({data}) => { 
+        data = JSON.parse( data )
+        // console.log( chat )
+
+        updateChat(data) 
+        console.log( chat )
+        // console.log( data )
     }
     return <>
         <h1> Hello World </h1>

@@ -19,8 +19,9 @@ let ws
     ws.onopen = () => {
         console.log('Connection opened')
     }
-    ws.onmessage = ({message}) =>  { console.log( message )}
+    
     ws.onclose = () => {ws = null}
+    ws.onmessage = ({data}) => {return ( data )}
     
     const sendMessage = (message) => {
         console.log( message )
@@ -35,7 +36,7 @@ function App() {
         <Route path = '/signin' element = { <Login /> } />
         <Route path = '/signup' element = { <SignUp /> } />
         <Route path = '/user' element = { <UserFeed /> } />
-        <Route path  = '/chat' element = { <Chat sendMessage = { sendMessage } />  } />
+        <Route path  = '/chat' element = { <Chat sendMessage = { sendMessage } wsObject = { ws } />  } />
       </Routes>
     </Router>
     </>
