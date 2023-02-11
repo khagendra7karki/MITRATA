@@ -24,7 +24,6 @@ let ws
     ws.onmessage = ({data}) => {return ( data )}
     
     const sendMessage = (message) => {
-        console.log( message )
         ws.send(JSON.stringify(message))
     }
 
@@ -32,8 +31,8 @@ function App() {
   return (<>
     <Router>
       <Routes>
-        <Route index element = {<Home />} />
-        <Route path = '/signin' element = { <Login /> } />
+        <Route index element = {<Home wsObject = { ws }/>} />
+        <Route path = '/login' element = { <Login wsObject = { ws }/> } />
         <Route path = '/signup' element = { <SignUp /> } />
         <Route path = '/user' element = { <UserFeed /> } />
         <Route path  = '/chat' element = { <Chat sendMessage = { sendMessage } wsObject = { ws } />  } />
