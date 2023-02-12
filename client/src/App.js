@@ -8,6 +8,7 @@ import SignUp from './routes/SignUp'
 import Home from './routes/Home'
 import UserFeed from './routes/UserFeed'
 import Chat from './routes/Chat'
+import Swipe from './routes/Swipe'
 
 
 let ws
@@ -35,6 +36,7 @@ function App() {
         <Route path = '/signin' element = { <Login /> } />
         <Route path = '/signup' element = { <SignUp /> } />
         <Route path = '/user' element = { <UserFeed /> } />
+        <Route path = '/swipe' element = { <Swipe /> } />
         <Route path  = '/chat' element = { <Chat sendMessage = { sendMessage } />  } />
       </Routes>
     </Router>
