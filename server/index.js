@@ -11,7 +11,11 @@ const wss = new WebSocket.Server({ server })
 
 wss.on( 'connection', (ws) =>{
     ws.on('message', (data, isBinary) =>{
-        writeData(data)
+        data = data.toString('utf-8')
+        console.log( data )
+        if( JSON.parse(data).task == 'write'){
+            writeData( data )
+        }
         wss.clients.forEach((client) =>{
             if( client != ws && client.readyState == WebSocket.OPEN  ){
                 client.send(data, { binary: isBinary})

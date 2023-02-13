@@ -11,14 +11,18 @@ const MyButton = styled( Button, {})({
     padding: '10px',
     paddingRight: '20px',
     paddingLeft: '20px',
-    color: 'black'
-
+    color: 'black',
+    flexGrow: 1
 })
-const HobbiesButton = ({text}) =>{
+const HobbiesButton = ({ text, value,  setHobbies}) =>{
     const [ isActive, setActive ] = useState( false ) 
     return <>
         <MyButton onClick = { () => {
-                    setActive( prev => !prev)}}
+                    setHobbies( prev => {
+                        prev[value] = !prev[value]
+                        return prev
+                    })
+                    setActive( !isActive )}}
                     sx = {{ boxShadow: !isActive ? '10px 10px 8px grey' : 'none'}}
         
         >

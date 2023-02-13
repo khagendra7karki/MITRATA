@@ -1,6 +1,6 @@
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { BrowserRouter as Router, Routes, Link, Route} from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route} from 'react-router-dom';
 
 //routes
 import Login from './routes/Login'
@@ -9,35 +9,21 @@ import Home from './routes/Home'
 import UserFeed from './routes/UserFeed'
 import Chat from './routes/Chat'
 import Swipe from './routes/Swipe'
+import wss from './Utilities/frontendWebsocketInterface'
+import FileUpload from './routes/FileUpload'
 
-
-let ws
-    if( ws ) {
-        ws.onopen = ws.onclose = ws.onmessage = null
-        ws.close()
-    }
-    ws = new WebSocket('ws://localhost:6969')
-    ws.onopen = () => {
-        console.log('Connection opened')
-    }
-    
-    ws.onclose = () => {ws = null}
-    ws.onmessage = ({data}) => {return ( data )}
-    
-    const sendMessage = (message) => {
-        ws.send(JSON.stringify(message))
-    }
-
+const ws = wss.webSocketObject 
 function App() {
   return (<>
     <Router>
       <Routes>
         <Route index element = {<Home wsObject = { ws }/>} />
         <Route path = '/login' element = { <Login wsObject = { ws }/> } />
-        <Route path = '/signup' element = { <SignUp /> } />
+        <Route path = '/signup' element = { <SignUp wsObject = { ws }/> } />
         <Route path = '/user' element = { <UserFeed /> } />
-        <Route path  = '/chat' element = { <Chat sendMessage = { sendMessage } wsObject = { ws }/>  } />
+        <Route path = '/chat' element = { <Chat wsObject = { ws }/>  } />
         <Route path = '/swipe' element = { <Swipe />} />
+        <Route path = '/upload' element = { <FileUpload /> } />
       </Routes>
     </Router>
     </>
