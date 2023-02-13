@@ -113,7 +113,7 @@ const First = ({setFirst, credential, handleChange}) => {
 
 const Second = ({setFirst, credential, handleChange, setCredential, handleSignUp }) => {
     const [ hobbies , setHobbies ] = useState([0, 0, 0, 0, 0, 0, 0, 0, 0])
-    const preferences = [ 'Travelling', 'Reading', 'Cooking', 'Sports', 'Photography', 'Gardening', 'Movies', 'Hiking/Trekking']
+    const preferences = [ 'Travelling', 'Reading', 'Cooking', 'Sports', 'Photography', 'Gardening', 'Movies', 'Music', 'Hiking/Trekking']
     const handleSubmit = () => {
         const prefer = preferences.filter( (value, index) => {
             return hobbies[index]

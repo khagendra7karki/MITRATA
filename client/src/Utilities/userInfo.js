@@ -20,7 +20,7 @@ class userInfo{
             gender:this.gender,
             age: this.age,
             address: this.address,
-            hobies: this.hobies, 
+            hobbies: this.hobbies, 
         }
         return JSONInfo
     }
