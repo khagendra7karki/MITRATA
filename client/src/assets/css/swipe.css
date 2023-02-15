@@ -1,0 +1,5 @@
+
+    .hello:active{
+        content: '' !important;
+        cursor: pointer;
+    }

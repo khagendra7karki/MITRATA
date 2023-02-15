@@ -31,4 +31,4 @@ const HobbiesButton = ({ text, value,  setHobbies}) =>{
     </>
 }
 
-export default HobbiesButton
+export default HobbiesButton     

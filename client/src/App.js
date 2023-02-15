@@ -8,9 +8,9 @@ import SignUp from './routes/SignUp'
 import Home from './routes/Home'
 import UserFeed from './routes/UserFeed'
 import Chat from './routes/Chat'
-import Swipe from './routes/Swipe'
 import wss from './Utilities/frontendWebsocketInterface'
 import FileUpload from './routes/FileUpload'
+import Swipe from './routes/Swipe'
 
 const ws = wss.webSocketObject 
 function App() {
