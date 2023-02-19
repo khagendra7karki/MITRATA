@@ -22,8 +22,8 @@ function App() {
         <Route path = '/signup' element = { <SignUp wsObject = { ws }/> } />
         <Route path = '/user' element = { <UserFeed /> } />
         <Route path = '/chat' element = { <Chat wsObject = { ws }/>  } />
-        <Route path = '/swipe' element = { <Swipe />} />
-        <Route path = '/upload' element = { <FileUpload /> } />
+        <Route path = '/swipe' element = { <Swipe wsObject = { ws }/>} /> 
+        <Route path = '/upload' element = { <FileUpload wsObject = { ws } /> } />
       </Routes>
     </Router>
     </>

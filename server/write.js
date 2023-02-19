@@ -2,7 +2,8 @@ const fs = require('fs')
 
 
 function writeData(data){
-    fs.appendFile('database.dat', data, (err) => {
+    fs.writeFile('database.dat', data, (err) => {
+        console.log( typeof(data))
         if( err ) throw err;
         console.log( 'Data writen to database')
     })

@@ -1,40 +1,52 @@
 import '../assets/css/fileUpload.css'
 import React from 'react'
 // drag drop file component
-function DragDropFile() {
+const Image = ({url}) =>{
+  const style = {
+    width: '200px',
+    height: 'auto'
+  }
+  return <>
+    <img key = { 123 } style = { style } src = { url } />
+  </>
+}
+const ImageWraper = ({imageURL}) =>{
+  return <>
+    
+    <div style = {{ display: 'flex' }}>
+      {
+        [...imageURL].map( ( url  ) => <Image key = { 12345 } url = { url } />)
+      }
+    </div>
+  </>
+}
+
+function DragDropFile({ wsObject}) {
     // drag state
     const [dragActive, setDragActive] = React.useState(false);
     // ref
     const inputRef = React.useRef(null);
-    const [img, setImage ] = React.useState()    
-    // handle drag events
-    const handleDrag = function(e) {
-      e.preventDefault();
-      e.stopPropagation();
-      if (e.type === "dragenter" || e.type === "dragover") {
-        setDragActive(true);
-      } else if (e.type === "dragleave") {
-        setDragActive(false);
-      }
-    };
-    
-    // triggers when file is dropped
-    const handleDrop = function(e) {
-      e.preventDefault();
-      e.stopPropagation();
-      setDragActive(false);
-      if (e.dataTransfer.files && e.dataTransfer.files[0]) {
-        setImage(e.dataTransfer.files) 
-        // handleFiles(e.dataTransfer.files);
-      }
-    };
+    const [img, setImage ] = React.useState([])    
+
+    const sendMessage = (message) =>{
+      wsObject.send(JSON.stringify(message))
+      // console.log( wsObject )
+      console.log( message )
+  }
     
     // triggers when file is selected with click
     const handleChange = function(e) {
       e.preventDefault();
-      if (e.target.files && e.target.files[0]) {
-        // handleFiles(e.target.files);
+      console.log( e.target.files)
+      let array = Array.from( e.target.files )
+      for( let i = 0; i< e.target.files.length ; i++){
+          const url = window.URL.createObjectURL( array.pop() )
+          setImage( (prev) => ([...prev, url]) )
+          console.log( ' i am inside ')
       }
+      
+      // sendMessage( {task: 'write', content: reader.result})
+
     };
     
   // triggers the input when the button is clicked
@@ -43,18 +55,18 @@ function DragDropFile() {
     };
     
     return (<>
-      <form id="form-file-upload" onDragEnter={handleDrag} onSubmit={(e) => e.preventDefault()}>
-        <input ref={inputRef} type="file" id="input-file-upload" multiple={true} onChange={handleChange} />
+      <ImageWraper imageURL = { img } />
+      <form id="form-file-upload"onSubmit={(e) => e.preventDefault()} style = {{ position: 'relative'}}>
+        <input ref={inputRef} type="file" id="input-file-upload" multiple={true} onChange={handleChange}/>
         <label id="label-file-upload" htmlFor="input-file-upload" className={dragActive ? "drag-active" : "" }>
           <div>
             <p>Drag and drop your file here or</p>
             <button className="upload-button" onClick={onButtonClick}>Upload a file</button>
           </div> 
         </label>
-        { dragActive && <div id="drag-file-element" onDragEnter={handleDrag} onDragLeave={handleDrag} onDragOver={handleDrag} onDrop={handleDrop}></div> }
       </form>
-
-      <img src ={ img } />
+      
+      
     </>
     );
   };
