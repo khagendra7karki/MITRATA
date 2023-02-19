@@ -31,18 +31,13 @@ const ImageWraper = ({imageURL}) =>{
   </>
 }
 
-function FileUploadComponent({ wsObject}) {
+function FileUploadComponent({ setCredential }) {
     // drag state
     const [ isEmpty, setEmpty] = React.useState(true);
     // ref
     const inputRef = React.useRef(null);
     const [img, setImage ] = React.useState([])    
 
-    const sendMessage = (message) =>{
-      wsObject.send(JSON.stringify(message))
-      // console.log( wsObject )
-      console.log( message )
-  }
     
     // triggers when file is selected with click
     const handleChange = function(e) {
@@ -52,9 +47,17 @@ function FileUploadComponent({ wsObject}) {
       }
       let array = Array.from( e.target.files )
       for( let i = 0; i< e.target.files.length ; i++){
-          const url = window.URL.createObjectURL( array.pop() )
-          setImage( (prev) => ([...prev, url]) )
-          console.log( ' i am inside ')
+        let latestValue = array.pop()
+        const url = window.URL.createObjectURL( latestValue )
+        const reader = new FileReader()
+        reader.addEventListener('load', () => {
+            setCredential( ( prev ) => {
+              prev.image.push( {url: url, data: reader.result} )
+              return prev
+            })
+          })
+        setImage( (prev) => ([...prev, url]) )
+        reader.readAsDataURL( latestValue )
       }
       
 

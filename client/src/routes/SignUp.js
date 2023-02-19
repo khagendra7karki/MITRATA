@@ -112,7 +112,7 @@ const First = ({setFirst, credential, handleChange}) => {
     </>
 }
 
-const Second = ({setFirst, credential, handleChange, setCredential, handleSignUp }) => {
+const Second = ({ credential, handleChange, setCredential, handleSignUp }) => {
     const [ hobbies , setHobbies ] = useState([0, 0, 0, 0, 0, 0, 0, 0, 0])
     const preferences = [ 'Travelling', 'Reading', 'Cooking', 'Sports', 'Photography', 'Gardening', 'Movies', 'Music', 'Hiking/Trekking']
     const handleSubmit = () => {
@@ -224,7 +224,7 @@ const Second = ({setFirst, credential, handleChange, setCredential, handleSignUp
                 <Typography variant = 'h2'>
                         Add a photo
                 </Typography>
-                <FileUpload />
+                <FileUpload setCredential = { setCredential } />
 
                 <FormControlLabel control = {<Checkbox />}
                                   label = 'Agree to our terms and conditions'
@@ -261,6 +261,7 @@ const SignUp = ({ wsObject }) =>{
         address: '',
         gender: '',
         hobbies: [],
+        image: []
     }
     const [ credential, setCredential ]  = useState( userInfoModel )
     const handleChange = (e) => {

@@ -8,6 +8,7 @@ class userInfo{
         this.age = ''
         this.addresss = ''
         this.hobbies = []
+        this.image = []
         this.wsObject = wsObject
     }
 
@@ -21,6 +22,7 @@ class userInfo{
             age: this.age,
             address: this.address,
             hobbies: this.hobbies, 
+            image : this.image
         }
         return JSONInfo
     }
@@ -33,6 +35,7 @@ class userInfo{
         this.age = object.age
         this.address = object.address
         this.hobbies = object.hobbies
+        this.image =object.image
         let requestObject = JSON.stringify({task: 'write', ...this.createJSON()})
         this.wsObject.send( requestObject)
     }
