@@ -1,9 +1,23 @@
+.file-upload-wraper{
+  border-width: 2px;
+  border-radius: 1rem;
+  border-style: dashed;
+  border-color: #cbd5e1;
+  width: 100%;
+  margin: auto;
+}
+
 #form-file-upload {
     height: 16rem;
-    width: 28rem;
     max-width: 100%;
     text-align: center;
     position: relative;
+    border-width: 2px;
+    border-radius: 1rem;
+    border-style: dashed;
+    border-color: #cbd5e1;
+    align-self: center;
+
   }
   
   #input-file-upload {
@@ -14,12 +28,12 @@
     height: 100%;
     display: flex;
     align-items: center;
-    justify-content: center;
-    border-width: 2px;
     border-radius: 1rem;
-    border-style: dashed;
-    border-color: #cbd5e1;
+    justify-content: center;
     background-color: #f8fafc;
+  }
+  #label-file-upload:hover{
+    background-color: lightgrey;
   }
   
   #label-file-upload.drag-active {
@@ -39,13 +53,14 @@
     text-decoration-line: underline;
   }
   
-  #drag-file-element {
-    position: absolute;
+
+
+  .no-file-uploaded{
     width: 100%;
-    height: 100%;
-    border-radius: 1rem;
-    top: 0px;
-    right: 0px;
-    bottom: 0px;
-    left: 0px;
+    min-width: 100%;
+    
+  }
+  .file-uploaded{
+    width: 200px !important;
+    display: inline-block;
   }

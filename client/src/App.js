@@ -9,7 +9,7 @@ import Home from './routes/Home'
 import UserFeed from './routes/UserFeed'
 import Chat from './routes/Chat'
 import wss from './Utilities/frontendWebsocketInterface'
-import FileUpload from './routes/FileUpload'
+import FileUpload from './components/FileUpload'
 import Swipe from './routes/Swipe'
 
 const ws = wss.webSocketObject 

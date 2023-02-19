@@ -8,6 +8,7 @@ import CustomLink from '../components/Link'
 import Input from "../components/Input"
 import HobbiesButton from "../components/HobbiesButton"
 import userInfo from '../Utilities/userInfo'
+import FileUpload from "../components/FileUpload"
 
 const First = ({setFirst, credential, handleChange}) => {
     return <>
@@ -220,10 +221,15 @@ const Second = ({setFirst, credential, handleChange, setCredential, handleSignUp
 
                 
                 </Grid>
+                <Typography variant = 'h2'>
+                        Add a photo
+                </Typography>
+                <FileUpload />
+
                 <FormControlLabel control = {<Checkbox />}
-                                    label = 'Agree to our terms and conditions'
-                sx = {{ my: 3 }}
-                />
+                                  label = 'Agree to our terms and conditions'
+                                  sx = {{ my: 3 }}
+                    />
                 <Grid container>
                     <Button variant= 'contained'
                             onClick = { handleSubmit }
@@ -231,17 +237,8 @@ const Second = ({setFirst, credential, handleChange, setCredential, handleSignUp
                     <Button variant = 'contained' onClick = { handleSubmit } sx = {{ mx: 2,  p: 2, background: '#df2a2a', color: 'white', fontWeight: '600', width: '180px'}}>Cancel</Button>
                     <Typography align = 'center' variant = 'h6' color = '#393f45' sx = {{ml: 'auto', alignSelf:'flex-end'}}>Already have an account ? <CustomLink to = '/' sx = {{ color: '#393f45' }}  text = 'Log In'/></Typography>
                 </Grid>
-                <Typography variant = 'h2'>
-                        Add a photo
-                        <Box sx = {{height: '300px', width: '100%'}}>
-                            <input type = 'file' id = 'input-file-upload' multiple = { true } />
-                            <label htmlFor="input-file-upload">
-
-                            </label>
-                        </Box>
-                </Typography>
             </Stack>
-            <Typography align = 'center' variant = 'h5' sx = {{ mt: 2}}>
+            <Typography align = 'center' variant = 'h5' sx = {{ my: 2}}>
                 Copyright @ The Gedes
             </Typography>
     </Container>
