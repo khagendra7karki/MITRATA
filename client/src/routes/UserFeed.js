@@ -1,4 +1,4 @@
-import { ChevronLeft } from '@mui/icons-material'
+import { ChevronLeft, ChevronRight } from '@mui/icons-material'
 import { Buttons, Box, Card, CardMedia, Grid, Container, Typography , Avatar} from '@mui/material'
 
 //custom component
@@ -11,6 +11,7 @@ import Alexandria from '../assets/images/alexandria_daddario.jpg'
 import image1 from '../assets/images/image1.jpg'
 import image2 from '../assets/images/image2.jpg'
 import image3 from '../assets/images/image3.jpg'
+import Swipe from '../components/Swipe'
 const UserFeed = () => {
     return <>
     <CustomContainer sx = {{ display: 'flex'}}>
@@ -18,10 +19,8 @@ const UserFeed = () => {
         <Container sx = {{ padding: '0 !important', display: 'flex' , alignItems: 'center', maxHeight: '800px'}}>
             <Grid container>
                 <Grid item xs = { 5 } sx = {{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                <Avatar sx = {{background: 'none', marginLeft: 2, marginBottom: 8}}>
-                    <ChevronLeft  color=  'disabled' sx = {{height: '90px', width: '90px'}} />
-                </Avatar>
-                    <Box>
+                <ChevronLeft  color=  'disabled' sx = {{height: '90px', width: '90px'}} />
+                    {/* <Box>
                         <Card sx = {{ height: '600px' , borderRadius: '20px'}}>
                             <CardMedia component = 'img' 
                                         image = {Alexandria}
@@ -33,8 +32,13 @@ const UserFeed = () => {
 
                             </CardMedia>
                         </Card>
+                    </Box> */}
+                    <Box>
+                        < Swipe image1 = { image3 } image2 = { Alexandria }/>
                         <Option sx = {{backgroundColor: '#b0b0b0', borderRadius: '20px' , py: 1.5, mx: 2}}/>
                     </Box>
+                    
+                    <ChevronRight  color = 'disabled' sx = {{ height: '90px' , width: '90px' }} />
                 </Grid>
                 <Grid item xs = { 7 } sx  ={{ display: 'flex', overflowY: 'hidden', height: '100%', alignSelf: 'center', justifyContent: 'center'}}>
                     <Box maxWidth='600px'maxHeight='500px'>
@@ -100,7 +104,7 @@ const UserFeed = () => {
             </Grid>
         </Container>
 
-        <Card sx = {{background: 'none', position: 'absolute', bottom: '20px', left: '50%', transform: 'translateX(-50%)'}}>
+        <Card sx = {{background: 'none', position: 'absolute', bottom: '20px', left: '50%', transform: 'translateX(-50%)', zIndex: '-1'}}>
             <CardMedia component = 'img'
                         image = {logo}
                         sx = {{width: '150px', border: '0'}}

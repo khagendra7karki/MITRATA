@@ -11,17 +11,13 @@ import { useEffect } from 'react'
 
 //reference origin ( this will be respect to the frame )
 //this is to calculate the angle of rotation
-const velocity = 10
-const maxDisplacement = 500
+const maxDisplacement = 300
 
-function calculateVelocity( object ) {
-    distance(object.currentX , object.currentY)
-}
 
 function distance( x, y ){
     return Math.sqrt( x * x + y * y )
 }
-const Swipe = () => {
+const Swipe = ( { image1, image2 } ) => {
     const initialValue = {
         currentX: 0,        //with refernce to the center
         currentY: 0,        //with the refernce to the center
@@ -37,17 +33,17 @@ const Swipe = () => {
         isDrag: false,
         height: 0,
         width: 0,
+        isSwiped: false,
+        leftSwiped: false,
+        rightSwiped: false,
     }
     const [ cordinate, setCordinate ] = React.useState( initialValue )
     
-    const style = { height:  '700px',
-                    width: '400px',
-                    background: 'grey',
-                    transformOrigin: `50% 100%`,
-                    transform: `rotate(${cordinate.currentAngle}deg)`,
+    const style = { transform: `rotate(${cordinate.currentAngle}deg)`,
                     position: 'relative',
                     left: cordinate.currentX - cordinate.reference.x,
                     bottom: cordinate.currentY - cordinate.reference.y,
+                    opacity: 1
                 }
     
     const handleDragStart = (e) => {
@@ -71,19 +67,22 @@ const Swipe = () => {
             isSwiped: false,
             height: e.target.offsetHeight,
             width: e.target.offsetHeight,
+            leftSwiped: false,
+            rightSwiped: false,
         }
         setCordinate(evaluatedState)
     
     }
     const handleDrag = (e) => {
+        // console.log( cordinate )
         if( cordinate.isDrag ){
             e.preventDefault()
             const x = e.clientX - cordinate.center.xo
             const y = -e.clientY + cordinate.center.yo
             const distanceInX = x - cordinate.reference.x
+            const distanceInY  = y - cordinate.reference.y
             const base = cordinate.height / 2
             let angle = (Math.atan( distanceInX / base )) * 180/3.14
-            console.log( angle )
             if( Math.abs( angle ) > 30 ){
                 if( angle > 0 ){
                     angle = 30
@@ -101,22 +100,34 @@ const Swipe = () => {
             setCordinate((prev) => {
                 return ({ ...prev, ...evaluated})
             })
-            const offsetX = Number(window.getComputedStyle( e.target ).getPropertyValue( 'left' ).slice( 0, -2))
-            const offsetY = Number(window.getComputedStyle( e.target ).getPropertyValue( 'bottom' ).slice( 0, -2))
-            if( distance(offsetX, offsetY )  > maxDisplacement ) {
-                setCordinate( initialValue )
+            console.log( distanceInX, distanceInY)
+            console.log( distance( distanceInX, distanceInY ) )
+            if( distance( distanceInX, distanceInY )  > maxDisplacement ) {
+                let rightSwiped = false
+                let leftSwiped = false
+                if( distanceInX > 0 )
+                    rightSwiped = true
+                else{
+                   leftSwiped = true 
+                }
+                setCordinate( { ...initialValue, rightSwiped: rightSwiped, leftSwiped: leftSwiped, isDrag: false, isSwiped: true} )
             }
+            
+            // console.log( cordinate.leftSwiped, cordinate.rightSwiped )
         }
     }
     const handleDragEnd = (e) => {
         setCordinate( initialValue )
     }
-    return<>
-        <div style = {{width: '100vw', height: '100vh', display: 'flex' , justifyContent: 'center', alignItems: 'center'}}>
-            <div className = 'hello' draggable style = { style }  onDragStart = { handleDragStart } onDrag = { handleDrag }  onDragEnd  = { handleDragEnd }>
 
+    return<>
+        <div style = {{ display: 'flex' , justifyContent: 'center', alignItems: 'center'}} draggable =  {false} >
+            <div className = 'user-suggestion-image-wrapper' draggable style = { {...style } }  onDragStart = { handleDragStart } onDrag = { handleDrag }  onDragEnd  = { handleDragEnd }>
+                <img src = { image2 }  draggable ={ false }/>
             </div>
-            <div style = {{ background: 'blue', height: '20px', width: '30px' }}></div>
+            <div className = 'user-suggestion-image-wrapper' style = {{ background: `url(${ image1 })`, position: 'absolute', zIndex : '-1' }}>
+                <img src = { image1 } draggable = { false } />
+            </div>
         </div>
     </>
 };
