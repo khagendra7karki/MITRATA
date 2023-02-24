@@ -1,4 +1,4 @@
-const writeData = require('./write.js')
+const writeData = require('./database/write.js')
 const http = require('http')
 const WebSocket = require('ws')
 const express = require('express')

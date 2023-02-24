@@ -82,7 +82,7 @@ const Swipe = ( { image1, image2 } ) => {
             const distanceInX = x - cordinate.reference.x
             const distanceInY  = y - cordinate.reference.y
             const base = cordinate.height / 2
-            let angle = (Math.atan( distanceInX / base )) * 180/3.14
+            let angle = (Math.atan( distanceInX / base )) * 60/3.14
             if( Math.abs( angle ) > 30 ){
                 if( angle > 0 ){
                     angle = 30

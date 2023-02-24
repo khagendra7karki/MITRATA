@@ -12,7 +12,8 @@ import { useNavigate } from 'react-router-dom'
 const Login = ({wsObject}) => {
     const navigate = useNavigate()
     const [credential, setCredential] = useState({email:'', password:''})
-    const handleClick = () =>{
+
+    const handleSubmit = () =>{
         wsObject.send(JSON.stringify({email:credential.email , password: credential.password}))
         navigate('/user')
     }
@@ -23,19 +24,26 @@ const Login = ({wsObject}) => {
                             image = {logo}
                             sx = {{width: '300px' , pb: 20}}
                 ></CardMedia>
-                <Typography variant = 'h4' align = 'center' color = 'white'>
+                <Typography variant = 'h3' align = 'center' color = 'white'>
                     Login
                 </Typography>
-                <TextField sx = {{background: 'gray', borderRadius: '12px', my: 2}}
+                <TextField sx = {{ background: 'white', borderRadius: '12px', my: 2}}
                            label = 'Email'
                            value = { credential.email }
                            onChange = { ( event ) => setCredential(( prev ) => {return  {...prev, email: event.target.value}}) }
                  />
-                <TextField  sx = {{background: 'gray', borderRadius: '12px', my: 2}} 
+                <TextField  sx = {{background: 'white', borderRadius: '12px', my: 2}} 
                             label = 'Password' 
+                            type = 'password'
                             onChange = {(event) => setCredential((prev) => {return {...prev, password: event.target.value}})} />
-                <Button variant = 'contained' sx = {{ borderRadius: '20px !important', py : 1}} onClick = { handleClick }><Typography variant = 'h5'>Login</Typography></Button>
-                <Typography align = 'center' variant = 'h6' color = 'white'>New User ? <CustomLink to = '/signup' sx = {{ color: 'white' }}  text = 'Sign Up'/></Typography>
+
+                <Button variant = 'contained' sx = {{ borderRadius: '20px !important', py : 1, my: 1 }} onClick = { handleSubmit }>
+                    <Typography variant = 'h5'>Login</Typography>
+                </Button>
+                <Typography align = 'center' variant = 'h5' color = 'white' sx = {{ my: 1}}>
+                    New User ? 
+                    <CustomLink to = '/signup' sx = {{ color: 'white' }}  text = 'Sign Up'/>
+                </Typography>
 
             </Stack>
 

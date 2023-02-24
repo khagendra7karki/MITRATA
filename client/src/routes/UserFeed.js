@@ -20,19 +20,6 @@ const UserFeed = () => {
             <Grid container>
                 <Grid item xs = { 5 } sx = {{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                 <ChevronLeft  color=  'disabled' sx = {{height: '90px', width: '90px'}} />
-                    {/* <Box>
-                        <Card sx = {{ height: '600px' , borderRadius: '20px'}}>
-                            <CardMedia component = 'img' 
-                                        image = {Alexandria}
-                                        sx = {{
-                                            height: '100%',
-                                            alighItems: 'center',
-                                        }}
-                                        >
-
-                            </CardMedia>
-                        </Card>
-                    </Box> */}
                     <Box>
                         < Swipe image1 = { image3 } image2 = { Alexandria }/>
                         <Option sx = {{backgroundColor: '#b0b0b0', borderRadius: '20px' , py: 1.5, mx: 2}}/>
@@ -53,9 +40,7 @@ const UserFeed = () => {
                                         <CardMedia component = 'img'
                                                     image = { image1 }
                                                     sx = {{width: '100%'}}
-                                                    
                                         >
-
                                         </CardMedia>
                                     </Card>
 
