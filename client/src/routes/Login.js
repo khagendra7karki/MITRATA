@@ -14,7 +14,7 @@ const Login = ({wsObject}) => {
     const [credential, setCredential] = useState({email:'', password:''})
 
     const handleSubmit = () =>{
-        wsObject.send(JSON.stringify({email:credential.email , password: credential.password}))
+        wsObject.send(JSON.stringify({task : 'get', email:credential.email , password: credential.password}))
         navigate('/user')
     }
     return <>
@@ -44,7 +44,6 @@ const Login = ({wsObject}) => {
                     New User ? 
                     <CustomLink to = '/signup' sx = {{ color: 'white' }}  text = 'Sign Up'/>
                 </Typography>
-
             </Stack>
 
         </CustomContainer>
