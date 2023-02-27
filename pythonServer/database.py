@@ -5,16 +5,17 @@ SEGMENTS_DIRECTORY = 'segments/'
 SEGMENT_BASENAME = 'LSMTree-1'
 WAL_BASENAME = 'memtable_bkup'
 
-class DATABASE():
-    def __int__( self ):
+class Database():
+    def __init__( self ):
         self.lsm = LSMTree(SEGMENT_BASENAME, SEGMENTS_DIRECTORY, WAL_BASENAME)
         
 
-    def _create_new_user( self, key , value ):
+    def create_new_user( self, key , value ):
+        print( type( self.lsm))
         self.lsm.db_set( key, value )
     
-    def _get_user( self , key ):
-        self.lsm.db_get_key( key )
+    def get_user( self , key ):
+        self.lsm.db_get( key )
     def _update_chat():
         pass
     def _verify_user():
