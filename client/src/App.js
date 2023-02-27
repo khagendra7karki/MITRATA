@@ -9,35 +9,18 @@ import Home from './routes/Home'
 import UserFeed from './routes/UserFeed'
 import Chat from './routes/Chat'
 import Swipe from './routes/Swipe'
-
-
-let ws
-    if( ws ) {
-        ws.onopen = ws.onclose = ws.onmessage = null
-        ws.close()
-    }
-    ws = new WebSocket('ws://localhost:6969')
-    ws.onopen = () => {
-        console.log('Connection opened')
-    }
-    ws.onmessage = ({message}) =>  { console.log( message )}
-    ws.onclose = () => {ws = null}
-    
-    const sendMessage = (message) => {
-        console.log( message )
-        ws.send(JSON.stringify(message))
-    }
-
+import socketIO from "socket.io-client"
+const socket = socketIO.connect("http://localhost:4000")
 function App() {
   return (<>
     <Router>
       <Routes>
-        <Route index element = {<Home />} />
-        <Route path = '/signin' element = { <Login /> } />
+        {/* <Route index element = {<Home />} /> */}
+        <Route path = '/' element = { <Login socket={socket}/> } />
         <Route path = '/signup' element = { <SignUp /> } />
         <Route path = '/user' element = { <UserFeed /> } />
         <Route path = '/swipe' element = { <Swipe /> } />
-        <Route path  = '/chat' element = { <Chat sendMessage = { sendMessage } />  } />
+        <Route path  = '/chat' element = { <Chat  socket={socket} />  } />
       </Routes>
     </Router>
     </>

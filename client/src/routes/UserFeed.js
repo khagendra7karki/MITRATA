@@ -1,23 +1,45 @@
-import { ChevronRightSharp} from '@mui/icons-material'
-import { Buttons, Box, Card, CardMedia, Grid, Container, Typography , Avatar} from '@mui/material'
-import { Favorite } from '@mui/icons-material';
+import { ChevronLeft, ChevronRight } from '@mui/icons-material'
+import { Box, Card, CardMedia, Grid, Container, Typography } from '@mui/material'
 
 //custom component
 import UserNavBar from '../components/UserNavBar'
 import CustomContainer from '../components/CustomContaier'
 import Option from '../components/Option'
 //image
+import logo from '../assets/images/logo-with-name.png'
 import Alexandria from '../assets/images/alexandria_daddario.jpg'
 import image1 from '../assets/images/image1.jpg'
 import image2 from '../assets/images/image2.jpg'
 import image3 from '../assets/images/image3.jpg'
+import Swipe from '../components/Swipe'
 const UserFeed = () => {
     return <>
     <CustomContainer sx = {{ display: 'flex'}}>
-        <UserNavBar sx = {{ position: 'relative' , borderRadius: '0 20px 20px 0', backgroundColor: '#b0b0b0', position: 'absolute', left: '0', top: '50%', transform:'translateY(-50%)'}}/>
+        <UserNavBar sx = {{ position: 'relative' , borderRadius: '20px 0 0  20px ', backgroundColor: '#b0b0b0', position: 'absolute', right: '0', top: '50%', transform:'translateY(-50%)'}}/>
         <Container sx = {{ padding: '0 !important', display: 'flex' , alignItems: 'center', maxHeight: '800px'}}>
             <Grid container>
+                <Grid item xs = { 5 } sx = {{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <ChevronLeft  color=  'disabled' sx = {{height: '90px', width: '90px'}} />
+                    {/* <Box>
+                        <Card sx = {{ height: '600px' , borderRadius: '20px'}}>
+                            <CardMedia component = 'img' 
+                                        image = {Alexandria}
+                                        sx = {{
+                                            height: '100%',
+                                            alighItems: 'center',
+                                        }}
+                                        >
 
+                            </CardMedia>
+                        </Card>
+                    </Box> */}
+                    <Box>
+                        < Swipe image1 = { image3 } image2 = { Alexandria }/>
+                        <Option sx = {{backgroundColor: '#b0b0b0', borderRadius: '20px' , py: 1.5, mx: 2}}/>
+                    </Box>
+                    
+                    <ChevronRight  color = 'disabled' sx = {{ height: '90px' , width: '90px' }} />
+                </Grid>
                 <Grid item xs = { 7 } sx  ={{ display: 'flex', overflowY: 'hidden', height: '100%', alignSelf: 'center', justifyContent: 'center'}}>
                     <Box maxWidth='600px'maxHeight='500px'>
                         <Typography variant = 'h2' component = 'h2' color = 'white' sx = {{marginLeft: 3}}>Alisha  19</Typography>
@@ -26,8 +48,8 @@ const UserFeed = () => {
                         </Typography>
                         <Box sx = {{ display: 'flex', justifyContent: 'center', borderRadius: '16px' , mx: 3}}>
                             <Grid container> 
-                                <Grid item   sm = { 6 }  md = { 6 } xl = { 4 } sx = {{display: 'flex' , justifyContent: 'center', p: 0}}>
-                                    <Card sx = {{width: '200px'}}>
+                                <Grid item   sm = { 6 }  md = { 4 } sx = {{display: 'flex' , justifyContent: 'center', p: 0}}>
+                                    <Card sx = {{width: '200px', borderRadius: '0'}}>
                                         <CardMedia component = 'img'
                                                     image = { image1 }
                                                     sx = {{width: '100%'}}
@@ -39,8 +61,8 @@ const UserFeed = () => {
 
                                 </Grid>
                             
-                                <Grid item  sm = { 6 } md = { 6 } xl = { 4 } sx = {{display: 'flex' , justifyContent: 'center', p: 0}}>
-                                    <Card sx = {{width: '200px'}}>
+                                <Grid item  sm = { 6 } md = { 4 } sx = {{display: 'flex' , justifyContent: 'center', p: 0}}>
+                                    <Card sx = {{width: '200px', borderRadius: '0'}}>
                                         <CardMedia component = 'img'
                                                         image = { image2 }
                                                         sx = {{width: '100%'}}
@@ -49,8 +71,8 @@ const UserFeed = () => {
                                     </Card>
                                 </Grid>
 
-                                <Grid item  sm = { 6 } md = { 6} xl = { 4 }  sx = {{display: 'flex' , justifyContent: 'center', p: 0}}>
-                                    <Card sx = {{width: '200px'}}>
+                                <Grid item  sm = { 6 } md = { 4 }  sx = {{display: 'flex' , justifyContent: 'center', p: 0}}>
+                                    <Card sx = {{width: '200px', borderRadius: '0'}}>
                                         <CardMedia component = 'img'
                                                         image = { image3 }
                                                         sx = {{width: '100%'}}
@@ -59,8 +81,8 @@ const UserFeed = () => {
                                         </CardMedia>
                                     </Card>
                                 </Grid>
-                                <Grid item  sm = { 6 } md = { 6} xl = { 4 }  sx = {{display: 'flex' , justifyContent: 'center', p: 0}}>
-                                    <Card sx = {{width: '200px'}}>
+                                <Grid item  sm = { 6 } md = { 4 }  sx = {{display: 'flex' , justifyContent: 'center', p: 0}}>
+                                    <Card sx = {{width: '200px', borderRadius: '0'}}>
                                         <CardMedia component = 'img'
                                                         image = { Alexandria }
                                                         sx = {{width: '100%'}}
@@ -78,27 +100,18 @@ const UserFeed = () => {
                         
                 
                 </Grid>
-                <Grid item xs = { 5 } sx = {{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                    <Box>
-                        <Card sx = {{ height: '600px' , borderRadius: '20px'}}>
-                            <CardMedia component = 'img' 
-                                        image = {Alexandria}
-                                        sx = {{
-                                            height: '100%',
-                                            alighItems: 'center'
-                                        }}
-                                        >
-
-                            </CardMedia>
-                        </Card>
-                        <Option sx = {{backgroundColor: '#b0b0b0', borderRadius: '20px' , py: 1.5, mx: 2}}/>
-                    </Box>
-                    <Avatar sx = {{background: 'white', marginLeft: 2, marginBottom: 8}}>
-                            <ChevronRightSharp  color=  'disabled' sx = {{height: '70px', width: '70px'}} />
-                    </Avatar>
-                </Grid>
+                
             </Grid>
         </Container>
+
+        <Card sx = {{background: 'none', position: 'absolute', bottom: '20px', left: '50%', transform: 'translateX(-50%)', zIndex: '-1'}}>
+            <CardMedia component = 'img'
+                        image = {logo}
+                        sx = {{width: '150px', border: '0'}}
+                        >
+
+            </CardMedia>
+        </Card>
     </CustomContainer>
     </>
 } 
