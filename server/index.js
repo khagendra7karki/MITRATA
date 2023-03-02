@@ -1,27 +1,45 @@
-const http = require('http')
-const WebSocket = require('ws')
-const express = require('express')
+const express = require("express")
+const app = express()
+const cors = require("cors")
+const http = require('http').Server(app);
+const PORT = 4000
+const socketIO = require('socket.io')(http, {
+    cors: {
+        origin: "http://localhost:3000"
+    }
+});
 
+app.use(cors())
+let users = []
 
-const  PORT = 6969
-
-const server = http.createServer( express )
-const wss = new WebSocket.Server({ server })
-
-
-wss.on( 'connection', (ws) =>{
-    ws.on('message', (data, isBinary) =>{
-        console.log( isBinary )
-        const message = isBinary ?data.toString() :  data
-        console.log(message)
-        wss.clients.forEach((client) =>{
-            if( client != ws && client.readyState == WebSocket.OPEN  ){
-                client.send(message, { binary: isBinary})
-            } 
-        })
+socketIO.on('connection', (socket) => {
+    console.log(` ${socket.id} user just connected!`)  
+    socket.on("message", data => {
+      
+      socketIO.emit("messageResponse", data)
     })
-})
 
-server.listen( PORT , () =>{
-    console.log(`Server is running on ${PORT}`)
-})
+   
+
+    socket.on("newUser", (data) => {
+     
+      users.push(data)
+      socketIO.emit("newUserResponse", users)
+    })
+ 
+    socket.on('disconnect', () => {
+      console.log('A user disconnected');
+      users = users.filter(user => user.socketID !== socket.id)
+      socketIO.emit("newUserResponse", users)
+      socket.disconnect()
+    });
+});
+
+app.get("/api", (req, res) => {
+  res.json({message: "Hello"})
+});
+
+   
+http.listen(PORT, () => {
+    console.log(`Server listening on ${PORT}`);
+});

@@ -1,13 +1,39 @@
-import { CardMedia, Typography, Stack, TextField, Button } from '@mui/material'
+import { CardMedia,Box, Typography, Stack, TextField, Button } from '@mui/material'
 
-
-
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 //custom import
 import CustomContainer from "../components/CustomContaier"
 import login_bg from '../assets/images/login_bg.jpg'
 import logo from '../assets/images/logo-with-name.png'
 import CustomLink from '../components/Link'
-const Login = () => {
+const Login = ({socket}) => {
+    const navigate = useNavigate();
+    const [values, setValues] = useState({ email: "", password: "" });
+    
+    const handleChange = (event) => {
+        setValues({ ...values, [event.target.name]: event.target.value });
+      };
+ 
+      const handleSubmit =  (event) => {
+        event.preventDefault();
+        const { email, password } = values;
+        const userdata  =  {
+            userEmail : email,
+            userPassword : password
+        };
+        localStorage.setItem(
+              "chat-app-user",
+               JSON.stringify(userdata)
+            );
+            console.log("helllo i reach1")
+            console.log(email)
+        socket.emit("newUser", {email, socketID: socket.id})
+        console.log("helllo i reach2")
+        navigate("/chat");
+      };
+
+
     return <>
         <CustomContainer sx = {{ backgroundImage : `url(${login_bg})`, backgroundSize: 'contain' , justifyContent: 'center'}}>
             <Stack>
@@ -18,11 +44,11 @@ const Login = () => {
                 <Typography variant = 'h4' align = 'center' color = 'white'>
                     Login
                 </Typography>
-                <TextField sx = {{background: 'gray', borderRadius: '12px', my: 2}} label = 'Email' />
-                <TextField  sx = {{background: 'gray', borderRadius: '12px', my: 2}} label = 'Password' />
-                <Button variant = 'contained' sx = {{ borderRadius: '20px !important', py : 1}}><Typography variant = 'h5'>Login</Typography></Button>
-                <Typography align = 'center' variant = 'h6' color = 'white'>New User ? <CustomLink to = '/signup' sx = {{ color: 'white' }}  text = 'Sign Up'/></Typography>
-
+                <Box component="form" onSubmit={(event) => handleSubmit(event)} noValidate sx={{ mt: 1 }}>
+                <TextField sx = {{background: 'gray', borderRadius: '12px', my: 2}} label = 'Email' name="email" type="email" onChange={(e) => handleChange(e)}/>
+                <TextField  sx = {{background: 'gray', borderRadius: '12px', my: 2}} label = 'Password'  name="password" type="password" onChange={(e) => handleChange(e)}/>
+                <Button type="submit" variant= 'contained' sx = {{ mx: 2, p: 2, background: '#1d84a6', color: 'white', fontWeight: '600', width: '180px'}}>Login</Button>
+                </Box>
             </Stack>
 
         </CustomContainer>
