@@ -18,5 +18,7 @@ class Database():
         self.lsm.db_get( key )
     def _update_chat():
         pass
-    def _verify_user():
-        pass
+    def verify_user( self, key):
+        if(self.lsm.db_get( key )):
+            return True
+        return False

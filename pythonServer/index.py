@@ -4,6 +4,7 @@ import json
 
 #custom database module
 from database import Database
+from tasks import task
 
 LEN = 0
 PORT = 6969
@@ -19,8 +20,8 @@ async def echo( websocket, path):
     try:
         async for message in websocket:
             message = json.loads( message )
-            if(  message['task'] == 'create'):
-                db.create_new_user( message['key'], str(message['value']) )
+            if (task( db, message )):
+                await websocket.send( 'true' )
             print( 'Received message from the client ' + str(message) )
             for conn in connected:
                 if conn != websocket:

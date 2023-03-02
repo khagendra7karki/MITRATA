@@ -201,7 +201,17 @@ class LSMTree():
         if Path(self.memtable_wal_path()).exists():
             with open(self.memtable_wal_path(), 'r') as s:
                 for line in s:
-                    key, value = line.strip().split(',')
+                    flag = 0
+                    key = ''
+                    value = ''
+                    for letters in line:
+                        if( letters != ',' and flag == 0):
+                            key = key + letters
+                        else:
+                            flag = 1
+                            value = value + letters
+                    print( 'printing key and value \n')
+
                     self.memtable.add(key, value)
                     self.memtable.total_bytes += len(key) + len(value)
 

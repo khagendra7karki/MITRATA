@@ -8,14 +8,17 @@ import login_bg from '../assets/images/login_bg.jpg'
 import logo from '../assets/images/logo-with-name.png'
 import CustomLink from '../components/Link'
 import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { json, useNavigate } from 'react-router-dom'
 const Login = ({wsObject}) => {
     const navigate = useNavigate()
     const [credential, setCredential] = useState({email:'', password:''})
-
+    wsObject.onmessage = ({data }) => {
+        if( data == 'true' )
+            navigate( '/user')
+    }
     const handleSubmit = () =>{
-        wsObject.send(JSON.stringify({task : 'get', email:credential.email , password: credential.password}))
-        navigate('/user')
+        wsObject.send(JSON.stringify({task : 'verify', email:credential.email , password: credential.password}))
+
     }
     return <>
         <CustomContainer sx = {{ backgroundImage : `url(${login_bg})`, backgroundSize: 'contain' , justifyContent: 'center'}}>
