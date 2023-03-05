@@ -11,7 +11,6 @@ class Database():
         
 
     def create_new_user( self, key , value ):
-        print( type( self.lsm))
         self.lsm.db_set( key, value )
     
     def get_user( self , key ):
@@ -19,6 +18,4 @@ class Database():
     def _update_chat():
         pass
     def verify_user( self, key):
-        if(self.lsm.db_get( key )):
-            return True
-        return False
+        return self.lsm.db_get( key )

@@ -210,9 +210,8 @@ class LSMTree():
                         else:
                             flag = 1
                             value = value + letters
-                    print( 'printing key and value \n')
-
-                    self.memtable.add(key, value)
+                    value = value[1:]
+                    self.memtable.add(key, value )
                     self.memtable.total_bytes += len(key) + len(value)
 
     # Write helpers

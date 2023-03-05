@@ -11,6 +11,7 @@ import Chat from './routes/Chat'
 import wss from './Utilities/frontendWebsocketInterface'
 import FileUpload from './components/FileUpload'
 import Swipe from './routes/Swipe'
+import Photo from './routes/Photo'
 
 const ws = wss.webSocketObject 
 function App() {
@@ -24,6 +25,7 @@ function App() {
         <Route path = '/chat' element = { <Chat wsObject = { ws }/>  } />
         <Route path = '/swipe' element = { <Swipe wsObject = { ws }/>} /> 
         <Route path = '/upload' element = { <FileUpload wsObject = { ws } /> } />
+        <Route path = '/photo' element = { <Photo wsObject = { ws } /> } />
       </Routes>
     </Router>
     </>

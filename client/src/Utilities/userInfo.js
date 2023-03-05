@@ -28,7 +28,7 @@ class userInfo{
     }
     createUser(object){
         this.email = object.email
-        this.password = object.firstName
+        this.password = object.password
         this.firstName = object.firstName
         this.lastName = object.lastName
         this.gender = object.gender

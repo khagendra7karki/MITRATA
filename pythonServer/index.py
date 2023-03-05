@@ -19,14 +19,18 @@ async def echo( websocket, path):
         print( 'A client just connected ')
     try:
         async for message in websocket:
-            message = json.loads( message )
-            if (task( db, message )):
-                await websocket.send( 'true' )
             print( 'Received message from the client ' + str(message) )
-            for conn in connected:
-                if conn != websocket:
-                    await conn.send( str(message))
-            await websocket.send( "Pong" + str(message) )
+            message = json.loads( message )
+            result = json.loads( task( db, message ) )
+            # print(result['image'])
+            result = json.dumps(result['image'])
+            await websocket.send( result )
+            # if (task( db, message )):
+            #     await websocket.send( 'true' )
+            # for conn in connected:
+            #     if conn != websocket:
+            #         await conn.send( str(message))
+            # await websocket.send( "Pong" + str(message) )
 
     except websockets.exceptions.ConnectionClosed as  e:
         print ( 'something went wrong')

@@ -52,7 +52,7 @@ function FileUploadComponent({ setCredential }) {
         const reader = new FileReader()
         reader.addEventListener('load', () => {
             setCredential( ( prev ) => {
-              prev.image.push( {url: url, data: reader.result} )
+              prev.image.push( { data: reader.result} )
               return prev
             })
           })
