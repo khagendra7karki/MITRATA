@@ -21,9 +21,9 @@ async def echo( websocket, path):
         async for message in websocket:
             print( 'Received message from the client ' + str(message) )
             message = json.loads( message )
-            result = json.loads( task( db, message ) )
+            result = task( db, message ) 
             # print(result['image'])
-            result = json.dumps(result['image'])
+        
             await websocket.send( result )
             # if (task( db, message )):
             #     await websocket.send( 'true' )

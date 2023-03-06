@@ -1,5 +1,8 @@
 import json   #import json library for parsing json
 
+defaultResponse = {
+    'status': 'unsuccessful'
+}
 
 def task( db, message ):
     # message = json.loads( message )
@@ -9,8 +12,11 @@ def task( db, message ):
             # print( 'type of the object is ', type(verification_result ))
             # print( 'the value of the variable is ', verification_result )
             verification_result = json.loads( verification_result )
-            return verification_result['password'] == message['password']
-        return False
+            if(verification_result['password'] == message['password']):
+                defaultResponse['status'] = 'successful'
+                return json.dumps( defaultResponse )
+        
+        return json.dumps( defaultResponse )
     
     if( message['task'] == 'create' ):
         db.create_new_user( message['key'],json.dumps( message['value']) )        
@@ -18,11 +24,12 @@ def task( db, message ):
     
     if( message['task'] =='photo'):
         result = db.verify_user('khagendra.karki007@gmail.com')
-        # image = result['image']
-        # return image[0]
+
         print( 'the type of the result is', type(result))
         return result
     
     if( message['task'] == 'getData'):
         db.get_random_data()
-    return """"{"default": "hi"}"""
+        
+        
+    return json.dumps( defaultResponse )
