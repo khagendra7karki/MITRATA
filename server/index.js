@@ -19,7 +19,6 @@ socketIO.on('connection', (socket) => {
       socketIO.emit("messageResponse", data)
     })
 
-   
 
     socket.on("newUser", (data) => {
      

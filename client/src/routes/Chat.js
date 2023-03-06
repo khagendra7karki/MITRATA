@@ -1,26 +1,31 @@
 import * as React from 'react';
-import { Grid,Paper} from '@mui/material'
-
-
-
-import Head from '../chatcomponents/Head';
+import { Grid,Box,Paper} from '@mui/material'
+import { useState } from 'react';
 import Contacts from '../chatcomponents/Contacts';
 import Chatcontainer from '../chatcomponents/Chatcontainer';
 
-const chatApp=({socket})=> {
- 
+const ChatApp=({socket})=> {
+  const [currentChat, setCurrentChat] = useState(undefined);
+  const changeChat = (chat) => {
+    setCurrentChat(chat);
+  };
+
   return (
-    <div >
-    <Grid container component={Paper} sx ={{ width: '100vh',height: '90vh',}}>
-    <Head/>
-    <Contacts socket={socket}/>
-    <Chatcontainer socket={socket}/>
+  
+        <Box sx={{ margin: 'auto',
+      width: '50%',
+      padding: '10px',
+     }}>
+    <Grid container component={Paper} sx ={{ width: '100vh',height: '90vh', }} >
+    <Contacts socket={socket} changeChat={changeChat}/>
+    <Chatcontainer socket={socket} currentChat={currentChat}/>
     </Grid>
-  </div>
+    </Box>
+
 
 
 
   );
 }
 
-export default chatApp;
+export default ChatApp;
