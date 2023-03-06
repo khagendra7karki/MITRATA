@@ -1,7 +1,5 @@
 import { CardMedia, Typography, Stack, TextField, Button } from '@mui/material'
 
-
-
 //custom import
 import CustomContainer from "../components/CustomContaier"
 import login_bg from '../assets/images/login_bg.jpg'
@@ -13,7 +11,8 @@ const Login = ({wsObject}) => {
     const navigate = useNavigate()
     const [credential, setCredential] = useState({email:'', password:''})
     wsObject.onmessage = ({data }) => {
-        if( data == 'true' )
+        data = JSON.parse( data )
+        if( data.status = 'successful' )
             navigate( '/user')
     }
     const handleSubmit = () =>{

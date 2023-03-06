@@ -6,6 +6,8 @@ class userInfo{
         this.lastName= ''
         this.gender = ''
         this.age = ''
+        this.motto = ''
+        this.birthday = ''
         this.addresss = ''
         this.hobbies = []
         this.image = []
@@ -19,6 +21,8 @@ class userInfo{
             email: this.email,
             password: this.password,
             gender:this.gender,
+            motto: this.motto,
+            birthday: this.birthday,
             age: this.age,
             address: this.address,
             hobbies: this.hobbies, 
@@ -33,6 +37,8 @@ class userInfo{
         this.lastName = object.lastName
         this.gender = object.gender
         this.age = object.age
+        this.motto = object.motto
+        this.birthday = object.birthday
         this.address = object.address
         this.hobbies = object.hobbies
         this.image =object.image

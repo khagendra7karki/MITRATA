@@ -39,16 +39,50 @@ const UserFeed = ({ wsObject }) => {
     const onSwipe = (left, right ) =>{      //do certain task on swipe
         getData()
     }
+    const onHomeClick = () =>{
+
+    }
+    const onUserClick = () =>{
+        
+    }
+    const onMesageClick = () =>{
+        
+    }
+    const onNotificationClick = () =>{
+        
+    }
+    const onSettingClick = () =>{
+        
+    }
+    const handleRejection = () =>{
+        console.log( 'i have been rejected')
+    }
+    const handleApproval = () =>{
+        console.log('i have been approved')
+    }
+    const handleLike = () =>{
+        console.log( 'i have been liked' )
+    }
     return <>
     <CustomContainer sx = {{ display: 'flex'}}>
-        <UserNavBar sx = {{ position: 'relative' , borderRadius: '20px 0 0  20px ', backgroundColor: '#b0b0b0', position: 'absolute', right: '0', top: '50%', transform:'translateY(-50%)'}}/>
+        <UserNavBar sx = {{ position: 'relative' , borderRadius: '20px 0 0  20px ', backgroundColor: '#b0b0b0', position: 'absolute', right: '0', top: '50%', transform:'translateY(-50%)'}}
+                    onMessageClick = { onMesageClick }
+                    onHomeClick = { onHomeClick } 
+                    onUserClick = { onUserClick }
+                    onNotificationClick = { onNotificationClick }
+                    onSettingClick = { onSettingClick }
+        />
         <Container sx = {{ padding: '0 !important', display: 'flex' , alignItems: 'center', maxHeight: '800px'}}>
             <Grid container>
                 <Grid item xs = { 5 } sx = {{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                 <ChevronLeft  color=  'disabled' sx = {{height: '90px', width: '90px'}} />
                     <Box>
                         < Swipe image1 = { image3 } image2 = { Alexandria } handleSwipe = { onSwipe } />
-                        <Option sx = {{backgroundColor: '#b0b0b0', borderRadius: '20px' , py: 1.5, mx: 2}}/>
+                        <Option sx = {{backgroundColor: '#b0b0b0', borderRadius: '20px' , py: 1.5, mx: 2}}
+                                handleRejection ={ handleRejection }
+                                handleApproval = { handleApproval }
+                                handleLike = { handleLike}
+                        />
                     </Box>
                     
                     <ChevronRight  color = 'disabled' sx = {{ height: '90px' , width: '90px' }} />

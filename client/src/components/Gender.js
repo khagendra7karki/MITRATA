@@ -37,6 +37,7 @@ export default function Gender({ setCredential }) {
             console.log( e.target.value )
             handleChange( e.target.value )
           }}
+          sx = {{ width: '100%'}}
           
         >
           {currencies.map((option) => (

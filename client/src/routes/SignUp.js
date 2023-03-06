@@ -10,14 +10,15 @@ import HobbiesButton from "../components/HobbiesButton"
 import userInfo from '../Utilities/userInfo'
 import FileUpload from "../components/FileUpload"
 import Birthdate from "../components/Birthdate"
+import Gender from '../components/Gender'
 
 const First = ({setFirst, credential, handleChange}) => {
     return <>
             <Container>
-                <Stack justifyContent  ='center' sx = {{borderBottom: '2px solid black', pb: 5}}>
+                <Stack justifyContent  ='center' sx = {{borderBottom: '2px solid black', pb: 3}}>
                     <CardMedia component = 'img'
                                 image = { logo }
-                                sx = {{width: '175px', margin: 'auto', pb: 2, pt: 4}}                        >
+                                sx = {{width: '175px', margin: 'auto', pb: 2, pt: 4}}>
 
                     </CardMedia>    
                     <Typography align = 'center' variant = 'h5'>Sign up to Mitrata</Typography>
@@ -48,7 +49,7 @@ const First = ({setFirst, credential, handleChange}) => {
                                         />
                             </Grid>
 
-                            <Grid item sm = {6} xs = {12} sx = {{display: 'flex',justifyContent: 'center', px: 4}}>
+                            {/* <Grid item sm = {6} xs = {12} sx = {{display: 'flex',justifyContent: 'center', px: 4}}>
                                 <Input placeholder = 'Age'
                                        label = 'Age'
                                        name = 'age'
@@ -56,7 +57,7 @@ const First = ({setFirst, credential, handleChange}) => {
                                        value = { credential.age }
                                        />
 
-                            </Grid>
+                            </Grid> */}
                             <Grid item sm = {6} xs = {12} sx = {{display: 'flex',justifyContent: 'center', px: 4}}>
                                 <Input placeholder = 'Email' 
                                        label = 'Email'
@@ -106,7 +107,7 @@ const First = ({setFirst, credential, handleChange}) => {
                     </Grid>
 
                 </Stack>
-                <Typography align = 'center' variant = 'h5' sx = {{ mt: 2}}>
+                <Typography align = 'center' variant = 'h5' sx = {{ mt: 1}}>
                     Copyright @ The Gedes
                 </Typography>
             </Container>
@@ -136,13 +137,11 @@ const Second = ({ credential, handleChange, setCredential, handleSignUp }) => {
                 <Typography align = 'center' variant = 'h4' sx = {{ my: 2}}>Set up your profile</Typography>
                 <Grid container spacing = {3}>
                         <Grid item sm = {6} xs = {12}sx = {{display: 'flex',justifyContent: 'center', px: 4}}>
-                            <Input placeholder = 'First Name' 
-                                   label = 'Gender'
-                                   name = 'gender'
-                                   value = { credential.gender } 
-                                   onChange = { handleChange } 
 
-                           />
+                           <Stack direction = 'column' sx = { { width: '100%' }}>
+                                <label style = {{ paddingLeft: '20px', fontWeight: '500'}}> Gender </label>
+                                <Gender setCredential = { setCredential } />
+                            </Stack>
                         </Grid>
                         <Grid item sm = {6} xs = {12}sx = {{display: 'flex',justifyContent: 'center', px: 4}}>
                             <Stack direction = 'column' sx = { { width: '100%' }}>
@@ -269,6 +268,8 @@ const SignUp = ({ wsObject }) =>{
         firstName: '',
         lastName: '',
         age: '',
+        motto: '',
+        birthday: '',
         address: '',
         gender: '',
         hobbies: [],

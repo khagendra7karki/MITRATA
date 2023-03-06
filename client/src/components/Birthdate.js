@@ -11,7 +11,19 @@ export default function Birthdate({ setCredential }) {
   const handleChange = ( newValue ) =>{
     setDate( newValue )
     setCredential( ( prev ) =>{
-        return { ...prev, birthday: { year: newValue.$y , month : newValue.$M + 1 , day: newValue.$D}}
+        var birthdayInStr = `${newValue.$M + 1 }/${newValue.$D}/${newValue .$y}`
+        var birthdate = new Date( birthdayInStr )
+        var month_diff = Date.now() - birthdate.getTime();  
+      
+        //convert the calculated difference in date format  
+        var age_dt = new Date(month_diff);   
+      
+        //extract year from date      
+        var year = age_dt.getUTCFullYear();  
+      
+        //now calculate the age of the user  
+        var age = Math.abs(year - 1970);  
+        return { ...prev, birthday: birthdayInStr , age: age }
     })
   }
   
