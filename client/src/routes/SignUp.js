@@ -1,4 +1,4 @@
-import { Container, Grid, Button, CardMedia, FormControlLabel, Box, Typography , Checkbox,OutlinedInput, FormControl, InputLabel} from "@mui/material"
+import { Container, Grid, Button, CardMedia, FormControlLabel, Box, Typography , Checkbox,OutlinedInput, FormControl, InputLabel, TextField} from "@mui/material"
 import { Stack } from "@mui/system"
 import { useEffect, useState } from 'react'
 
@@ -9,6 +9,7 @@ import Input from "../components/Input"
 import HobbiesButton from "../components/HobbiesButton"
 import userInfo from '../Utilities/userInfo'
 import FileUpload from "../components/FileUpload"
+import Birthdate from "../components/Birthdate"
 
 const First = ({setFirst, credential, handleChange}) => {
     return <>
@@ -122,6 +123,8 @@ const Second = ({ credential, handleChange, setCredential, handleSignUp }) => {
         credential.hobbies = prefer;
         handleSignUp()
     }
+   
+      
     return<>
     <Container>
             <Stack justifyContent  ='center' sx = {{borderBottom: '2px solid black', pb: 5}}>
@@ -130,7 +133,7 @@ const Second = ({ credential, handleChange, setCredential, handleSignUp }) => {
                             sx = {{width: '175px', margin: 'auto', pb: 2, pt: 4}}                        >
 
                 </CardMedia>    
-                <Typography align = 'center' variant = 'h5'>Sign up to Mitrata</Typography>
+                <Typography align = 'center' variant = 'h4' sx = {{ my: 2}}>Set up your profile</Typography>
                 <Grid container spacing = {3}>
                         <Grid item sm = {6} xs = {12}sx = {{display: 'flex',justifyContent: 'center', px: 4}}>
                             <Input placeholder = 'First Name' 
@@ -138,15 +141,22 @@ const Second = ({ credential, handleChange, setCredential, handleSignUp }) => {
                                    name = 'gender'
                                    value = { credential.gender } 
                                    onChange = { handleChange } 
+
                            />
-                    </Grid>
-                        
-                    <Grid item sm = {6} xs = {12} sx = {{display: 'flex',justifyContent: 'center', px: 4}}>
-                        <Input placeholder = 'Last Name' label = 'Looking For'/>
+                        </Grid>
+                        <Grid item sm = {6} xs = {12}sx = {{display: 'flex',justifyContent: 'center', px: 4}}>
+                            <Stack direction = 'column' sx = { { width: '100%' }}>
+                                <label style = {{ paddingLeft: '20px', fontWeight: '500'}}> Birthdate </label>
+                                <Birthdate setCredential =  {setCredential}/>
+                            </Stack>
+                        </Grid>
+
+                    <Grid item xs = {12} sx = {{display: 'flex',justifyContent: 'center', px: 4}}>
+                        <Input label = 'Motto' placeholder = 'Write something you believe in or describes about yourself'/>
                     </Grid>
                 </Grid>
 
-                <Typography>{'Choose your preferences( select at least three)'}</Typography>
+                <Typography variant = 'h5' sx = {{ mt: 3 }}>{'Choose your preferences( select at least three)'}</Typography>
                 <Grid container spacing = { 2 } sx = {{py: 5}}>
                     <Grid item xs = {6} sm = {4} sx = {{display: 'flex', justifyContent: 'center'}}>
                             <HobbiesButton name = 'Travelling'
@@ -241,6 +251,7 @@ const Second = ({ credential, handleChange, setCredential, handleSignUp }) => {
             <Typography align = 'center' variant = 'h5' sx = {{ my: 2}}>
                 Copyright @ The Gedes
             </Typography>
+           
     </Container>
         
     </>

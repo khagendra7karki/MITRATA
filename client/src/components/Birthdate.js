@@ -3,6 +3,9 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 
+//styling 
+import '../assets/css/birthday.css'
+
 export default function Birthdate({ setCredential }) {
   const [ date, setDate ] = React.useState( '' ) 
   const handleChange = ( newValue ) =>{
@@ -12,10 +15,12 @@ export default function Birthdate({ setCredential }) {
     })
   }
   
-  return (
-    <LocalizationProvider dateAdapter={AdapterDayjs}>
-        <DatePicker value={date} onChange={(newValue) => {
-            handleChange( newValue )}}/>
-    </LocalizationProvider>
+
+  return (<>
+        <LocalizationProvider dateAdapter={AdapterDayjs}>
+            <DatePicker sx = {{ width: '100%'}}value={date} onChange={(newValue) => {
+                handleChange( newValue )}}/>
+        </LocalizationProvider>
+    </>
   );
 }
