@@ -22,5 +22,7 @@ def task( db, message ):
         # return image[0]
         print( 'the type of the result is', type(result))
         return result
-        
+    
+    if( message['task'] == 'getData'):
+        db.get_random_data()
     return """"{"default": "hi"}"""

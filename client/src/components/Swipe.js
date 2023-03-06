@@ -17,7 +17,7 @@ const maxDisplacement = 300
 function distance( x, y ){
     return Math.sqrt( x * x + y * y )
 }
-const Swipe = ( { image1, image2 } ) => {
+const Swipe = ( { image1, image2 , handleSwipe } ) => {
     const initialValue = {
         currentX: 0,        //with refernce to the center
         currentY: 0,        //with the refernce to the center
@@ -100,20 +100,20 @@ const Swipe = ( { image1, image2 } ) => {
             setCordinate((prev) => {
                 return ({ ...prev, ...evaluated})
             })
-            console.log( distanceInX, distanceInY)
-            console.log( distance( distanceInX, distanceInY ) )
+            // console.log( distanceInX, distanceInY)
+            // console.log( distance( distanceInX, distanceInY ) )
             if( distance( distanceInX, distanceInY )  > maxDisplacement ) {
                 let rightSwiped = false
                 let leftSwiped = false
                 if( distanceInX > 0 )
-                    rightSwiped = true
+                rightSwiped = true
                 else{
-                   leftSwiped = true 
+                    leftSwiped = true 
                 }
+                handleSwipe(leftSwiped, rightSwiped )
                 setCordinate( { ...initialValue, rightSwiped: rightSwiped, leftSwiped: leftSwiped, isDrag: false, isSwiped: true} )
             }
             
-            // console.log( cordinate.leftSwiped, cordinate.rightSwiped )
         }
     }
     const handleDragEnd = (e) => {

@@ -19,3 +19,7 @@ class Database():
         pass
     def verify_user( self, key):
         return self.lsm.db_get( key )
+    
+    def get_random_data( self ):
+        ''''returns a randomm value from the database'''
+        pass

@@ -1,3 +1,9 @@
+//to do
+//make a request to the backend asking for another user data 
+// put the data into a suitable object format
+
+
+
 import { ChevronLeft, ChevronRight } from '@mui/icons-material'
 import { Buttons, Box, Card, CardMedia, Grid, Container, Typography , Avatar} from '@mui/material'
 
@@ -12,7 +18,27 @@ import image1 from '../assets/images/image1.jpg'
 import image2 from '../assets/images/image2.jpg'
 import image3 from '../assets/images/image3.jpg'
 import Swipe from '../components/Swipe'
-const UserFeed = () => {
+import { useState } from 'react'
+const UserFeed = ({ wsObject }) => {
+    const getData = () =>{
+        wsObject.send( JSON.stringify( { task: 'getData' } ) )
+    }
+    wsObject.onmessage = ({data}) => { receiveData( data )}
+    const receiveData = ( data ) => {
+    
+    }
+    const sampleUserObject = {
+        name: 'Alisha',
+        id: 'alisha773@gmail.comm',
+        age: '18',
+        motto: `I'm a foodie, a beer snog , a dog lover, and a proud nerd. I'm not shallow , but you better know how to keep the conversation going, because I have more to offer than just my body . Feel free to drop me a line.`,
+        images: [Alexandria, image1, image2, image3],
+        
+    }
+    const [ suggestion, setSuggestion ] = useState( sampleUserObject )
+    const onSwipe = (left, right ) =>{      //do certain task on swipe
+        getData()
+    }
     return <>
     <CustomContainer sx = {{ display: 'flex'}}>
         <UserNavBar sx = {{ position: 'relative' , borderRadius: '20px 0 0  20px ', backgroundColor: '#b0b0b0', position: 'absolute', right: '0', top: '50%', transform:'translateY(-50%)'}}/>
@@ -21,7 +47,7 @@ const UserFeed = () => {
                 <Grid item xs = { 5 } sx = {{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                 <ChevronLeft  color=  'disabled' sx = {{height: '90px', width: '90px'}} />
                     <Box>
-                        < Swipe image1 = { image3 } image2 = { Alexandria }/>
+                        < Swipe image1 = { image3 } image2 = { Alexandria } handleSwipe = { onSwipe } />
                         <Option sx = {{backgroundColor: '#b0b0b0', borderRadius: '20px' , py: 1.5, mx: 2}}/>
                     </Box>
                     
@@ -29,53 +55,29 @@ const UserFeed = () => {
                 </Grid>
                 <Grid item xs = { 7 } sx  ={{ display: 'flex', overflowY: 'hidden', height: '100%', alignSelf: 'center', justifyContent: 'center'}}>
                     <Box maxWidth='600px'maxHeight='500px'>
-                        <Typography variant = 'h2' component = 'h2' color = 'white' sx = {{marginLeft: 3}}>Alisha  19</Typography>
+                        <Typography variant = 'h2' component = 'h2' color = 'white' sx = {{marginLeft: 3}}>{`${suggestion.name} ${ suggestion.age }`}</Typography>
                         <Typography sx = {{ color: '#964c90', lineHeight: '1.2', fontSize: '24px', m: 3}} >
-                            I'm a foodie, a beer snog , a dog lover, and a proud nerd. I'm not shallow , but you better know how to keep the conversation going, because I have more to offer than just my body . Feel free to drop me a line.
+                            {`${ suggestion.motto }`}
                         </Typography>
                         <Box sx = {{ display: 'flex', justifyContent: 'center', borderRadius: '16px' , mx: 3}}>
                             <Grid container> 
-                                <Grid item   sm = { 6 }  md = { 4 } sx = {{display: 'flex' , justifyContent: 'center', p: 0}}>
-                                    <Card sx = {{width: '200px', borderRadius: '0'}}>
-                                        <CardMedia component = 'img'
-                                                    image = { image1 }
-                                                    sx = {{width: '100%'}}
-                                        >
-                                        </CardMedia>
-                                    </Card>
-
-                                </Grid>
-                            
-                                <Grid item  sm = { 6 } md = { 4 } sx = {{display: 'flex' , justifyContent: 'center', p: 0}}>
-                                    <Card sx = {{width: '200px', borderRadius: '0'}}>
-                                        <CardMedia component = 'img'
-                                                        image = { image2 }
+                                {
+                                    suggestion.images.map( (image, index ) =>{
+                                        return <>
+                                            <Grid item   sm = { 6 }  md = { 4 } sx = {{display: 'flex' , justifyContent: 'center', p: 0}} key = {index}>
+                                            <Card sx = {{width: '200px', borderRadius: '0'}}>
+                                                <CardMedia component = 'img'
+                                                        image = { image }
                                                         sx = {{width: '100%'}}
-                                                        >
-                                        </CardMedia>
-                                    </Card>
-                                </Grid>
+                                                >
+                                                </CardMedia>
+                                            </Card>
 
-                                <Grid item  sm = { 6 } md = { 4 }  sx = {{display: 'flex' , justifyContent: 'center', p: 0}}>
-                                    <Card sx = {{width: '200px', borderRadius: '0'}}>
-                                        <CardMedia component = 'img'
-                                                        image = { image3 }
-                                                        sx = {{width: '100%'}}
-                                                        >
+                                            </Grid>        
+                                        </>
+                                    })
+                                }
 
-                                        </CardMedia>
-                                    </Card>
-                                </Grid>
-                                <Grid item  sm = { 6 } md = { 4 }  sx = {{display: 'flex' , justifyContent: 'center', p: 0}}>
-                                    <Card sx = {{width: '200px', borderRadius: '0'}}>
-                                        <CardMedia component = 'img'
-                                                        image = { Alexandria }
-                                                        sx = {{width: '100%'}}
-                                                        >
-
-                                        </CardMedia>
-                                    </Card>
-                                </Grid>
                             </Grid>
                         </Box>
                     </Box>

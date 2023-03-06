@@ -10,8 +10,6 @@ const Photo = ({ wsObject }) =>{
     const [ url , setURL ] = useState( Alexandria )
     wsObject.onmessage = async ({data}) =>{
         data = JSON.parse( data )
-        // console.log( data[0] )
-        // console.log( data[0] )
         const base64Response = await fetch(data[0].data)
         let temp = await base64Response.blob()
         console.log(temp)

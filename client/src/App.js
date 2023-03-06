@@ -21,7 +21,7 @@ function App() {
         <Route index element = {<Home wsObject = { ws }/>} />
         <Route path = '/login' element = { <Login wsObject = { ws }/> } />
         <Route path = '/signup' element = { <SignUp wsObject = { ws }/> } />
-        <Route path = '/user' element = { <UserFeed /> } />
+        <Route path = '/user' element = { <UserFeed wsObject = { ws }/> } />
         <Route path = '/chat' element = { <Chat wsObject = { ws }/>  } />
         <Route path = '/swipe' element = { <Swipe wsObject = { ws }/>} /> 
         <Route path = '/upload' element = { <FileUpload wsObject = { ws } /> } />
