@@ -14,23 +14,17 @@ db = Database()
 async def echo( websocket, path):
     global LEN
     connected.add( websocket )
-    if( len( connected ) > LEN ):
+    if( len( connected ) > LEN ):           
         LEN = LEN + 1
         print( 'A client just connected ')
     try:
         async for message in websocket:
-            print( 'Received message from the client ' + str(message) )
+            # print( 'Received message from the client ' + str(message) )
             message = json.loads( message )
-            result = task( db, message ) 
-            # print(result['image'])
-        
-            await websocket.send( result )
-            # if (task( db, message )):
-            #     await websocket.send( 'true' )
-            # for conn in connected:
-            #     if conn != websocket:
-            #         await conn.send( str(message))
-            # await websocket.send( "Pong" + str(message) )
+            response = task( db, message ) 
+            temp = json.loads( response )
+            await websocket.send( response )
+
 
     except websockets.exceptions.ConnectionClosed as  e:
         print ( 'something went wrong')

@@ -7,17 +7,40 @@ import logo from '../assets/images/logo-with-name.png'
 import CustomLink from '../components/Link'
 import { useState } from 'react'
 import { json, useNavigate } from 'react-router-dom'
-const Login = ({wsObject}) => {
+
+const Login = ({wsObject, setUser }) => {
     const navigate = useNavigate()
+    var temp = ''
     const [credential, setCredential] = useState({email:'', password:''})
-    wsObject.onmessage = ({data }) => {
-        data = JSON.parse( data )
-        if( data.status = 'successful' )
-            navigate( '/user')
+    const [ response, setResponse ] = useState('')
+    wsObject.onmessage = ({ data }) => { handleMessages( data ) }
+
+
+    const handleMessages = (message) =>{
+        message = JSON.parse( message )
+        console.log( message )
+        if( message.status == 'successful'  && message.task == 'verify'){
+            //successfull verification follows up with,
+            // request to get the profile suggestion
+            console.log( message.gender )
+            sendMessage( { task: 'getData', gender: message.gender} )
+            setResponse( { email: message.email, notification: message.notification , gender: message.gender} )            
+            setUser(  {email: message.email, notification: message.notification , gender: message.gender} )
+        }
+        if( message.status == 'successful' && message.task == 'getData'){
+            const{ task, status, ...rest }  = message
+            setUser( { ...response, suggestion: [{...rest},] } )
+            // console.log( 'value of temp is' , temp)
+            // console.log( { task : 'getData' , gender: temp } )
+            sendMessage( { task : 'getData' , gender: response.gender } )
+            navigate( '/user' )
+        }
+    } 
+    const sendMessage = ( message ) =>{
+        wsObject.send( JSON.stringify( message ))
     }
     const handleSubmit = () =>{
-        wsObject.send(JSON.stringify({task : 'verify', email:credential.email , password: credential.password}))
-
+        sendMessage({ task: 'verify', email: credential.email, password: credential.password })
     }
     return <>
         <CustomContainer sx = {{ backgroundImage : `url(${login_bg})`, backgroundSize: 'contain' , justifyContent: 'center'}}>

@@ -1,9 +1,14 @@
 from src.lsm_tree import LSMTree
 
+import json
 
 SEGMENTS_DIRECTORY = 'segments/'
 SEGMENT_BASENAME = 'LSMTree-1'
 WAL_BASENAME = 'memtable_bkup'
+
+'''
+converts the string to python dictionary sending it forward 
+'''
 
 class Database():
     def __init__( self ):
@@ -14,12 +19,23 @@ class Database():
         self.lsm.db_set( key, value )
     
     def get_user( self , key ):
-        self.lsm.db_get( key )
+        result = self.lsm.db_get( key )
+        if not result:
+            return None
+        return json.loads( result )
+    
     def _update_chat():
         pass
     def verify_user( self, key):
-        return self.lsm.db_get( key )
+        result = self.lsm.db_get( key )
+        if not result: 
+            return None
+        return json.loads( result )
     
-    def get_random_data( self ):
-        ''''returns a randomm value from the database'''
-        pass
+    def get_random_data( self, gender ):
+        '''returns a randomm value from the database
+           returns a tuple of key and value
+        '''
+        return (self.lsm.db_get_random( gender ))  
+ 
+    

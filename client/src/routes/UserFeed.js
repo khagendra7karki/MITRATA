@@ -1,11 +1,7 @@
-//to do
-//make a request to the backend asking for another user data 
-// put the data into a suitable object format
-
 
 
 import { ChevronLeft, ChevronRight } from '@mui/icons-material'
-import { Buttons, Box, Card, CardMedia, Grid, Container, Typography , Avatar} from '@mui/material'
+import { Box, Card, CardMedia, Grid, Container, Typography , Avatar} from '@mui/material'
 
 //custom component
 import UserNavBar from '../components/UserNavBar'
@@ -18,26 +14,69 @@ import image1 from '../assets/images/image1.jpg'
 import image2 from '../assets/images/image2.jpg'
 import image3 from '../assets/images/image3.jpg'
 import Swipe from '../components/Swipe'
-import { useState } from 'react'
-const UserFeed = ({ wsObject }) => {
-    const getData = () =>{
-        wsObject.send( JSON.stringify( { task: 'getData' } ) )
-    }
-    wsObject.onmessage = ({data}) => { receiveData( data )}
-    const receiveData = ( data ) => {
-    
-    }
+import {useEffect, useState } from 'react'
+
+// maintains the user data
+const blobToURL = async ( blob ) =>{
+    const base64Response = await fetch( blob )
+    const URL = await base64Response.blob()
+    const returnObject = window.URL.createObjectURL( URL )
+    // console.log( 'from top', returnObject )
+    return returnObject
+}
+
+const UserFeed = ({ wsObject, user, setUser }) => {
     const sampleUserObject = {
         name: 'Alisha',
         id: 'alisha773@gmail.comm',
         age: '18',
         motto: `I'm a foodie, a beer snog , a dog lover, and a proud nerd. I'm not shallow , but you better know how to keep the conversation going, because I have more to offer than just my body . Feel free to drop me a line.`,
-        images: [Alexandria, image1, image2, image3],
-        
+        images: [Alexandria, image1, image2, image3],  
     }
     const [ suggestion, setSuggestion ] = useState( sampleUserObject )
+    const initialSetup = () =>{
+        // console.log( user )
+        if( !user ){
+            console.log( 'something went wrong' )
+            return
+        }    
+        user.suggestion[0].image.map( ( blob ) => { blobToURL( blob.data ).then( ( value ) => {setSuggestion( ( prev    ) => {
+                                                                                                if( prev.images ){
+                                                                                                    prev.images.push( value )
+                                                                                                    return prev
+                                                                                                }
+                                                                                                return { ...prev, images: [value]}
+                                                                                            })})})
+        setSuggestion(() =>{
+            return {
+            name: user.suggestion[0].name,
+            id: user.suggestion[0].email,
+            age: user.suggestion[0].age,
+            motto: user.suggestion[0].motto, 
+        }})        
+    }
+    useEffect( () =>{
+        initialSetup()
+        console.log( suggestion )
+    }, [] )
+    const sendMessage = ( message ) =>{
+        wsObject.send( JSON.stringify( message ))
+    }
+
+    wsObject.onmessage = ({data}) => { handleMessages( data )}
+    const handleMessages = ( response ) => {
+        response = JSON.parse( response )
+        if( response.status == 'successful' && response.task == 'getData' ){
+            const{ task, status, ...rest }  = response
+            setUser( ( prev ) =>{
+                prev.suggestion.push( rest )
+                return prev
+            })
+        }
+
+    }
     const onSwipe = (left, right ) =>{      //do certain task on swipe
-        getData()
+        sendMessage( { task: 'getData', gender: user.gender } )
     }
     const onHomeClick = () =>{
 
@@ -77,7 +116,7 @@ const UserFeed = ({ wsObject }) => {
                 <Grid item xs = { 5 } sx = {{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                 <ChevronLeft  color=  'disabled' sx = {{height: '90px', width: '90px'}} />
                     <Box>
-                        < Swipe image1 = { image3 } image2 = { Alexandria } handleSwipe = { onSwipe } />
+                        < Swipe image1 = { Alexandria } image2 = { image1 } handleSwipe = { onSwipe } />
                         <Option sx = {{backgroundColor: '#b0b0b0', borderRadius: '20px' , py: 1.5, mx: 2}}
                                 handleRejection ={ handleRejection }
                                 handleApproval = { handleApproval }
@@ -95,22 +134,44 @@ const UserFeed = ({ wsObject }) => {
                         </Typography>
                         <Box sx = {{ display: 'flex', justifyContent: 'center', borderRadius: '16px' , mx: 3}}>
                             <Grid container> 
-                                {
-                                    suggestion.images.map( (image, index ) =>{
-                                        return <>
-                                            <Grid item   sm = { 6 }  md = { 4 } sx = {{display: 'flex' , justifyContent: 'center', p: 0}} key = {index}>
-                                            <Card sx = {{width: '200px', borderRadius: '0'}}>
-                                                <CardMedia component = 'img'
-                                                        image = { image }
-                                                        sx = {{width: '100%'}}
-                                                >
-                                                </CardMedia>
-                                            </Card>
 
-                                            </Grid>        
+                                {(() =>{
+                                    const fallout = [1, 2, 3]
+                                    if( suggestion.images ){
+                                        return<>
+                                        {suggestion.images.map( (image, index ) =>{
+                                                var img = new Image()
+                                                return <>
+                                                    <Grid item   sm = { 6 }  md = { 4 } sx = {{display: 'flex' , justifyContent: 'center', p: 0}} key = {index}>
+                                                    <Card sx = {{width: '200px', borderRadius: '0'}}>
+                                                        <CardMedia component = 'img'
+                                                                image = { image }
+                                                                sx = {{width: '100%'}}
+                                                        >
+                                                        </CardMedia>
+                                                    </Card>
+                                                    </Grid>        
+                                                </>
+                                            })}
                                         </>
-                                    })
-                                }
+                                    }
+                                    else
+                                        return<>{
+                                            fallout.map( ( index ) =>{
+                                                return<>
+                                                <Grid item   sm = { 6 }  md = { 4 } sx = {{display: 'flex' , justifyContent: 'center', p: 0}} key = {index}>
+                                                <Card sx = {{width: '200px', borderRadius: '0'}}>
+                                                    <CardMedia component = 'img'
+                                                            sx = {{width: '100%', width: '150px', height: '150px', background: 'grey'}}
+                                                    >
+                                                    </CardMedia>
+                                                </Card>
+
+                                                </Grid>        
+                                        </>})
+                                        } 
+                                    </>
+                                })()}
 
                             </Grid>
                         </Box>

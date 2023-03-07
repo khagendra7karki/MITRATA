@@ -4,6 +4,7 @@ from .red_black_tree import RedBlackTree
 from .append_log import AppendLog
 from .bloom_filter import BloomFilter
 import pickle
+import json
 
 class LSMTree():
     def __init__(self, segment_basename, segments_directory, wal_basename):
@@ -75,6 +76,18 @@ class LSMTree():
         # Write to memtable
         self.memtable.add(key, value)
         self.memtable.total_bytes += additional_size
+    def db_get_random( self, gender ):
+
+        # get the new node from memtable
+            # traverse the tree 
+        in_order = self.memtable.in_order()
+        for profile in in_order:
+            key = profile.key
+            value = json.loads( profile.value )
+            if value['gender'] != gender:
+                return key, value 
+        return None
+        #get the random data from 
 
     def db_get(self, key):
         ''' (self, str) -> None
@@ -98,9 +111,19 @@ class LSMTree():
             with open(path, 'r') as s:
                 s.seek(floor_node.offset)
                 for line in s:
-                    k, v = line.strip().split(',')
-                    if k == key:
-                        return v.strip()
+                    flag = 0
+                    k = ''
+                    value = ''
+                    for letter in line:
+                        if( flag == 0 and letter == ','):
+                            flag = 1
+                            continue
+                        if( flag == 0 ):
+                            k = k + letter
+                        else:
+                            value = value + letter
+                if k == key:
+                    return value.strip()
 
         return self.search_all_segments(key)
 
@@ -152,8 +175,17 @@ class LSMTree():
 
             while len(pairs):
                 ptr = (len(pairs) - 1) // 2
-                k, v = pairs[ptr].split(',')
-
+                flag = 0
+                k = ''
+                v = ''
+                for letter in pairs[ptr]:
+                    if( flag == 0 and letter == ','):
+                        flag = 1
+                        continue
+                    if( flag == 0 ):
+                        k = k + letter
+                    else:
+                        v = v + letter
                 if k == key:
                     return v
 
@@ -204,13 +236,14 @@ class LSMTree():
                     flag = 0
                     key = ''
                     value = ''
-                    for letters in line:
-                        if( letters != ',' and flag == 0):
-                            key = key + letters
-                        else:
+                    for letter in line:
+                        if( flag == 0 and letter == ','):
                             flag = 1
-                            value = value + letters
-                    value = value[1:]
+                            continue
+                        if( flag == 0 ):
+                            key = key + letter
+                        else:
+                            value = value + letter
                     self.memtable.add(key, value )
                     self.memtable.total_bytes += len(key) + len(value)
 

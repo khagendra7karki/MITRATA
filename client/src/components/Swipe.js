@@ -110,6 +110,7 @@ const Swipe = ( { image1, image2 , handleSwipe } ) => {
                 else{
                     leftSwiped = true 
                 }
+                console.log( 'i have been swiped ')
                 handleSwipe(leftSwiped, rightSwiped )
                 setCordinate( { ...initialValue, rightSwiped: rightSwiped, leftSwiped: leftSwiped, isDrag: false, isSwiped: true} )
             }
@@ -123,10 +124,18 @@ const Swipe = ( { image1, image2 , handleSwipe } ) => {
     return<>
         <div style = {{ display: 'flex' , justifyContent: 'center', alignItems: 'center'}} draggable =  {false} >
             <div className = 'user-suggestion-image-wrapper' draggable style = { {...style } }  onDragStart = { handleDragStart } onDrag = { handleDrag }  onDragEnd  = { handleDragEnd }>
-                <img src = { image2 }  draggable ={ false }/>
+                {(() =>{
+                        if( !image1 )
+                            return <></>
+                        return <img src = { image1 }  draggable ={ false }/>
+                        })()}
             </div>
             <div className = 'user-suggestion-image-wrapper' style = {{ background: `url(${ image1 })`, position: 'absolute', zIndex : '-1' }}>
-                <img src = { image1 } draggable = { false } />
+                    {(() =>{
+                        if( !image2 )
+                            return <></>
+                        return <img src = { image2 }  draggable ={ false }/>
+                        })()}
             </div>
         </div>
     </>

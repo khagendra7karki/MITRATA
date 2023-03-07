@@ -12,16 +12,18 @@ import wss from './Utilities/frontendWebsocketInterface'
 import FileUpload from './components/FileUpload'
 import Swipe from './routes/Swipe'
 import Photo from './routes/Photo'
+import { useState } from 'react';
 
 const ws = wss.webSocketObject 
 function App() {
+  const [ user, setUser] = useState( {})
   return (<>
     <Router>
       <Routes>
-        <Route index element = {<Home wsObject = { ws }/>} />
-        <Route path = '/login' element = { <Login wsObject = { ws }/> } />
+        <Route index element = {<Home wsObject = { ws } setUser = { setUser }/>} />
+        <Route path = '/login' element = { <Login wsObject = { ws } setUser = { setUser } /> } />
         <Route path = '/signup' element = { <SignUp wsObject = { ws }/> } />
-        <Route path = '/user' element = { <UserFeed wsObject = { ws }/> } />
+        <Route path = '/user' element = { <UserFeed wsObject = { ws } user = { user } setUser = { setUser }/> } />
         <Route path = '/chat' element = { <Chat wsObject = { ws }/>  } />
         <Route path = '/swipe' element = { <Swipe wsObject = { ws }/>} /> 
         <Route path = '/upload' element = { <FileUpload wsObject = { ws } /> } />

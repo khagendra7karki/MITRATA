@@ -4,32 +4,62 @@ defaultResponse = {
     'status': 'unsuccessful'
 }
 
+randomDataSample = {
+    'email': '',
+    'name': '',
+    'age':'',
+    'motto': '',
+    'image': ''
+}
+
+userDataSample= {
+    'email' : '',
+    'gender': '',
+    'notification': '',
+    'chat': '',
+
+}
+
 def task( db, message ):
     # message = json.loads( message )
     if( message['task'] == 'verify' ):
-        verification_result =  db.verify_user( message['email'] )
+        id = message['email']
+        verification_result =  db.verify_user( id )
         if( verification_result ):
-            # print( 'type of the object is ', type(verification_result ))
-            # print( 'the value of the variable is ', verification_result )
-            verification_result = json.loads( verification_result )
             if(verification_result['password'] == message['password']):
-                defaultResponse['status'] = 'successful'
-                return json.dumps( defaultResponse )
+                response = {}
+                response['status'] = 'successful'
+                response['task'] = 'verify'
+                response['email'] = id 
+                response['gender'] = verification_result['gender']
+                response['notification'] = ''
+                response['chat'] = ''
+
+                return json.dumps( response )
         
         return json.dumps( defaultResponse )
     
     if( message['task'] == 'create' ):
         db.create_new_user( message['key'],json.dumps( message['value']) )        
-        return 'created'
+        return json.dumps({ 'task': 'create', 'status': 'successful'})
     
-    if( message['task'] =='photo'):
-        result = db.verify_user('khagendra.karki007@gmail.com')
-
-        print( 'the type of the result is', type(result))
-        return result
+    # if( message['task'] =='photo'):
+    #     result = db.verify_user('khagendra.karki007@gmail.com')
+    #     return result
     
     if( message['task'] == 'getData'):
-        db.get_random_data()
-        
+        print( message )
+        key, value = db.get_random_data( message['gender'] )
+        if not key and (not value):
+            return json.dumps( defaultResponse )
+        user_response = randomDataSample
+        user_response['email'] = key
+        user_response['age'] = value['age']
+        user_response['name'] = value['firstName']
+        user_response['motto'] = value['motto']
+        user_response['image'] = value['image'] 
+        user_response['status'] = 'successful'
+        user_response['task'] = 'getData'
+        return json.dumps( user_response )
         
     return json.dumps( defaultResponse )
