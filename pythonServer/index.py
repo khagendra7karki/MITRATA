@@ -9,7 +9,7 @@ from tasks import task
 LEN = 0
 PORT = 6969
 connected = set()
-print( 'Server is listening on port' + str( PORT ))
+print( 'Server is listening on port ' + str( PORT ))
 db = Database()
 async def echo( websocket, path):
     global LEN
@@ -34,7 +34,7 @@ async def echo( websocket, path):
 
 
 
-start_server =  websockets.serve( echo, 'localhost', PORT )
+start_server = websockets.serve( echo, 'localhost', PORT, max_size = 2**22 )
 
 asyncio.get_event_loop().run_until_complete( start_server )
 asyncio.get_event_loop().run_forever()
