@@ -4,7 +4,7 @@ import {Button} from '@mui/material';
 // import Fab from '@mui/material/Fab';
 import SendIcon from '@mui/icons-material/Send';
 import { Grid,TextField } from '@mui/material'
-export default function Chatinput({socket}) {
+export default function Chatinput({socket, currentUser}) {
  const [message, setMessage] = useState("")
  const handleOnSubmit = (event) =>{
     event.preventDefault()
@@ -15,7 +15,8 @@ export default function Chatinput({socket}) {
         socket.emit("message", 
             {
             text: message, 
-            name: data.userEmail, 
+            from: data.userEmail, 
+            to: currentUser.email,
             id: `${socket.id}${Math.random()}`,
             socketID: socket.id
             }

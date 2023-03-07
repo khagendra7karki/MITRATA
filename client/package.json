@@ -4,9 +4,10 @@
   "private": true,
   "dependencies": {
     "@emotion/react": "^11.10.6",
-    "@emotion/styled": "^11.10.5",
+    "@emotion/styled": "^11.10.6",
     "@mui/icons-material": "^5.11.0",
-    "@mui/material": "^5.11.6",
+    "@mui/material": "^5.11.11",
+    "@mui/system": "^5.11.11",
     "@react-spring/web": "^9.5.5",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
@@ -17,9 +18,9 @@
     "react-router-dom": "^6.8.0",
     "react-scripts": "^5.0.1",
     "react-tinder-card": "^1.6.2",
-    "web-vitals": "^2.1.4",
     "socket.io-client": "^4.6.0",
-    "uuid": "^8.3.2"
+    "uuid": "^8.3.2",
+    "web-vitals": "^2.1.4"
   },
   "scripts": {
     "start": "react-scripts start",
