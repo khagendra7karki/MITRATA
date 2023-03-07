@@ -5,6 +5,16 @@ class frontendWebsocketInterface{
             console.log( 'Web Socket opened')
         }
     }
+    sendMessage( message ){
+        message = JSON.stringify( message )
+        this.webSocketObject.send( message )
+    }
+
+    onMessage( callback ) {
+        wsObject.onmessage = ({ data })=>{
+            callback( data )
+        } 
+    }
 }
 const wsObject = new frontendWebsocketInterface();
 export default wsObject 

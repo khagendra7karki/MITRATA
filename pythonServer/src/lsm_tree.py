@@ -76,16 +76,19 @@ class LSMTree():
         # Write to memtable
         self.memtable.add(key, value)
         self.memtable.total_bytes += additional_size
-    def db_get_random( self, gender ):
-
-        # get the new node from memtable
-            # traverse the tree 
+    def db_get_random( self, gender, num ):
+        # returns an array of keys and value
         in_order = self.memtable.in_order()
+        result = []
         for profile in in_order:
             key = profile.key
             value = json.loads( profile.value )
             if value['gender'] != gender:
-                return key, value 
+                
+                result.append( {'key': key} | value )
+                if len( result ) == num:
+                    return result 
+                  
         return None
         #get the random data from 
 
