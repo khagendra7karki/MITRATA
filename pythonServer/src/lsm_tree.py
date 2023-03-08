@@ -67,6 +67,7 @@ class LSMTree():
 
             self.segments.append(self.current_segment)
             new_seg_name = self.incremented_segment_name()
+            self.save_metadata()
             self.current_segment = new_seg_name
             self.memtable.total_bytes = 0
 
@@ -99,6 +100,7 @@ class LSMTree():
                 for line in s:
                     k =''
                     value = ''
+                    flag = 0
                     for letter in line:
                         if( flag == 0 and letter == ','):
                             flag = 1
@@ -118,6 +120,8 @@ class LSMTree():
         ''' (self, str) -> None
         Retrieve the value associated with key in the db
         '''
+        print('key to be searched', key)
+
         # Attempt to find the key in the memtable first
         memtable_result = self.memtable.find_node(key)
         if memtable_result:
@@ -147,8 +151,9 @@ class LSMTree():
                             k = k + letter
                         else:
                             value = value + letter
-                if k == key:
-                    return value.strip()
+                    print( key )
+                    if k == key:
+                        return value.strip()
 
         return self.search_all_segments(key)
 
@@ -182,7 +187,9 @@ class LSMTree():
         ''' (self, str) -> str
         Searches all segments on disk for key.
         '''
+
         segments = self.segments[:]
+        print( segments )
         while len(segments):
             segment = segments.pop()
 
@@ -211,6 +218,7 @@ class LSMTree():
                         k = k + letter
                     else:
                         v = v + letter
+                print( key )
                 if k == key:
                     return v
 
