@@ -40,7 +40,11 @@ def task( db, message ):
         return json.dumps( defaultResponse )
     
     if( message['task'] == 'create' ):
-        db.create_new_user( message['key'],json.dumps( message['value']) )        
+        new_image_array = []
+        for image in message['value']['image']:
+            new_image_array.append( image['data'][5:])
+        message['value']['image'] = new_image_array
+        db.create_new_user( message['key'],json.dumps( message['value'] ))        
         return json.dumps({ 'task': 'create', 'status': 'successful'})
     
     # if( message['task'] =='photo'):
@@ -49,17 +53,24 @@ def task( db, message ):
     
     if( message['task'] == 'getData'):
         print( message )
-        key, value = db.get_random_data( message['gender'] )
-        if not key and (not value):
+        results = db.get_random_data( message['gender']  , message['number'])
+        if not results:
             return json.dumps( defaultResponse )
-        user_response = randomDataSample
-        user_response['email'] = key
-        user_response['age'] = value['age']
-        user_response['name'] = value['firstName']
-        user_response['motto'] = value['motto']
-        user_response['image'] = value['image'] 
-        user_response['status'] = 'successful'
-        user_response['task'] = 'getData'
-        return json.dumps( user_response )
+        final_response = {}
+        for result in results:
+            user_response = {}
+            user_response['email'] = result['key']
+            user_response['age'] = result['age']
+            user_response['name'] = result['firstName']
+            user_response['motto'] = result['motto']
+            print( user_response )            
+            user_response['image'] = result['image'] 
+            if 'content' in final_response:
+                final_response['content'].append( user_response )
+            else:
+                final_response['content'] = [user_response]
+        final_response['status'] = 'successful'
+        final_response['task'] = 'getData'
+        return json.dumps( final_response )
         
     return json.dumps( defaultResponse )

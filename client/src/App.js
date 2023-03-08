@@ -7,14 +7,12 @@ import Login from './routes/Login'
 import SignUp from './routes/SignUp'
 import Home from './routes/Home'
 import UserFeed from './routes/UserFeed'
-
+import Chat from './routes/Chat'
 import wss from './Utilities/frontendWebsocketInterface'
 import FileUpload from './components/FileUpload'
 import Swipe from './routes/Swipe'
 import Photo from './routes/Photo'
 import { useState } from 'react';
-import socketIO from "socket.io-client"
-const socket = socketIO.connect("http://localhost:4000")
 
 const ws = wss.webSocketObject 
 function App() {
@@ -22,11 +20,11 @@ function App() {
   return (<>
     <Router>
       <Routes>
-        {/* <Route index element = {<Home wsObject = { ws } setUser = { setUser } socket={socket} />}  /> */}
-        <Route path = '/' element = { <Login wsObject = { ws } setUser = { setUser } socket={socket}/> } />
+        <Route index element = {<Home wsObject = { ws } setUser = { setUser }/>} />
+        <Route path = '/login' element = { <Login wsObject = { ws } setUser = { setUser } /> } />
         <Route path = '/signup' element = { <SignUp wsObject = { ws }/> } />
-        <Route path = '/user' element = { <UserFeed wsObject = { ws } user = { user } setUser = { setUser } socket={socket}/> } />
-        
+        <Route path = '/user' element = { <UserFeed wsObject = { ws } user = { user } setUser = { setUser }/> } />
+        <Route path = '/chat' element = { <Chat wsObject = { ws }/>  } />
         <Route path = '/swipe' element = { <Swipe wsObject = { ws }/>} /> 
         <Route path = '/upload' element = { <FileUpload wsObject = { ws } /> } />
         <Route path = '/photo' element = { <Photo wsObject = { ws } /> } />

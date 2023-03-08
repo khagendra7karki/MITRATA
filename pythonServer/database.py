@@ -32,10 +32,10 @@ class Database():
             return None
         return json.loads( result )
     
-    def get_random_data( self, gender ):
+    def get_random_data( self, gender, num ):
         '''returns a randomm value from the database
            returns a tuple of key and value
         '''
-        return (self.lsm.db_get_random( gender ))  
+        return (self.lsm.db_get_random( gender, num ))  
  
     
