@@ -7,4 +7,4 @@ const CustomLink = ({sx,text,  ...rest}) => {
     </>
 }
 
-export default CustomLink
+export default CustomLink 

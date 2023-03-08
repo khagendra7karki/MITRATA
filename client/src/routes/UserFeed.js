@@ -19,13 +19,13 @@ import {useEffect, useState } from 'react'
 // maintains the user data
 
 
-const blobToURL = async ( blob ) =>{
-    console.log( blob )
-    const base64Response = await fetch( blob )
-    const URL = await base64Response.blob()
-    const returnObject = window.URL.createObjectURL( URL )
-    return returnObject
-}
+// const blobToURL = async ( blob ) =>{
+//     console.log( blob )
+//     const base64Response = await fetch( blob )
+//     const URL = await base64Response.blob()
+//     const returnObject = window.URL.createObjectURL( URL )
+//     return returnObject
+// }
 
 const InternalImage = ( image ) =>{
         return <>
@@ -79,13 +79,13 @@ const UserFeed = ({ wsObject, user, setUser }) => {
             console.log( 'something went wrong' )
             return
         }    
-        user.suggestion[0].image.map( ( blob ) => { blobToURL( blob ).then( ( value ) => {setSuggestion( ( prev ) => {
-                                                                                                if( prev.images ){
-                                                                                                    prev.images.push( value )
-                                                                                                    return prev
-                                                                                                }
-                                                                                                return { ...prev, images: [value]}
-                                                                                            })})})
+        // user.suggestion[0].image.map( ( blob ) => { blobToURL( blob ).then( ( value ) => {setSuggestion( ( prev ) => {
+        //                                                                                         if( prev.images ){
+        //                                                                                             prev.images.push( value )
+        //                                                                                             return prev
+        //                                                                                         }
+        //                                                                                         return { ...prev, images: [value]}
+        //                                                                                     })})})
         setSuggestion(() =>{
             // console.log( suggestion.images )
             return {
@@ -93,6 +93,7 @@ const UserFeed = ({ wsObject, user, setUser }) => {
             id: user.suggestion[0].email,
             age: user.suggestion[0].age,
             motto: user.suggestion[0].motto, 
+            image: user.suggestion[0].image
         }})       
     }
     useEffect( () =>{

@@ -40,10 +40,11 @@ def task( db, message ):
         return json.dumps( defaultResponse )
     
     if( message['task'] == 'create' ):
-        new_image_array = []
-        for image in message['value']['image']:
-            new_image_array.append( image['data'][5:])
-        message['value']['image'] = new_image_array
+        # new_image_array = []
+        # for image in message['value']['image']:
+        #     new_image_array.append( image['data'][5:])
+        # message['value']['image'] = new_image_array
+        print( 'A record added to the database')
         db.create_new_user( message['key'],json.dumps( message['value'] ))        
         return json.dumps({ 'task': 'create', 'status': 'successful'})
     

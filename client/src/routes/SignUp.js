@@ -275,7 +275,7 @@ const SignUp = ({ wsObject }) =>{
         motto: '',
         birthday: '',
         address: '',
-        gender: '',
+        gender: 'Female',
         hobbies: [],
         image: []
     }

@@ -77,7 +77,9 @@ class LSMTree():
         self.memtable.add(key, value)
         self.memtable.total_bytes += additional_size
     def db_get_random( self, gender, num ):
-        # returns an array of keys and value
+        '''returns an array of keys and value'''
+
+        #search in the memtable first
         in_order = self.memtable.in_order()
         result = []
         for profile in in_order:
@@ -87,10 +89,30 @@ class LSMTree():
                 
                 result.append( {'key': key} | value )
                 if len( result ) == num:
-                    return result 
-                  
+                    return result
+                 
+        #search all the segments
+        segments = self.segments[:]
+        while( len( segments )):
+            segment = segments.pop()
+            with open( self.segment_path( segment ), 'r') as s:
+                for line in s:
+                    k =''
+                    value = ''
+                    for letter in line:
+                        if( flag == 0 and letter == ','):
+                            flag = 1
+                            continue
+                        if( flag == 0 ):
+                            k = k + letter
+                        else:
+                            v = v + letter
+                    value = json.loads( value )
+                    if value['gender'] != gender:
+                        result.append( { 'key': key} | value )                     
+                    if len( result ) == num: 
+                        return result
         return None
-        #get the random data from 
 
     def db_get(self, key):
         ''' (self, str) -> None
@@ -343,7 +365,17 @@ class LSMTree():
         with open(segment_path, "r") as input:
             with open(temp_path, "w") as output:
                 for line in input:
-                    key, value = line.split(',')
+                    flag = 0
+                    key = ''
+                    value = ''
+                    for letter in line:
+                        if( flag == 0 and letter == ','):
+                            flag = 1
+                            continue
+                        if( flag == 0 ):
+                            key = key + letter
+                        else:
+                            value = value + letter
                     if not key in deletion_keys:
                         output.write(line)
 
