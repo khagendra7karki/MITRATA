@@ -30,7 +30,7 @@ const Login = ({socket}) => {
             console.log(email)
         socket.emit("newUser", {email, socketID: socket.id})
         console.log("helllo i reach2")
-        navigate("/chat");
+        navigate("/user");
       };
 
 

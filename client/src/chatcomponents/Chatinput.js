@@ -28,13 +28,15 @@ export default function Chatinput({socket, currentUser}) {
  }
   return (
             
-    <Grid container style={{padding: '20px'}} component="form" onSubmit={(event) =>  handleOnSubmit(event)} noValidate sx={{ mt: 1 }}>
-                <Grid item xs={11}>
+    <Grid container style={{padding: '20px'}} component="form" onSubmit={(event) =>  handleOnSubmit(event)} noValidate sx={{ mt: 1,display:'flex', alignItems:'baseline', justifyContent:'center' }}>
+                <Grid item xs={10}>
                     <TextField id="outlined-basic-email" label="Type Something"    value={message} type="text" onChange={(e) => setMessage(e.target.value)} fullWidth />
                 </Grid>
-                <Grid xs={1} align="right">
-                <Button type="submit" ><SendIcon/></Button>
-               
+                <Grid xs={2} align="right">
+                {/* <Button type="submit" ><SendIcon/></Button> */}
+                <Button type="submit" variant="contained" endIcon={<SendIcon />} sx={{marginTop:'25px'}}>
+  Send
+        </Button>
                     {/* <Fab color="primary" aria-label="add"><SendIcon /></Fab> */}
                 </Grid>
             </Grid>

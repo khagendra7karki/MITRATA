@@ -2,7 +2,7 @@ import React from "react";
 // import { css } from "@emotion/react";
 import { useNavigate } from "react-router-dom";
 import CloseIcon from '@mui/icons-material/Close';
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import {
   List,
   Box,
@@ -13,6 +13,7 @@ import {
 } from "@mui/material";
 import Chatinput from "./Chatinput";
 const Chatcontainer = ({ socket, currentChat }) => {
+  const scrollRef = useRef();
   const navigate = useNavigate();
   const [chatMessages, setChatMessages] = useState([]);
 
@@ -23,26 +24,31 @@ const Chatcontainer = ({ socket, currentChat }) => {
     console.log(chatMessages);
   }, [socket, chatMessages]);
 
+  useEffect(() => {
+    scrollRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [chatMessages]);
+
   const onPressed=(event) =>{
     event.preventDefault()
     navigate('/user')
   }
-
+ 
   return (
     <Grid item xs={9} sx={{height:'90vh',width:'100vh', display:'flex', flexDirection: 'column',  borderTopRightRadius:'18px',borderBottomRightRadius:'18px',background: "#b0b0b0" }}>
       <Grid item xs={12} style={{ padding: "10px" }} >
         <Grid container direction="row" alignItems="center">
-          <Grid item>
+          <Grid item xs={11}>
             <Typography
-              sx={{ paddingRight:'550px' }}
               variant="h5"
               className="header-message"
-            >
-              Alice
+            > 
+            {currentChat ? currentChat.email : 'hello'}
+           
+              {/* {`${currentChat.email}`} */}
             </Typography>
           </Grid>
-          <Grid item>
-            <CloseIcon onClick= { (event)=> onPressed(event)} />
+          <Grid item xs={1} sx={{display:'flex',justifyContent:"center"}}>
+            <CloseIcon onClick= { (event)=> onPressed(event)} sx={{bgcolor:'#8c8c8c',padding:'2px'}} />
           </Grid>
         </Grid>
       </Grid>
@@ -54,7 +60,7 @@ const Chatcontainer = ({ socket, currentChat }) => {
               message.from ===
                 JSON.parse(localStorage.getItem("chat-app-user")).userEmail
                 ? (message.to === currentChat.email) && (
-                    <ListItem key={message.id}>
+                    <ListItem  ref={scrollRef} key={message.id}>
                       <Grid container>
                         <Grid
                           item
@@ -77,7 +83,8 @@ const Chatcontainer = ({ socket, currentChat }) => {
                       </Grid>
                     </ListItem>
                   )
-                : (message.from === currentChat.email) && (
+                : message.to ===
+                JSON.parse(localStorage.getItem("chat-app-user")).userEmail &&(message.from === currentChat.email) && (
                     <ListItem key={message.id}>
                       <Grid container>
                         <Grid item xs={12}   sx={{ display: "flex", flexDirection: "row" }}>

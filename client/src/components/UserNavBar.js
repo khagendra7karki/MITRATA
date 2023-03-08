@@ -2,6 +2,7 @@ import {AccountCircleOutlined, MessageOutlined, NotificationsOutlined, EmailOutl
 import { Link } from 'react-router-dom'
 import { Typography, Avatar, Box, Stack } from '@mui/material'
 import { styled } from '@mui/system'
+import { useState } from 'react';
 
 const CustomAvatar = styled( Avatar,{} )({
         backgroundColor: '#b0b0b0',
@@ -9,25 +10,31 @@ const CustomAvatar = styled( Avatar,{} )({
         height: '60px',
         margin: '20px !important',
 })
-const UserNavBar = ({sx}) => {
-    
+
+const UserNavBar = ({sx, rightTab}) => {
+   const [toggle,setToggle] = useState(true)
+    const setSelected =(tabb)=>{
+        setToggle(!toggle)    
+        
+        rightTab(tabb,toggle)
+    }
     return <>
         <Box sx  = { sx }>
             <Stack spacing = { 5 }>
                 <CustomAvatar > 
-                    <HomeOutlined sx = {{ height: '60px', width: '60px', color: 'black'}}/>
+                    <HomeOutlined onClick = {()=> {setSelected('Home')}} sx = {{ height: '60px', width: '60px', color: 'black'}}/>
                 </CustomAvatar>
                 <CustomAvatar > 
-                    <AccountCircleOutlined sx = {{ height: '60px', width: '60px', color: 'black'}}/>
+                    <AccountCircleOutlined onClick = {()=> {setSelected('contacts')}} sx = {{ height: '60px', width: '60px', color: 'black'}}/>
                 </CustomAvatar>
                 <CustomAvatar> 
-                    <EmailOutlined sx = {{ height: '60px', width: '60px', color: 'black'}}/>
+                    <EmailOutlined onClick = {()=> {setSelected('chat')}} sx = {{ height: '60px', width: '60px', color: 'black'}}/>
                 </CustomAvatar>
                 <CustomAvatar> 
-                    <NotificationsOutlined sx = {{ height: '60px', width: '60px', color: 'black'}}/>
+                    <NotificationsOutlined onClick = {()=> {setSelected('notification')}} sx = {{ height: '60px', width: '60px', color: 'black'}}/>
                 </CustomAvatar>
                 <CustomAvatar> 
-                    <SettingsOutlined sx = {{ height: '60px', width: '60px', color: 'black'}}/>
+                    <SettingsOutlined onClick = {()=> {setSelected('setting')}} sx = {{ height: '60px', width: '60px', color: 'black'}}/>
                 </CustomAvatar>
             </Stack>
         </Box>

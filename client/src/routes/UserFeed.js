@@ -1,10 +1,12 @@
 import { ChevronLeft, ChevronRight } from '@mui/icons-material'
 import { Box, Card, CardMedia, Grid, Container, Typography } from '@mui/material'
-
+import {useState} from 'react';
 //custom component
 import UserNavBar from '../components/UserNavBar'
 import CustomContainer from '../components/CustomContaier'
 import Option from '../components/Option'
+import Chat from '../components/Chat'
+import Notification from '../components/Notification'
 //image
 import logo from '../assets/images/logo-with-name.png'
 import Alexandria from '../assets/images/alexandria_daddario.jpg'
@@ -12,10 +14,24 @@ import image1 from '../assets/images/image1.jpg'
 import image2 from '../assets/images/image2.jpg'
 import image3 from '../assets/images/image3.jpg'
 import Swipe from '../components/Swipe'
-const UserFeed = () => {
+const UserFeed = ({socket}) => {
+    const [selected, setSelected] = useState('') 
+    const [condition, setCondition] = useState(true) 
+    const rightTab=(tabb,toggle)=>{
+        setSelected(tabb)
+        setCondition(toggle)
+    }
     return <>
     <CustomContainer sx = {{ display: 'flex'}}>
-        <UserNavBar sx = {{ position: 'relative' , borderRadius: '20px 0 0  20px ', backgroundColor: '#b0b0b0', position: 'absolute', right: '0', top: '50%', transform:'translateY(-50%)'}}/>
+        <UserNavBar sx = {{  borderRadius: '20px 0 0  20px ', backgroundColor: '#b0b0b0', position: 'absolute', right: '0', top: '50%', transform:'translateY(-50%)'}} rightTab={rightTab}/>
+        {condition && (selected==='chat')&& (<Box sx={{ zIndex: 'tooltip',position: 'absolute', right: '120px', top: '50%', transform:'translateY(-50%)'}}  >
+        <Chat socket={socket} />
+        </Box>)}
+        {condition && (selected==='notification')&& (<Box sx={{ zIndex: 'tooltip',position: 'absolute', right: '120px', top: '50%', transform:'translateY(-50%)'}}  >
+        <Notification socket={socket} />
+        </Box>)}
+       
+       
         <Container sx = {{ padding: '0 !important', display: 'flex' , alignItems: 'center', maxHeight: '800px'}}>
             <Grid container>
                 <Grid item xs = { 5 } sx = {{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
@@ -113,6 +129,7 @@ const UserFeed = () => {
             </CardMedia>
         </Card>
     </CustomContainer>
+  
     </>
 } 
 export default UserFeed

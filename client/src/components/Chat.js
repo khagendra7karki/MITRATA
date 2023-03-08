@@ -12,15 +12,13 @@ const ChatApp=({socket})=> {
 
   return (
   
-        <Box sx={{ margin: 'auto',
-      width: '50%',
-      padding: '10px',
-     }}>
-    <Grid container component={Paper} sx ={{ width: '100vh',height: '90vh', }} >
+    
+    <Grid container  sx ={{ width: '100vh',height: '90vh', }} >
     <Contacts socket={socket} changeChat={changeChat}/>
+    {/* {currentChat &&  <Chatcontainer socket={socket} currentChat={currentChat}/>} */}
     <Chatcontainer socket={socket} currentChat={currentChat}/>
     </Grid>
-    </Box>
+
 
 
 
