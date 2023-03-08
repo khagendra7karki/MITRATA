@@ -266,6 +266,7 @@ class LSMTree():
         }
 
         with open(self.metadata_path(), 'wb') as s:
+            print( 'the metadata is' , bookkeeping_info)
             pickle.dump(bookkeeping_info, s)
 
     def restore_memtable(self):

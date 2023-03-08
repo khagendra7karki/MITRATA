@@ -7,6 +7,8 @@ import { Box, Card, CardMedia, Grid, Container, Typography , Avatar} from '@mui/
 import UserNavBar from '../components/UserNavBar'
 import CustomContainer from '../components/CustomContaier'
 import Option from '../components/Option'
+import Notification from '../components/Notification'
+import UserInfo from '../components/UserInfo'
 //image
 import logo from '../assets/images/logo-with-name.png'
 import Alexandria from '../assets/images/alexandria_daddario.jpg'
@@ -79,6 +81,7 @@ const UserFeed = ({ wsObject, user, setUser }) => {
     }
     ]
     const [ suggestion, setSuggestion ] = useState( sampleUserObject )
+    const [ navBarControl, toggleControl ] = useState( new Uint8Array([ 1 ]) )
     const initialSetup = () =>{
         // console.log( user )
         if( !user ){
@@ -111,8 +114,6 @@ const UserFeed = ({ wsObject, user, setUser }) => {
     }, [] )
 
     useEffect( () =>{
-        console.log( 'first', suggestion[0].name )
-        console.log( 'second', suggestion[1].name)
     }, [suggestion[0] ])
 
 
@@ -140,6 +141,9 @@ const UserFeed = ({ wsObject, user, setUser }) => {
         sendMessage( { task: 'getData', gender: user.gender, number: 1 } )
     }
     const onHomeClick = () =>{
+        let a = navBarControl & 0 //resetting all the other bits
+        a |= 1                  //setting d0 bit 
+        toggleControl( a )
 
     }
     const onUserClick = () =>{
@@ -149,7 +153,13 @@ const UserFeed = ({ wsObject, user, setUser }) => {
         
     }
     const onNotificationClick = () =>{
-        
+        if( navBarControl & 16 ){
+            toggleControl( 1 )
+            return
+        }
+        let a = navBarControl & 0
+        a |= 16
+        toggleControl( a )
     }
     const onSettingClick = () =>{
         
@@ -188,17 +198,8 @@ const UserFeed = ({ wsObject, user, setUser }) => {
                     <ChevronRight  color = 'disabled' sx = {{ height: '90px' , width: '90px' }} />
                 </Grid>
                 <Grid item xs = { 7 } sx  ={{ display: 'flex', overflowY: 'hidden', height: '100%', alignSelf: 'center', justifyContent: 'center'}}>
-                    <Box maxWidth='600px'maxHeight='500px'>
-                        <Typography variant = 'h2' component = 'h2' color = 'white' sx = {{marginLeft: 3}}>{`${suggestion[0].name} ${ suggestion[0].age }`}</Typography>
-                        <Typography sx = {{ color: '#964c90', lineHeight: '1.2', fontSize: '24px', m: 3}} >
-                            {`${ suggestion[0].motto }`}
-                        </Typography>
-                        <Box sx = {{ display: 'flex', justifyContent: 'center', borderRadius: '16px' , mx: 3}}>
-                            <Grid container> 
-                                <InternalImageWraper images = { suggestion[0].image } />
-                            </Grid>
-                        </Box>
-                    </Box>
+                    <UserInfo display = { navBarControl } suggestion = {{ name: suggestion[0].name, motto: suggestion[0].motto, age: suggestion[0].age , image: suggestion[0].image }}/>
+                    <Notification display = { navBarControl }  />
                 </Grid>
                 
             </Grid>

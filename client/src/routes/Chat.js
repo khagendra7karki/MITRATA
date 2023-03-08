@@ -1,6 +1,62 @@
 import { useState } from 'react'
 
 
+const sampleChatObject = {
+    received: [{key:  [{message: '', time: ''}] }],
+    sent: [ { key: [ { message: '', time: ''}]}],
+
+}
+
+
+//returns the date in YYYYMMDDHHMMSS format
+const getTime = () =>{
+    var today = new Date();
+    var year = today.getFullYear()
+    var month = today.getMonth()+1
+    var day = today.getDate()     
+    var hour = today.getHours()
+    var minute = today.getMinutes()
+    var second = today.getSeconds()
+    var date = ''
+    date = date + year
+    console.log( date )
+    if( month < 10)
+        date +='0' + month
+    else    
+        date +=month
+    console.log( date )
+    if( day < 10)
+        date +='0' + day
+    else
+        date += day
+    console.log( date )
+    if( hour < 10)
+        date += '0' + hour
+    else
+        date+= hour
+    console.log( date )
+    if( minute < 10)
+        date += '0' + minute
+    else    
+        date += minute
+    console.log( date )
+    if( second < 10)
+        date += '0' + second
+    else    
+        date += second
+    return date    
+}
+const converMessage = ( key, message ) =>{
+    let convertedMessage 
+    convertedMessage = { message: '', time: '' }
+}
+const sendMessage = ( message ) => {
+
+}
+
+const receiveMessage = () =>{
+
+}
 //form to take input text and submit
 const MyForm = ({updateChat, sendMessage}) => {
     const [text, setText ] = useState({ id:0, content:''})
