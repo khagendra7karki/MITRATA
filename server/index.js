@@ -23,6 +23,7 @@ socketIO.on('connection', (socket) => {
     socket.on("newUser", (data) => {
      
       users.push(data)
+      console.log(users)
       socketIO.emit("newUserResponse", users)
     })
  

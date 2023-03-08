@@ -20,6 +20,7 @@ const Contacts = ({ socket, changeChat }) => {
   const data = JSON.parse(localStorage.getItem("chat-app-user")).userEmail;
   useEffect(() => {
     socket.on("newUserResponse", (data) => setUsers(data));
+    console.log("inside socket recieve", data)
   }, [socket, users]);
 
   const changeCurrentChat = (user, index) => {
@@ -33,7 +34,6 @@ const Contacts = ({ socket, changeChat }) => {
     align-items: center;
     overflow: auto;
     margin: 5px 0;
-    
     padding: 20px;
   `;
   return (
@@ -63,9 +63,11 @@ const Contacts = ({ socket, changeChat }) => {
             overflowY: "auto",
           }}
         >
+          {console.log("inside contacts", users)}
           {users.map(
             (user, index) =>
-              user.email !== data && (
+            
+              (user.useremail !== data) && (
                 <ListItem
                   button
                   key={user.socketID}
@@ -79,7 +81,8 @@ const Contacts = ({ socket, changeChat }) => {
                         <Avatar alt="Remy Sharp" src="https://material-ui.com/static/images/avatar/1.jpg" />
                     </ListItemIcon> */}
                   <ListItemText
-                    primary={`${user.email}`}
+                    primary={`${user.useremail}`}
+                    
                     sx={{ overflowWrap: "break-word", maxWidth: "80%" }}
                   ></ListItemText>
                   {/* <ListItemText secondary="online" align="right"></ListItemText> */}

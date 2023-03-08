@@ -12,18 +12,29 @@
 
 .customInput{
     outline: none;
-    height: 40px;
     padding-left: 20px;
-    border-radius: 8px;
-    border: 1px solid grey;
+    border-radius: 3px;
+    padding-top: 16.5px;
+    padding-bottom: 16.5px;
     width: 100%;
+    border: none;
+    line-height: 23px;
+    color: rgba( 0, 0, 0, 0.87 );
+    font-family: Roboto, Helvetica, Arial;
+    -webkit-box-shadow: 0 0 0 0.5px rgba(160,160,160,255);
+    -moz-box-shadow: 0 0 0 0.5px rgba(160,160,160,255);
+    box-shadow: 0 0 0 0.5px rgba(160,160,160,255);
 }
-
+.customInput:hover{
+    -webkit-box-shadow: 0 0 0 0.75px #171515;
+    -moz-box-shadow: 0 0 0 0.75px #171515;
+    box-shadow: 0 0 0 0.75px #171515;
+}
 .customInput:focus{
     outline: none;
-    border-color: rgb(84, 117, 185);
-    background-color: #808080;
-    color: #393f45;
+    -webkit-box-shadow: 0 0 0 1.5px #1976d2;
+    -moz-box-shadow: 0 0 0 1.5px #1976d2;
+    box-shadow: 0 0 0 1.5px #1976d2;
 }
 
 .customInput:focus::placeholder{

@@ -1,41 +1,53 @@
-import {AccountCircleOutlined, MessageOutlined, NotificationsOutlined, EmailOutlined, HomeOutlined, SettingsOutlined } from '@mui/icons-material';
-import { Link } from 'react-router-dom'
-import { Typography, Avatar, Box, Stack } from '@mui/material'
+import {  AccountCircleOutlined, MessageOutlined, NotificationsOutlined, EmailOutlined, HomeOutlined, SettingsOutlined } from '@mui/icons-material';
+import { Button, Avatar, Box, Stack } from '@mui/material'
 import { styled } from '@mui/system'
-import { useState } from 'react';
 
 const CustomAvatar = styled( Avatar,{} )({
-        backgroundColor: '#b0b0b0',
+        backgroundColor: 'transparent',
         width: '60px',
         height: '60px',
         margin: '20px !important',
 })
-
-const UserNavBar = ({sx, rightTab}) => {
-   const [toggle,setToggle] = useState(true)
-    const setSelected =(tabb)=>{
-        setToggle(!toggle)    
-        
-        rightTab(tabb,toggle)
+const UserNavBar = ({ onHomeClick, onUserClick, onSettingClick, onNotificationClick , onMessageClick }) => {
+    const sx = { position: 'relative' , borderRadius: '20px 0 0  20px ', position: 'absolute', right: '0', top: '50%', transform:'translateY(-50%)', overflow: 'hidden'}
+    const itemStyle = { height: '60px', width: '60px', color: 'black'}
+    const buttonStyle = {
+        backgroundColor: '#b0b0b0',
+        borderRadius: '0px',
+        '&:hover' : {
+            backgroundColor: 'white'
+        }
     }
     return <>
         <Box sx  = { sx }>
-            <Stack spacing = { 5 }>
-                <CustomAvatar > 
-                    <HomeOutlined onClick = {()=> {setSelected('Home')}} sx = {{ height: '60px', width: '60px', color: 'black'}}/>
-                </CustomAvatar>
-                <CustomAvatar > 
-                    <AccountCircleOutlined onClick = {()=> {setSelected('contacts')}} sx = {{ height: '60px', width: '60px', color: 'black'}}/>
-                </CustomAvatar>
-                <CustomAvatar> 
-                    <EmailOutlined onClick = {()=> {setSelected('chat')}} sx = {{ height: '60px', width: '60px', color: 'black'}}/>
-                </CustomAvatar>
-                <CustomAvatar> 
-                    <NotificationsOutlined onClick = {()=> {setSelected('notification')}} sx = {{ height: '60px', width: '60px', color: 'black'}}/>
-                </CustomAvatar>
-                <CustomAvatar> 
-                    <SettingsOutlined onClick = {()=> {setSelected('setting')}} sx = {{ height: '60px', width: '60px', color: 'black'}}/>
-                </CustomAvatar>
+            <Stack >
+                <Button onClick = { onHomeClick } sx = { buttonStyle }>
+                    <CustomAvatar > 
+                        <HomeOutlined sx = {itemStyle}/>
+                    </CustomAvatar>
+                </Button>
+                <Button onClick = { onUserClick } sx = { buttonStyle }>
+                    <CustomAvatar> 
+                        <AccountCircleOutlined sx = {itemStyle}/>
+                    </CustomAvatar>
+                </Button>
+                <Button onClick = { onMessageClick } sx = { buttonStyle }>
+                    <CustomAvatar> 
+                        <EmailOutlined sx = {itemStyle}/>
+                    </CustomAvatar>
+                </Button>
+                <Button onClick = { onNotificationClick } sx = { buttonStyle }>
+                    <CustomAvatar> 
+                        <NotificationsOutlined sx = {itemStyle}/>
+                    </CustomAvatar>
+
+                </Button>
+                <Button onClick = { onSettingClick } sx = { buttonStyle }>
+                    <CustomAvatar> 
+                        <SettingsOutlined sx = {itemStyle}/>
+                    </CustomAvatar>
+
+                </Button>
             </Stack>
         </Box>
     </>

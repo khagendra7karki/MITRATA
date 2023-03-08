@@ -20,6 +20,7 @@
     "react-tinder-card": "^1.6.2",
     "socket.io-client": "^4.6.0",
     "uuid": "^8.3.2",
+    "dayjs": "^1.11.7",
     "web-vitals": "^2.1.4"
   },
   "scripts": {

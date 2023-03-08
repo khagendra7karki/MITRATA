@@ -42,7 +42,7 @@ const Chatcontainer = ({ socket, currentChat }) => {
               variant="h5"
               className="header-message"
             > 
-            {currentChat ? currentChat.email : 'hello'}
+            {currentChat ? currentChat.useremail : 'hello'}
            
               {/* {`${currentChat.email}`} */}
             </Typography>
@@ -59,7 +59,7 @@ const Chatcontainer = ({ socket, currentChat }) => {
               // message.name === currentChat
               message.from ===
                 JSON.parse(localStorage.getItem("chat-app-user")).userEmail
-                ? (message.to === currentChat.email) && (
+                ? (message.to === currentChat.useremail) && (
                     <ListItem  ref={scrollRef} key={message.id}>
                       <Grid container>
                         <Grid
@@ -84,7 +84,7 @@ const Chatcontainer = ({ socket, currentChat }) => {
                     </ListItem>
                   )
                 : message.to ===
-                JSON.parse(localStorage.getItem("chat-app-user")).userEmail &&(message.from === currentChat.email) && (
+                JSON.parse(localStorage.getItem("chat-app-user")).userEmail &&(message.from === currentChat.useremail) && (
                     <ListItem key={message.id}>
                       <Grid container>
                         <Grid item xs={12}   sx={{ display: "flex", flexDirection: "row" }}>

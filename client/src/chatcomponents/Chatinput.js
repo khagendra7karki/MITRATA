@@ -16,7 +16,7 @@ export default function Chatinput({socket, currentUser}) {
             {
             text: message, 
             from: data.userEmail, 
-            to: currentUser.email,
+            to: currentUser.useremail,
             id: `${socket.id}${Math.random()}`,
             socketID: socket.id
             }
