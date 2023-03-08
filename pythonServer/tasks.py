@@ -24,7 +24,6 @@ def task( db, message ):
     # message = json.loads( message )
     if( message['task'] == 'verify' ):
         id = message['email']
-        print( message )
         verification_result =  db.verify_user( id )
         if( verification_result ):
             if(verification_result['password'] == message['password']):

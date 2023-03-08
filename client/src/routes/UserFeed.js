@@ -16,23 +16,18 @@ import image3 from '../assets/images/image3.jpg'
 import Swipe from '../components/Swipe'
 import {useEffect, useState } from 'react'
 
-// maintains the user data
-
-
-// const blobToURL = async ( blob ) =>{
-//     console.log( blob )
-//     const base64Response = await fetch( blob )
-//     const URL = await base64Response.blob()
-//     const returnObject = window.URL.createObjectURL( URL )
-//     return returnObject
-// }
+let firstLoad = true
+function setFirstLoad( set ) {
+    firstLoad = set
+}
 
 const InternalImage = ( image ) =>{
+    // console.log( image )
         return <>
             <Grid item   sm = { 6 }  md = { 4 } sx = {{display: 'flex' , justifyContent: 'center', p: 0}} >
-                        <Card sx = {{width: '200px', borderRadius: '0'}}>
+                        <Card sx = {{width: '200px', borderRadius: '0', background: '#3f304b', display: 'flex', alignItems: 'center'}}>
                             <CardMedia component = 'img'
-                                image = { image }
+                                image = { image.image }
                                 sx = {{width: '100%'}}
                         >
                         </CardMedia>
@@ -43,18 +38,21 @@ const InternalImage = ( image ) =>{
 }
 const InternalImageWraper = ({ images }) =>{
     const fallout = [0, 1, 2]
-    if ( images )
+    if ( images ){
+        // console.log( images )
         return<>
             { images.map( ( image, index ) => { return <InternalImage image = { image } key = { index }/> }) }
         </> 
+    }
     else {
+        console.log( 'its a fallout')
         return <>{
             fallout.map( ( index ) =>{
                 
                  return <Grid item   sm = { 6 }  md = { 4 } sx = {{display: 'flex' , justifyContent: 'center', p: 0}} key = { index } >
                         <Card sx = {{width: '200px', borderRadius: '0'}}>
                             <CardMedia component = 'img'
-                                sx = {{width: '100%', height: '200px' , width: '200px', background: 'b0b0b0'}}
+                                sx = {{width: '100%', height: '200px' , width: '200px', background: 'grey'}}
                         >
                         </CardMedia>
                     </Card>
@@ -65,13 +63,21 @@ const InternalImageWraper = ({ images }) =>{
 }
 
 const UserFeed = ({ wsObject, user, setUser }) => {
-    const sampleUserObject = {
+    const sampleUserObject = [{
         name: 'Alisha',
         id: 'alisha773@gmail.comm',
         age: '18',
         motto: `I'm a foodie, a beer snog , a dog lover, and a proud nerd. I'm not shallow , but you better know how to keep the conversation going, because I have more to offer than just my body . Feel free to drop me a line.`,
-        images: [Alexandria, image1, image2, image3],  
+        image: [Alexandria, image1, image2, image3],  
+    },
+    {
+        name: 'Alisha',
+        id: 'alisha773@gmail.comm',
+        age: '18',
+        motto: `I'm a foodie, a beer snog , a dog lover, and a proud nerd. I'm not shallow , but you better know how to keep the conversation going, because I have more to offer than just my body . Feel free to drop me a line.`,
+        image: [Alexandria, image1, image2, image3],  
     }
+    ]
     const [ suggestion, setSuggestion ] = useState( sampleUserObject )
     const initialSetup = () =>{
         // console.log( user )
@@ -79,40 +85,53 @@ const UserFeed = ({ wsObject, user, setUser }) => {
             console.log( 'something went wrong' )
             return
         }    
-        // user.suggestion[0].image.map( ( blob ) => { blobToURL( blob ).then( ( value ) => {setSuggestion( ( prev ) => {
-        //                                                                                         if( prev.images ){
-        //                                                                                             prev.images.push( value )
-        //                                                                                             return prev
-        //                                                                                         }
-        //                                                                                         return { ...prev, images: [value]}
-        //                                                                                     })})})
+
         setSuggestion(() =>{
-            // console.log( suggestion.images )
-            return {
-            name: user.suggestion[0].name,
-            id: user.suggestion[0].email,
-            age: user.suggestion[0].age,
-            motto: user.suggestion[0].motto, 
-            image: user.suggestion[0].image
-        }})       
+            let present = [ {name: user.suggestion[0].name,
+                id: user.suggestion[0].email,
+                age: user.suggestion[0].age,
+                motto: user.suggestion[0].motto, 
+                image: user.suggestion[0].image},
+                {
+                name: user.suggestion[1].name,
+                id: user.suggestion[1].email,
+                age: user.suggestion[1].age,
+                motto: user.suggestion[1].motto, 
+                image: user.suggestion[1].image
+                }]
+            // console.log( 'outputting the usre suggestion',user.suggestion[0])
+            return present })       
     }
     useEffect( () =>{
         // console.log( user )
-        initialSetup()
-        // console.log( suggestion )
+        if( firstLoad ){
+            initialSetup()
+            setFirstLoad( false )
+        }
     }, [] )
+
+    useEffect( () =>{
+        console.log( 'first', suggestion[0].name )
+        console.log( 'second', suggestion[1].name)
+    }, [suggestion[0] ])
+
+
     const sendMessage = ( message ) =>{
         wsObject.send( JSON.stringify( message ))
     }
 
-    wsObject.onmessage = ({data}) => { handleMessages( data )}
+    wsObject.onmessage = ({data}) => { 
+        handleMessages( data )
+        console.log( suggestion[0].name)
+        console.log(suggestion[1].name )
+    }
+
     const handleMessages = ( response ) => {
         response = JSON.parse( response )
         if( response.status == 'successful' && response.task == 'getData' ){
-            const{ task, status, ...rest }  = response
-            setUser( ( prev ) =>{
-                prev.suggestion.push( rest )
-                return prev
+            console.log( 'about to change suggestion ')
+            setSuggestion( ( prev ) =>{
+                return [ prev[1], response.content[0]]
             })
         }
 
@@ -158,7 +177,7 @@ const UserFeed = ({ wsObject, user, setUser }) => {
                 <Grid item xs = { 5 } sx = {{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                 <ChevronLeft  color=  'disabled' sx = {{height: '90px', width: '90px'}} />
                     <Box>
-                        < Swipe image1 = { Alexandria } image2 = { image1 } handleSwipe = { onSwipe } />
+                        < Swipe image1 = { suggestion[0].image[0] } image2 = { suggestion[1].image[0] } handleSwipe = { onSwipe } />
                         <Option sx = {{backgroundColor: '#b0b0b0', borderRadius: '20px' , py: 1.5, mx: 2}}
                                 handleRejection ={ handleRejection }
                                 handleApproval = { handleApproval }
@@ -170,13 +189,13 @@ const UserFeed = ({ wsObject, user, setUser }) => {
                 </Grid>
                 <Grid item xs = { 7 } sx  ={{ display: 'flex', overflowY: 'hidden', height: '100%', alignSelf: 'center', justifyContent: 'center'}}>
                     <Box maxWidth='600px'maxHeight='500px'>
-                        <Typography variant = 'h2' component = 'h2' color = 'white' sx = {{marginLeft: 3}}>{`${suggestion.name} ${ suggestion.age }`}</Typography>
+                        <Typography variant = 'h2' component = 'h2' color = 'white' sx = {{marginLeft: 3}}>{`${suggestion[0].name} ${ suggestion[0].age }`}</Typography>
                         <Typography sx = {{ color: '#964c90', lineHeight: '1.2', fontSize: '24px', m: 3}} >
-                            {`${ suggestion.motto }`}
+                            {`${ suggestion[0].motto }`}
                         </Typography>
                         <Box sx = {{ display: 'flex', justifyContent: 'center', borderRadius: '16px' , mx: 3}}>
                             <Grid container> 
-                                <InternalImageWraper images = { suggestion.images } />
+                                <InternalImageWraper images = { suggestion[0].image } />
                             </Grid>
                         </Box>
                     </Box>

@@ -77,6 +77,11 @@ class LSMTree():
         # Write to memtable
         self.memtable.add(key, value)
         self.memtable.total_bytes += additional_size
+    def get_memtable( self ):
+        in_order = self.memtable.in_order()
+        print( 'from the memtable')
+        for node in in_order:
+            print( node.key )
     def db_get_random( self, gender, num ):
         '''returns an array of keys and value'''
 
@@ -85,9 +90,11 @@ class LSMTree():
         result = []
         for profile in in_order:
             key = profile.key
+            print( 'from memtable')
+            print( key )
             value = json.loads( profile.value )
             if value['gender'] != gender:
-                
+                print( 'the key of the result is', key)
                 result.append( {'key': key} | value )
                 if len( result ) == num:
                     return result
@@ -99,7 +106,7 @@ class LSMTree():
             with open( self.segment_path( segment ), 'r') as s:
                 for line in s:
                     k =''
-                    value = ''
+                    v = ''
                     flag = 0
                     for letter in line:
                         if( flag == 0 and letter == ','):
@@ -109,9 +116,12 @@ class LSMTree():
                             k = k + letter
                         else:
                             v = v + letter
-                    value = json.loads( value )
-                    if value['gender'] != gender:
-                        result.append( { 'key': key} | value )                     
+                    print( 'from segmesnt ')
+                    print( k )
+                    v = json.loads( v )
+                    if v['gender'] != gender:
+                        print( 'the key of the result is', k)
+                        result.append( { 'key': k} | v )                     
                     if len( result ) == num: 
                         return result
         return None
@@ -189,7 +199,6 @@ class LSMTree():
         '''
 
         segments = self.segments[:]
-        print( segments )
         while len(segments):
             segment = segments.pop()
 

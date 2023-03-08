@@ -97,6 +97,9 @@ const Swipe = ( { image1, image2 , handleSwipe } ) => {
                 currentY: y,
                 currentAngle: angle,
             }
+            // console.log( 'new' )
+            // console.log( x, y)
+            // console.log( distanceInX, distanceInY)
             setCordinate((prev) => {
                 return ({ ...prev, ...evaluated})
             })

@@ -13,6 +13,7 @@ converts the string to python dictionary sending it forward
 class Database():
     def __init__( self ):
         self.lsm = LSMTree(SEGMENT_BASENAME, SEGMENTS_DIRECTORY, WAL_BASENAME)
+        self.lsm.get_memtable()
         
 
     def create_new_user( self, key , value ):
