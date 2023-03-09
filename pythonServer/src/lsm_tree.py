@@ -77,55 +77,15 @@ class LSMTree():
         # Write to memtable
         self.memtable.add(key, value)
         self.memtable.total_bytes += additional_size
-    def get_memtable( self ):
-        in_order = self.memtable.in_order()
-        print( 'from the memtable')
-        for node in in_order:
-            print( node.key )
-    def db_get_random( self, gender, num ):
-        '''returns an array of keys and value'''
 
-        #search in the memtable first
-        in_order = self.memtable.in_order()
-        result = []
-        for profile in in_order:
-            key = profile.key
-            print( 'from memtable')
-            print( key )
-            value = json.loads( profile.value )
-            if value['gender'] != gender:
-                print( 'the key of the result is', key)
-                result.append( {'key': key} | value )
-                if len( result ) == num:
-                    return result
-                 
-        #search all the segments
-        segments = self.segments[:]
-        while( len( segments )):
-            segment = segments.pop()
-            with open( self.segment_path( segment ), 'r') as s:
-                for line in s:
-                    k =''
-                    v = ''
-                    flag = 0
-                    for letter in line:
-                        if( flag == 0 and letter == ','):
-                            flag = 1
-                            continue
-                        if( flag == 0 ):
-                            k = k + letter
-                        else:
-                            v = v + letter
-                    print( 'from segmesnt ')
-                    print( k )
-                    v = json.loads( v )
-                    if v['gender'] != gender:
-                        print( 'the key of the result is', k)
-                        result.append( { 'key': k} | v )                     
-                    if len( result ) == num: 
-                        return result
-        return None
-
+    def db_get_random( self, gender, segment_index, last_suggestion , num ):
+        '''returns an tuple of the result , last_key and  segment number'''
+        # result = get_suggestion_from_database
+        # result - get_sugg
+        result, last_key, segment_count = self.get_suggestion( gender, self.segments[:-(segment_index + 1 )], num , last_suggestion )
+        
+        return result, last_key, segment_index + segment_count
+    
     def db_get(self, key):
         ''' (self, str) -> None
         Retrieve the value associated with key in the db
@@ -161,7 +121,7 @@ class LSMTree():
                             k = k + letter
                         else:
                             value = value + letter
-                    print( key )
+                    # print( key )
                     if k == key:
                         return value.strip()
 
@@ -222,12 +182,14 @@ class LSMTree():
                 for letter in pairs[ptr]:
                     if( flag == 0 and letter == ','):
                         flag = 1
+                        if( k != key):
+                            break
                         continue
                     if( flag == 0 ):
                         k = k + letter
                     else:
                         v = v + letter
-                print( key )
+                # print( key )
                 if k == key:
                     return v
 
@@ -245,7 +207,7 @@ class LSMTree():
         if Path(self.metadata_path()).exists():
             with open(self.metadata_path(), 'rb') as s:
                 metadata = pickle.load(s)
-                self.segments = metadata['segments']
+                self.segments = list(set(metadata['segments']))
                 self.current_segment = metadata['current_segment']
                 self.bloom_filter = metadata['bloom_filter']
                 self.bf_num_items = metadata['bf_num_items']
@@ -510,3 +472,45 @@ class LSMTree():
         Returns the path to the metadata backup file.
         '''
         return self.segments_directory + 'database_metadata'
+    
+    #to get the serial result from a certain database
+    def get_suggestion( self, gender, segments, num, last_suggestion ):
+        # print( 'the last request was ', last_suggestion, ' and the number was' , num)
+        result = []
+        segment_counter  = 0
+        main_flag = False
+        if not last_suggestion:
+            main_flag  = True
+        print( segments )
+        while( len( segments )):
+            segment = segments.pop()
+            # print( 'the name of the segment is' + segment )
+            with open( self.segment_path( segment ), 'r') as s:
+                for line in s:
+                    k =''
+                    v = ''
+                    flag = 0
+                    for letter in line:
+                        if( flag == 0 and letter == ',' ):
+                            flag = 1
+                            if( not main_flag and (k == last_suggestion) ):       #break out of the loop if key is less or equal
+                                print( 'the key is' , k)
+                                main_flag = True
+                                break
+                            continue
+                        if( flag == 0 ):
+                            k = k + letter
+                        else:
+                            v = v + letter
+                    # print( 'from segmesnt ')
+                    if  k and v and main_flag:
+                        # print( 'the key is ' + k )
+                        v = json.loads( v )
+                        # print( 'the value of the gender is ' , v['gender'] )
+                        if v['gender'] != gender:
+                            # print( 'the key of the result is', k)
+                            result.append( { 'key': k} | v )                     
+                        if len( result ) == num: 
+                            return result, k, segment_counter
+            segment_counter +=1
+        return None

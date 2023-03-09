@@ -18,19 +18,16 @@ const Login = ({wsObject, setUser }) => {
 
     const handleMessages = (message) =>{
         message = JSON.parse( message )
-        console.log( message )
+        // console.log( message )
         if( message.status == 'successful'  && message.task == 'verify'){
             //successfull verification follows up with,
             // request to get the profile suggestion
-            console.log( message.gender )
-            sendMessage( { task: 'getData', gender: message.gender, number: 2 } )
-            setResponse( { email: message.email, notification: message.notification , gender: message.gender} )            
-            setUser(  {email: message.email, notification: message.notification , gender: message.gender} )
-        }
-        if( message.status == 'successful' && message.task == 'getData'){
-            console.log( message )
-            const{ task, status, content }  = message
-            setUser( { ...response, suggestion: content } )
+            // console.log( message )
+            // console.log( message.suggestion[0].mame, message.suggestion[1].name )
+        
+            const{ task, status, ...rest }  = message
+            console.log( rest )
+            setUser( { ...rest } )
             navigate( '/user' )
         }
     } 

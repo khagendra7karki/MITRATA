@@ -23,46 +23,6 @@ function setFirstLoad( set ) {
     firstLoad = set
 }
 
-const InternalImage = ( image ) =>{
-    // console.log( image )
-        return <>
-            <Grid item   sm = { 6 }  md = { 4 } sx = {{display: 'flex' , justifyContent: 'center', p: 0}} >
-                        <Card sx = {{width: '200px', borderRadius: '0', background: '#3f304b', display: 'flex', alignItems: 'center'}}>
-                            <CardMedia component = 'img'
-                                image = { image.image }
-                                sx = {{width: '100%'}}
-                        >
-                        </CardMedia>
-                    </Card>
-                </Grid>
-        </>
-    
-}
-const InternalImageWraper = ({ images }) =>{
-    const fallout = [0, 1, 2]
-    if ( images ){
-        // console.log( images )
-        return<>
-            { images.map( ( image, index ) => { return <InternalImage image = { image } key = { index }/> }) }
-        </> 
-    }
-    else {
-        console.log( 'its a fallout')
-        return <>{
-            fallout.map( ( index ) =>{
-                
-                 return <Grid item   sm = { 6 }  md = { 4 } sx = {{display: 'flex' , justifyContent: 'center', p: 0}} key = { index } >
-                        <Card sx = {{width: '200px', borderRadius: '0'}}>
-                            <CardMedia component = 'img'
-                                sx = {{width: '100%', height: '200px' , width: '200px', background: 'grey'}}
-                        >
-                        </CardMedia>
-                    </Card>
-                </Grid>        
-            })}
-        </>
-    }
-}
 
 const UserFeed = ({ wsObject, user, setUser }) => {
     const sampleUserObject = [{
@@ -90,6 +50,7 @@ const UserFeed = ({ wsObject, user, setUser }) => {
         }    
 
         setSuggestion(() =>{
+            console.log( user )
             let present = [ {name: user.suggestion[0].name,
                 id: user.suggestion[0].email,
                 age: user.suggestion[0].age,
@@ -102,7 +63,6 @@ const UserFeed = ({ wsObject, user, setUser }) => {
                 motto: user.suggestion[1].motto, 
                 image: user.suggestion[1].image
                 }]
-            // console.log( 'outputting the usre suggestion',user.suggestion[0])
             return present })       
     }
     useEffect( () =>{
@@ -113,11 +73,11 @@ const UserFeed = ({ wsObject, user, setUser }) => {
         }
     }, [] )
 
-    useEffect( () =>{
-    }, [suggestion[0] ])
+
 
 
     const sendMessage = ( message ) =>{
+        console.log( 'i am about to send a message')
         wsObject.send( JSON.stringify( message ))
     }
 
@@ -138,7 +98,13 @@ const UserFeed = ({ wsObject, user, setUser }) => {
 
     }
     const onSwipe = (left, right ) =>{      //do certain task on swipe
-        sendMessage( { task: 'getData', gender: user.gender, number: 1 } )
+        sendMessage( { task: 'getData', gender: user.gender, number: 1, requester: user.user.email } )
+        if( right ){
+            handleApproval( suggestion[0].id)
+        }
+        else {
+            handleRejection( suggestion[0].id )
+        }
     }
     const onHomeClick = () =>{
         let a = navBarControl & 0 //resetting all the other bits
@@ -157,18 +123,17 @@ const UserFeed = ({ wsObject, user, setUser }) => {
             toggleControl( 1 )
             return
         }
-        let a = navBarControl & 0
-        a |= 16
-        toggleControl( a )
+        toggleControl( 16 )         // 00010000
     }
     const onSettingClick = () =>{
         
     }
-    const handleRejection = () =>{
+    const handleRejection = ( id ) =>{
         console.log( 'i have been rejected')
     }
-    const handleApproval = () =>{
+    const handleApproval = ( id ) =>{
         console.log('i have been approved')
+        sendMessage( { task: 'notification', email: id, notification:{name: user.name ,message: `${ user.name} is looking for a match with you`, image: user.image[0]}})
     }
     const handleLike = () =>{
         console.log( 'i have been liked' )
