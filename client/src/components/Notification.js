@@ -1,90 +1,111 @@
-import React from "react";
+import React from 'react'
+import { useState } from 'react'; 
 import {
-  List,
-  ListItem,
-  Typography,
-  ListItemIcon,
-  ListItemText,
-  Avatar,
-  Grid,Box,
-  Divider,
-} from "@mui/material";
+    List,
+    ListItem,
+    Typography,
+    ListItemIcon,
+    ListItemText,
+    Avatar,Button,
+    Grid,
+    Divider,
+  } from "@mui/material";
 export default function Notification() {
+  const [notify,SetNotify] = useState('')
+  function acceptedFunc(){
+    
+  }
+  function rejectedFunc(){
+
+  
+  }
+
   return (
     <>
-      <Grid
-        container
-        sx={{
-          width: "50vh",
-          height: "65vh",
-          bgcolor: "#b0b0b0",
-          borderRadius: "50px",
-          display: "flex",
-        }}
-      >
-        <Typography
-          variant="h8"
-          sx={{ padding: "10px 50px 0px " }}
-          className="header-message"
-        >
+    <Grid container  sx ={{ width: '50vh',height: '65vh', bgcolor:'#b0b0b0', borderRadius:'50px', display:'flex'}} >
+    <Typography variant="h8" sx={{padding:'10px 50px 0px '}} className="header-message">
           Notification
         </Typography>
-        <Grid
-          container
-          sx={{
-            positon: "absolute",
-            margin: "0px 5px 40px  ",
-            width: "50vh",
-            height: "60vh",
-            bgcolor: "#242629",
-            borderRadius: "50px",
-          }}
-        >
-          <Grid item style={{ padding: "10px", height: "10px" }} xs={12}>
-            //Notification will be displayed here
-            <List
-              sx={{
-                margin: "auto",
-                width: "100%",
-                maxWidth: 425,
+    <Grid container  sx ={{positon:'absolute', margin:'0px 5px 40px  ', width: '50vh',height: '60vh', bgcolor:'#242629', borderRadius:'50px'}} >
+    <Grid item style={{ padding: "10px", height: "10px" }} xs={12}>
+        
+      
+    <List sx={{
+            margin:'auto',
+            width: "100%",
+            maxWidth:425,
+            
+            height: "55vh",
+           
+          }}>
+    <ListItem sx={{bgcolor:'#b8c9e3',display: 'flex', borderRadius:'15px',
+    flexDirection: 'column',
+    alignItems: 'center',
+    overflow: 'auto',
+    margin: '5px 5px',
+    padding: '20px'}}>
+      <Grid container>
+        <Grid item xs={2}><ListItemIcon>
+                <Avatar  sx={{ width: 56, height: 56 }}
+                  alt="Remy Sharp"
+                  src="https://material-ui.com/static/images/avatar/1.jpg"
+                />
+              </ListItemIcon></Grid>
+        <Grid item xs={10}>
+          <ListItemText sx={{ overflowWrap: "break-word", width: "100%",  }}><b>Sasha Obama</b></ListItemText>
+          <ListItemText sx={{ overflowWrap: "break-word", width: "100%" }}>Would you be my friend ?</ListItemText>
+   
+   </Grid >
+   <Grid container sx={{display:'flex' , width: "100%", flexDirection: 'row',
+    alignItems: 'center',  }}>
+   
+   <Button variant="contained" sx={{margin :'1px 5px 0px 160px'}} onClick={acceptedFunc}>Accept</Button>
+    <Button variant="outlined"sx={{  }} onClick={rejectedFunc}>Reject</Button>
 
-                height: "55vh",
-              }}
-            >
-              {/* {notificationCollection.map((notify, index) => ( */}
-                <ListItem
-                  sx={{
-                    bgcolor: "#b8c9e3",
-                    display: "flex",
-                    flexDirection: "column",
-                    alignItems: "center",
-                    overflow: "auto",
-                    margin: "5px 5px",
-                    padding: "20px",
-                  }}
-                >
-                  <Grid container  sx={{}}>
-                    <Grid item xs={2}>
-                    <ListItemIcon>
-                    <Avatar
-                      alt="Remy Sharp"
-                      src="https://material-ui.com/static/images/avatar/1.jpg"
-                    />
-                  </ListItemIcon></Grid>
-                  <Grid item xs={10}>
-                  <Typography sx={{padding: '3px 3px'}}>fromRandomContact</Typography> </Grid>
-                  </Grid>
-                  <ListItemText
-                    sx={{ overflowWrap: "break-word", width: "100%" }}
-                  >
-                    hello world hello world
-                  </ListItemText>
-                </ListItem>
-              {/* ))} */}
-            </List>
-          </Grid>
-        </Grid>
+
+   </Grid>
+   
       </Grid>
+      
+         </ListItem>
+    <ListItem sx={{bgcolor:'#b8c9e3',display: 'flex', borderRadius:'15px',
+    flexDirection: 'column',
+    alignItems: 'center',
+    overflow: 'auto',
+    margin: '5px 5px',
+    padding: '20px'}}>
+      <Grid container>
+        <Grid item xs={2}><ListItemIcon>
+                <Avatar  sx={{ width: 56, height: 56 }}
+                  alt="Remy Sharp"
+                  src="https://material-ui.com/static/images/avatar/1.jpg"
+                />
+              </ListItemIcon></Grid>
+        <Grid item xs={10}>
+          <ListItemText sx={{ overflowWrap: "break-word", width: "100%",  }}><b>Sasha Obama</b></ListItemText>
+          <ListItemText sx={{ overflowWrap: "break-word", width: "100%" }}>Would you be my friend ?</ListItemText>
+   
+   </Grid >
+   <Grid container sx={{display:'flex' , width: "100%", flexDirection: 'row',
+    alignItems: 'center',  }}>
+   
+   <Button variant="contained" sx={{margin :'1px 5px 0px 160px'}} onClick={acceptedFunc}>Accept</Button>
+    <Button variant="outlined"sx={{  }} onClick={rejectedFunc}>Reject</Button>
+
+
+   </Grid>
+   
+      </Grid>
+      
+         </ListItem>
+    
+ 
+    </List>
+    
+    </Grid>
+    </Grid>
+    </Grid>
+    
     </>
-  );
+  )
 }

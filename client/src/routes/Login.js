@@ -23,7 +23,7 @@ const Login = ({wsObject, setUser, socket }) => {
             //successfull verification follows up with,
             // request to get the profile suggestion
             console.log( message.gender )
-            sendMessage( { task: 'getData', gender: message.gender, number: 2 } )
+            sendMessage( { task: 'getData', gender: message.gender} )
             setResponse( { email: message.email, notification: message.notification , gender: message.gender} )            
             setUser(  {email: message.email, notification: message.notification , gender: message.gender} )
         }

@@ -152,7 +152,7 @@ const Second = ({ credential, handleChange, setCredential, handleSignUp }) => {
 
                     <Grid item xs = {12} sx = {{display: 'flex',justifyContent: 'center', px: 4}}>
                         <Input label = 'Motto'
-                               name = 'motto'
+                               name = 'moto'
                                value = { credential.motto }
                                onChange = { handleChange }
                                placeholder = 'Write something you believe in or describes about yourself'/>

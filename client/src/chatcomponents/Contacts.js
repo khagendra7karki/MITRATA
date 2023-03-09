@@ -36,7 +36,6 @@ const Contacts = ({ socket, changeChat }) => {
     margin: 5px 0;
     padding: 20px;
   `;
-  
   return (
     <Grid
       item
