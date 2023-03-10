@@ -17,6 +17,7 @@ import image2 from '../assets/images/image2.jpg'
 import image3 from '../assets/images/image3.jpg'
 import Swipe from '../components/Swipe'
 import {useEffect, useState } from 'react'
+import Chat from '../components/Chat'
 
 let firstLoad = true
 function setFirstLoad( set ) {
@@ -107,15 +108,19 @@ const UserFeed = ({ wsObject, user, setUser }) => {
         }
     }
     const onHomeClick = () =>{
-        let a = navBarControl & 0 //resetting all the other bits
-        a |= 1                  //setting d0 bit 
-        toggleControl( a )
+        toggleControl( 1 )
 
     }
     const onUserClick = () =>{
         
     }
     const onMesageClick = () =>{
+        if( navBarControl & 8){
+            toggleControl( 1 )
+            return
+        }
+        toggleControl( 8 )
+        
         
     }
     const onNotificationClick = () =>{
@@ -126,7 +131,6 @@ const UserFeed = ({ wsObject, user, setUser }) => {
         toggleControl( 16 )         // 00010000
     }
     const onSettingClick = () =>{
-        
     }
     const handleRejection = ( id ) =>{
         console.log( 'i have been rejected')
@@ -164,6 +168,7 @@ const UserFeed = ({ wsObject, user, setUser }) => {
                 </Grid>
                 <Grid item xs = { 7 } sx  ={{ display: 'flex', overflowY: 'hidden', height: '100%', alignSelf: 'center', justifyContent: 'center'}}>
                     <UserInfo display = { navBarControl } suggestion = {{ name: suggestion[0].name, motto: suggestion[0].motto, age: suggestion[0].age , image: suggestion[0].image }}/>
+                    <Chat display = { navBarControl } />
                     <Notification display = { navBarControl }  />
                 </Grid>
                 
