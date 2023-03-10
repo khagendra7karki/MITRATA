@@ -7,11 +7,12 @@ import Login from './routes/Login'
 import SignUp from './routes/SignUp'
 import Home from './routes/Home'
 import UserFeed from './routes/UserFeed'
-import Chat from './routes/Chat'
+// import Chat from './routes/Chat'
 import wss from './Utilities/frontendWebsocketInterface'
 import FileUpload from './components/FileUpload'
 import Swipe from './routes/Swipe'
 import Photo from './routes/Photo'
+import Chat from './components/Chat'
 import { useState } from 'react';
 
 const ws = wss.webSocketObject 
