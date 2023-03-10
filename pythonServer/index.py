@@ -28,6 +28,16 @@ userDataSample= {
     'chat': '',
 
 }
+def store_chat( db, chat ):
+    db.store_chat( chat )
+
+def retrieive_chat( requester ):
+    pass
+def store_notification( chat ):
+    pass
+def retrieve_notification():
+    pass
+
 # update user session 
 def update_user_session(email, last_suggestion, segment_index ):
     user_session_dict[ email ]['last_suggestion']= last_suggestion
