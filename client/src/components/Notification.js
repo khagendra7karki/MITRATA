@@ -14,7 +14,7 @@ import NotificationItem from './NotificationItems';
   return (
     <>
     <Grid container  sx ={{ width: '50vh',height: '65vh', bgcolor:'#b0b0b0', borderRadius:'50px', display: `${ display & 16 ? 'flex': 'none'}`}} >
-    <Typography variant="h8" sx={{padding:'10px 50px 0px '}} className="header-message">
+    <Typography variant="h5" sx={{m:'auto',padding:'10px 50px 0px '}} className="header-message">
           Notification
         </Typography>
         <Grid container  sx ={{positon:'absolute', margin:'0px 5px 40px  ', width: '50vh',height: '60vh', bgcolor:'#242629', borderRadius:'50px'}} >

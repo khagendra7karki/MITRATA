@@ -17,6 +17,7 @@ const maxDisplacement = 300
 function distance( x, y ){
     return Math.sqrt( x * x + y * y )
 }
+let isDragged = false
 const Swipe = ( { image1, image2 , handleSwipe } ) => {
     const initialValue = {
         currentX: 0,        //with refernce to the center
@@ -45,8 +46,10 @@ const Swipe = ( { image1, image2 , handleSwipe } ) => {
                     bottom: cordinate.currentY - cordinate.reference.y,
                     opacity: 1
                 }
-    
+
     const handleDragStart = (e) => {
+        isDragged = true
+        console.log( isDragged )
         e.dataTransfer.setDragImage( new Image() , e.clienttX, e.clientY)
         let center =  {
             xo: e.target.offsetLeft + e.target.offsetWidth / 2.0 ,
@@ -75,12 +78,15 @@ const Swipe = ( { image1, image2 , handleSwipe } ) => {
     }
     const handleDrag = (e) => {
         // console.log( cordinate )
-        if( cordinate.isDrag ){
+        console.log( isDragged)
+        if( isDragged ){
             e.preventDefault()
-            const x = e.clientX - cordinate.center.xo
-            const y = -e.clientY + cordinate.center.yo
-            const distanceInX = x - cordinate.reference.x
-            const distanceInY  = y - cordinate.reference.y
+            if( !(e.clientX *  e.clientY))
+                return
+                const x = e.clientX - cordinate.center.xo
+                const y = -e.clientY + cordinate.center.yo
+                const distanceInX = x - cordinate.reference.x
+                const distanceInY  = y - cordinate.reference.y
             const base = cordinate.height / 2
             let angle = (Math.atan( distanceInX / base )) * 60/3.14
             if( Math.abs( angle ) > 30 ){
@@ -89,7 +95,7 @@ const Swipe = ( { image1, image2 , handleSwipe } ) => {
                 }
                 else{
                     angle = -30
-            }
+                }
             }
             
             const evaluated = {
@@ -97,25 +103,22 @@ const Swipe = ( { image1, image2 , handleSwipe } ) => {
                 currentY: y,
                 currentAngle: angle,
             }
-            // console.log( 'new' )
-            // console.log( x, y)
-            // console.log( distanceInX, distanceInY)
             setCordinate((prev) => {
                 return ({ ...prev, ...evaluated})
             })
-            // console.log( distanceInX, distanceInY)
-            // console.log( distance( distanceInX, distanceInY ) )
+
             if( distance( distanceInX, distanceInY )  > maxDisplacement ) {
+                isDragged = false
                 let rightSwiped = false
                 let leftSwiped = false
-                if( distanceInX > 0 )
-                rightSwiped = true
+                if( distanceInX > 0 ){
+                    rightSwiped = true
+                }
                 else{
                     leftSwiped = true 
                 }
-                console.log( 'i have been swiped ')
+                setCordinate( { ...initialValue,  leftSwiped: leftSwiped,rightSwiped: rightSwiped, isDrag: false, isSwiped: true} )
                 handleSwipe(leftSwiped, rightSwiped )
-                setCordinate( { ...initialValue, rightSwiped: rightSwiped, leftSwiped: leftSwiped, isDrag: false, isSwiped: true} )
             }
             
         }

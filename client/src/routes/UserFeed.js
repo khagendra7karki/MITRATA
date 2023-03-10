@@ -43,7 +43,6 @@ const UserFeed = ({ wsObject, user, setUser }) => {
     const [ suggestion, setSuggestion ] = useState( sampleUserObject )
     const [ navBarControl, toggleControl ] = useState( new Uint8Array([ 1 ]) )
     const initialSetup = () =>{
-        // console.log( user )
         if( !user ){
             console.log( 'something went wrong' )
             return
@@ -77,7 +76,6 @@ const UserFeed = ({ wsObject, user, setUser }) => {
 
 
     const sendMessage = ( message ) =>{
-        console.log( 'i am about to send a message')
         wsObject.send( JSON.stringify( message ))
     }
 
@@ -90,14 +88,14 @@ const UserFeed = ({ wsObject, user, setUser }) => {
     const handleMessages = ( response ) => {
         response = JSON.parse( response )
         if( response.status == 'successful' && response.task == 'getData' ){
-            console.log( 'about to change suggestion ')
             setSuggestion( ( prev ) =>{
                 return [ prev[1], response.content[0]]
             })
         }
 
     }
-    const onSwipe = (left, right ) =>{      //do certain task on swipe
+    const onSwipe = async (left, right ) =>{      //do certain task on swipe
+        console.log( 'i am abour to send message')
         sendMessage( { task: 'getData', gender: user.gender, number: 1, requester: user.user.email } )
         if( right ){
             handleApproval( suggestion[0].id)
@@ -133,7 +131,8 @@ const UserFeed = ({ wsObject, user, setUser }) => {
     }
     const handleApproval = ( id ) =>{
         console.log('i have been approved')
-        sendMessage( { task: 'notification', email: id, notification:{name: user.name ,message: `${ user.name} is looking for a match with you`, image: user.image[0]}})
+        // const message = { task: 'notification', email: id, notification:{name: user.name ,message: `${ user.name} is looking for a match with you`, image: user.image[0]}}
+        // sendMessage(  message )
     }
     const handleLike = () =>{
         console.log( 'i have been liked' )
