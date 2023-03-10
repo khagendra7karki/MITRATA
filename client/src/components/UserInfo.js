@@ -3,7 +3,7 @@ const InternalImage = ( image ) =>{
     // console.log( image )
         return <>
             <Grid item   sm = { 6 }  md = { 4 } sx = {{display: 'flex' , justifyContent: 'center', p: 0}} >
-                        <Card sx = {{width: '200px', borderRadius: '0', background: 'transparent', display: 'flex', alignItems: 'center'}}>
+                        <Card sx = {{width: '200px', borderRadius: '0', background: '#3f304b', display: 'flex', alignItems: 'center'}}>
                             <CardMedia component = 'img'
                                 image = { image.image }
                                 sx = {{width: '100%'}}

@@ -38,7 +38,7 @@ const Login = ({wsObject, setUser }) => {
         sendMessage({ task: 'verify', email: credential.email, password: credential.password })
     }
     return <>
-        <CustomContainer sx = {{ backgroundImage : `url(${login_bg})`, backgroundSize: 'cover' , justifyContent: 'center'}}>
+        <CustomContainer sx = {{ backgroundImage : `url(${login_bg})`, backgroundSize: 'contain' , justifyContent: 'center'}}>
             <Stack>
                 <CardMedia component = 'img'
                             image = {logo}
