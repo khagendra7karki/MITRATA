@@ -10,7 +10,7 @@ const CustomContainer = styled(Box, {} )(({theme}) =>({
     right: '0',
     bottom: '0',
     top: '0',
-    backgroundColor: '#3f304b',
+    background: 'linear-gradient(0deg, rgb(255, 96, 54), rgb(253, 38, 122)) no-repeat',
     display: 'flex',
     alignItems: 'center', 
     overflow: 'hidden',
