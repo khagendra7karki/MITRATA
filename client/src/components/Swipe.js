@@ -2,41 +2,41 @@ import React from 'react';
 import '../assets/css/swipe.css';
 import { useEffect } from 'react'
   
-    // private properties
-    #startPoint;
-    #offsetX;
-    #offsetY;
-  
-    // #isTouchDevice = () => {
-    //   return (('ontouchstart' in window) ||
-    //     (navigator.maxTouchPoints > 0) ||
-    //     (navigator.msMaxTouchPoints > 0));
-    // }
-  
-    #init = () => {
-      const card = document.createElement('div');
-      card.classList.add('card');
-      const img = document.createElement('img');
-      img.src = this.imageUrl;
-      card.append(img);
-      this.element = card;
-        this.#listenToMouseEvents();
-    }
-  
-  
-    #listenToMouseEvents = () => {
-      this.element.addEventListener('mousedown', (e) => {
-        const { clientX, clientY } = e;
-        this.#startPoint = { x: clientX, y: clientY }
-        document.addEventListener('mousemove', this.#handleMouseMove);
-        this.element.style.transition = 'transform 0s';
-      });
-  
-      document.addEventListener('mouseup', this.#handleMoveUp);
-  
-      this.element.addEventListener('dragstart', (e) => {
-        e.preventDefault();
-      });
+// Card component with destructured props
+//things we need
+//current x and y
+
+// reference x and y => value of x and y cordinate where the drag was first initiated
+//this is to calculate the position 
+
+//reference origin ( this will be respect to the frame )
+//this is to calculate the angle of rotation
+const maxDisplacement = 300
+
+
+function distance( x, y ){
+    return Math.sqrt( x * x + y * y )
+}
+let isDragged = false
+const Swipe = ( { image1, image2 , handleSwipe } ) => {
+    const initialValue = {
+        currentX: 0,        //with refernce to the center
+        currentY: 0,        //with the refernce to the center
+        currentAngle: 0,    //with refernce to the initial angle
+        reference: {
+            x: 0,           //with reference to center
+            y: 0,           //with refernce to center
+        },
+        center: {
+            xo: 0,
+            yo: 0
+        },
+        isDrag: false,
+        height: 0,
+        width: 0,
+        isSwiped: false,
+        leftSwiped: false,
+        rightSwiped: false,
     }
     const [ cordinate, setCordinate ] = React.useState( initialValue )
     
@@ -88,15 +88,8 @@ import { useEffect } from 'react'
                 const distanceInX = x - cordinate.reference.x
                 const distanceInY  = y - cordinate.reference.y
             const base = cordinate.height / 2
-            let angle = (Math.atan( distanceInX / base )) * 60/3.14
-            if( Math.abs( angle ) > 30 ){
-                if( angle > 0 ){
-                    angle = 30
-                }
-                else{
-                    angle = -30
-                }
-            }
+
+            let angle = distanceInX * 0.1 
             
             const evaluated = {
                 currentX: x,

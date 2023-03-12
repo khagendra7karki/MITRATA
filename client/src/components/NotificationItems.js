@@ -24,8 +24,8 @@ const NotificationItem = () =>{
             margin:'auto',
             width: "100%",
             maxWidth:425,
-            
             height: "55vh",
+            transition: 'all ease'
            
           }}>
     <ListItem sx={{bgcolor:'#b8c9e3',display: 'flex', borderRadius:'15px',

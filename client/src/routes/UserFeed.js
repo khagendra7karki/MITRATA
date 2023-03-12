@@ -154,7 +154,6 @@ const UserFeed = ({ wsObject, user, setUser }) => {
         <Container sx = {{ padding: '0 !important', display: 'flex' , alignItems: 'center', maxHeight: '800px'}}>
             <Grid container>
                 <Grid item xs = { 5 } sx = {{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                <ChevronLeft  color=  'disabled' sx = {{height: '90px', width: '90px'}} />
                     <Box>
                         < Swipe image1 = { suggestion[0].image[0] } image2 = { suggestion[1].image[0] } handleSwipe = { onSwipe } />
                         <Option sx = {{backgroundColor: '#b0b0b0', borderRadius: '20px' , py: 1.5, mx: 2}}
@@ -164,7 +163,6 @@ const UserFeed = ({ wsObject, user, setUser }) => {
                         />
                     </Box>
                     
-                    <ChevronRight  color = 'disabled' sx = {{ height: '90px' , width: '90px' }} />
                 </Grid>
                 <Grid item xs = { 7 } sx  ={{ display: 'flex', overflowY: 'hidden', height: '100%', alignSelf: 'center', justifyContent: 'center'}}>
                     <UserInfo display = { navBarControl } suggestion = {{ name: suggestion[0].name, motto: suggestion[0].motto, age: suggestion[0].age , image: suggestion[0].image }}/>
