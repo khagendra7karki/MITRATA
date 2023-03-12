@@ -1,8 +1,4 @@
-/* eslint-disable react/react-in-jsx-scope -- Unaware of jsxImportSource */
-/** @jsxImportSource @emotion/react */
-
 import React, { useState, useEffect } from "react";
-import { css } from "@emotion/react";
 
 import {
   List,
@@ -26,32 +22,24 @@ const Contacts = ({ socket, changeChat }) => {
   const changeCurrentChat = (user, index) => {
     changeChat(user);
     setCurrentSelected(index);
-    console.log("i am in the contacts", user);
   };
-  const contactts = css`
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    overflow: auto;
-    margin: 5px 0;
-    padding: 20px;
-  `;
   return (
     <Grid
       item
       xs={3}
       sx={{
-        height: "90vh",
+        height: "60vh",
+
         display: "flex",
         flexDirection: "column",
         borderRight: "1px solid #e0e0e0",
-        background: "#A9b0b0",
-        borderRadius: "18px",
+        background: "#F8F8FF",
+        borderRadius: "0 18px 18px 0 ",
       }}
     >
       <Grid item style={{ padding: "10px", height: "10px" }} xs={12}>
-        <Typography variant="h3" className="header-message">
-          Chat
+        <Typography variant="h4" className="header-message">
+          <b>Chat</b>
         </Typography>
       </Grid>
       <Grid item xs={12}>
@@ -59,7 +47,7 @@ const Contacts = ({ socket, changeChat }) => {
           sx={{
             width: "100%",
             maxWidth: 360,
-            height: "70vh",
+            height: "50vh",
             overflowY: "auto",
           }}
         >
@@ -69,28 +57,50 @@ const Contacts = ({ socket, changeChat }) => {
             
               (user.useremail !== data) && (
                 <ListItem
-                  button
+                  // button
                   key={user.socketID}
                   onClick={() => changeCurrentChat(user, index)}
-                  css={css`
-                    ${contactts}
-                    background-color:${(index===currentSelected) ? '#455a64' : '#c6b3ff' } 
-                  `}
+                  sx={{
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    overflow: "auto",
+                    margin: "10px 0",
+                    backgroundColor: `${
+                      index === currentSelected ? "#455a64" : "#FFFFFF"
+                    }`,
+                    padding: "5px",
+                    borderRadius: "12px",
+                  }}
                 >
-                  {/* <ListItemIcon>
-                        <Avatar alt="Remy Sharp" src="https://material-ui.com/static/images/avatar/1.jpg" />
-                    </ListItemIcon> */}
-                  <ListItemText
-                    primary={`${user.useremail}`}
-                    
-                    sx={{ overflowWrap: "break-word", maxWidth: "80%" }}
-                  ></ListItemText>
+                  <Grid container>
+                    <Grid item xs={3}>
+                      <ListItemIcon>
+                        <Avatar
+                          sx={{ width: 30, height: 30 }}
+                          alt="Remy Sharp"
+                          src="https://material-ui.com/static/images/avatar/1.jpg"
+                        />
+                      </ListItemIcon>
+                    </Grid>
+                    <Grid item xs={9}>
+                      {" "}
+                      <ListItemText
+                        sx={{
+                          overflowWrap: "break-word",
+                          maxWidth: "100%",
+                          color: "black",
+                        }}
+                        primary={`${user.email}`}
+                      ></ListItemText>
+                    </Grid>
+                  </Grid>
                   {/* <ListItemText secondary="online" align="right"></ListItemText> */}
                 </ListItem>
               )
           )}
         </List>
-        <Grid
+        {/* <Grid
           container
           css={css`
             background-color: #516653;
@@ -116,7 +126,7 @@ const Contacts = ({ socket, changeChat }) => {
               ></ListItemText>
             </ListItem>
           </List>
-        </Grid>
+        </Grid> */}
       </Grid>
     </Grid>
   );
