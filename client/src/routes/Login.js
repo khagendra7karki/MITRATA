@@ -10,22 +10,15 @@ import { json, useNavigate } from 'react-router-dom'
 
 const Login = ({wsObject, setUser }) => {
     const navigate = useNavigate()
-    var temp = ''
     const [credential, setCredential] = useState({email:'', password:''})
-    const [ response, setResponse ] = useState('')
     wsObject.onmessage = ({ data }) => { handleMessages( data ) }
 
 
     const handleMessages = (message) =>{
         message = JSON.parse( message )
-        // console.log( message )
         if( message.status == 'successful'  && message.task == 'verify'){
-            //successfull verification follows up with,
-            // request to get the profile suggestion
-            // console.log( message )
-            // console.log( message.suggestion[0].mame, message.suggestion[1].name )
         
-            const{ task, status, ...rest }  = message
+              const{ task, status, ...rest }  = message
             console.log( rest )
             setUser( { ...rest } )
             navigate( '/user' )

@@ -4,7 +4,8 @@ import {
     Grid,
   } from "@mui/material";
 import NotificationItem from './NotificationItems';
-  export default function Notification({ display }) {
+  export default function Notification({ display, notifications }) {
+    // console.log( notifications )
   return (
     <>
     <Grid container  sx ={{ width: '50vh',height: '65vh', bgcolor:'#b0b0b0', borderRadius:'50px', display: `${ display & 16 ? 'flex': 'none'}` }} >
@@ -15,8 +16,17 @@ import NotificationItem from './NotificationItems';
             <Grid item style={{ padding: "10px", height: "10px" }} xs={12}>
                 
             
-            <NotificationItem />
-            
+            { (() =>{
+              if (notifications) {
+                  return <>
+                  {  notifications.map( notification =>{
+                      return <NotificationItem image = { notification.image } content = { notification.content } />
+                    } )}
+                  </>
+              }
+                return <>
+                </>
+            })()  }
             </Grid>
         </Grid>
     </Grid>

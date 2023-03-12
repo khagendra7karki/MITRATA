@@ -90,7 +90,7 @@ class LSMTree():
         ''' (self, str) -> None
         Retrieve the value associated with key in the db
         '''
-        print('key to be searched', key)
+        # print('key to be searched', key)
 
         # Attempt to find the key in the memtable first
         memtable_result = self.memtable.find_node(key)
@@ -228,7 +228,7 @@ class LSMTree():
         }
 
         with open(self.metadata_path(), 'wb') as s:
-            print( 'the metadata is' , bookkeeping_info)
+            # print( 'the metadata is' , bookkeeping_info)
             pickle.dump(bookkeeping_info, s)
 
     def restore_memtable(self):
@@ -481,7 +481,7 @@ class LSMTree():
         main_flag = False
         if not last_suggestion:
             main_flag  = True
-        print( segments )
+        # print( segments )
         while( len( segments )):
             segment = segments.pop()
             # print( 'the name of the segment is' + segment )
@@ -494,7 +494,7 @@ class LSMTree():
                         if( flag == 0 and letter == ',' ):
                             flag = 1
                             if( not main_flag and (k == last_suggestion) ):       #break out of the loop if key is less or equal
-                                print( 'the key is' , k)
+                                # print( 'the key is' , k)
                                 main_flag = True
                                 break
                             continue

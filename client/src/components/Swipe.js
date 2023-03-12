@@ -30,7 +30,6 @@ const Swipe = ( { image1, image2 , handleSwipe } ) => {
         isDrag: false,
         height: 0,
         width: 0,
-        isSwiped: false,
         leftSwiped: false,
         rightSwiped: false,
     }
@@ -39,7 +38,7 @@ const Swipe = ( { image1, image2 , handleSwipe } ) => {
     const style = { transform: `rotate(${cordinate.currentAngle}deg)`,
                     position: 'relative',
                     left: cordinate.currentX,
-                    bottom: cordinate.currentY,
+                    top: cordinate.currentY,
                     opacity: 1
                 }
 
@@ -56,9 +55,6 @@ const Swipe = ( { image1, image2 , handleSwipe } ) => {
                 y: e.clientY,
             },
             isDrag: true, 
-            isSwiped: false,
-            // height: e.target.offsetHeight,
-            // width: e.target.offsetHeight,
             leftSwiped: false,
             rightSwiped: false,
         }
@@ -98,7 +94,7 @@ const Swipe = ( { image1, image2 , handleSwipe } ) => {
                 else{
                     leftSwiped = true 
                 }
-                setCordinate( { ...initialValue,  leftSwiped: leftSwiped,rightSwiped: rightSwiped, isDrag: false, isSwiped: true} )
+                setCordinate( { ...initialValue,  leftSwiped: leftSwiped,rightSwiped: rightSwiped, isDrag: false} )
                 handleSwipe(leftSwiped, rightSwiped )
             }
             

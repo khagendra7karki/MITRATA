@@ -19,10 +19,6 @@ import Swipe from '../components/Swipe'
 import {useEffect, useState } from 'react'
 import Chat from '../components/Chat'
 
-let firstLoad = true
-function setFirstLoad( set ) {
-    firstLoad = set
-}
 
 
 const UserFeed = ({ wsObject, user, setUser }) => {
@@ -53,13 +49,13 @@ const UserFeed = ({ wsObject, user, setUser }) => {
         setSuggestion(() =>{
             console.log( user )
             let present = [ {name: user.suggestion[0].name,
-                id: user.suggestion[0].email,
+                email: user.suggestion[0].email,
                 age: user.suggestion[0].age,
                 motto: user.suggestion[0].motto, 
                 image: user.suggestion[0].image},
                 {
                 name: user.suggestion[1].name,
-                id: user.suggestion[1].email,
+                email: user.suggestion[1].email,
                 age: user.suggestion[1].age,
                 motto: user.suggestion[1].motto, 
                 image: user.suggestion[1].image
@@ -67,14 +63,19 @@ const UserFeed = ({ wsObject, user, setUser }) => {
             return present })       
     }
     useEffect( () =>{
-        // console.log( user )
-        if( firstLoad ){
             initialSetup()
-            setFirstLoad( false )
-        }
+            console.log( {task: 'get_notif', requester: user.user.email} )
+            sendMessage( {task: 'get_notif', requester: user.user.email})
     }, [] )
 
-
+    const sendNotif = async (id , name, image) =>{
+        let message = { task: 'store_notif',key: id , value : {
+            image: image,
+            content: `${name} is looking for a match.`
+        }}
+        console.log( message )
+        sendMessage(  message )
+    }
 
 
     const sendMessage = ( message ) =>{
@@ -84,16 +85,22 @@ const UserFeed = ({ wsObject, user, setUser }) => {
 
     wsObject.onmessage = ({data}) => { 
         handleMessages( data )
-        console.log( suggestion[0].name)
-        console.log(suggestion[1].name )
     }
 
     const handleMessages = ( response ) => {
         response = JSON.parse( response )
         if( response.status == 'successful' && response.task == 'getData' ){
             console.log( 'about to change suggestion ')
+            console.log( response.content[0])
             setSuggestion( ( prev ) =>{
                 return [ prev[1], response.content[0]]
+            })
+        }
+        else if( response.task == 'get_notif'){
+            // console.log( response.notification  )
+            // console.log({ ...user, notification : JSON.parse( response.notification )} )
+            setUser( (prev) =>{
+                return { ...prev, notification: response.notification }
             })
         }
 
@@ -101,10 +108,10 @@ const UserFeed = ({ wsObject, user, setUser }) => {
     const onSwipe = (left, right ) =>{      //do certain task on swipe
         sendMessage( { task: 'getData', gender: user.gender, number: 1, requester: user.user.email } )
         if( right ){
-            handleApproval( suggestion[0].id)
+            handleApproval( suggestion[0].email, user.user.name, user.user.image[0])
         }
         else {
-            handleRejection( suggestion[0].id )
+            handleRejection( suggestion[0].email )
         }
     }
     const onHomeClick = () =>{
@@ -135,9 +142,8 @@ const UserFeed = ({ wsObject, user, setUser }) => {
     const handleRejection = ( id ) =>{
         console.log( 'i have been rejected')
     }
-    const handleApproval = ( id ) =>{
-        console.log('i have been approved')
-        sendMessage( { task: 'notification', email: id, notification:{name: user.name ,message: `${ user.name} is looking for a match with you`, image: user.image[0]}})
+    const handleApproval = ( id, name, image ) =>{
+        sendNotif( id, name , image)
     }
     const handleLike = () =>{
         console.log( 'i have been liked' )
@@ -167,7 +173,7 @@ const UserFeed = ({ wsObject, user, setUser }) => {
                 <Grid item xs = { 7 } sx  ={{ display: 'flex', overflowY: 'hidden', height: '100%', alignSelf: 'center', justifyContent: 'center'}}>
                     <UserInfo display = { navBarControl } suggestion = {{ name: suggestion[0].name, motto: suggestion[0].motto, age: suggestion[0].age , image: suggestion[0].image }}/>
                     <Chat display = { navBarControl } />
-                    <Notification display = { navBarControl }  />
+                    <Notification display = { navBarControl } notifications = { user.notification}  />
                 </Grid>
                 
             </Grid>

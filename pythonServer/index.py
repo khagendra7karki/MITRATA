@@ -48,7 +48,7 @@ def update_user_session(email, last_suggestion, segment_index ):
 def create_user_session(websocket, email, gender, last_suggestion, segment_index ):
     ''' creates a use session '''
     global user_session_dict
-    print( 'the genderr is ' + gender )
+    # print( 'the genderr is ' + gender )
     temp_user_session = {
                         ''+ email + '': {'socket' : websocket, 
                                          'gender': gender,
@@ -88,24 +88,39 @@ def task( db, message, websocket):
     
     
     if( message['task'] == 'getData'):
-        print( message )
+        # print( message )
         requester_id = message['requester']
         gender = user_session_dict[requester_id]['gender']
         segment_index = user_session_dict[requester_id]['segment_index']
         last_suggestion = user_session_dict[requester_id]['last_suggestion']
-        suggestion, last_key, segment_index =  get_suggestion( user_session_dict[ requester_id ]['gender'],1, last_suggestion,segment_index )
+        suggestion, last_key, segment_index =  get_suggestion( gender,1, last_suggestion,segment_index )
         suggestion = json.loads( suggestion )
         response_message = { 'status': 'successful','task': 'getData', 'content': suggestion}
         update_user_session( message['requester'], last_key, segment_index)
         return  json.dumps( response_message )
     
-    if( message['notification'] =='notification' ):
-        result = db.verify_user( message['email'] + 'a')
-        if not result:
-            pass
-        db.create_new_user( message['email'] + 'a', { 'notification': message['notification'] })
-    return json.dumps( defaultResponse )
+    
+    if ( message['task'] == 'store_notif'):
+        # print( message['key'])
+        result = store_notification( db, message['key'] , message['value'] )
+        return result 
 
+    if( message['task'] == 'get_notif'):
+        # print( message)
+        result = get_notif( db, message['requester'])
+        print( result )
+        if result:
+            return json.dumps( { 'status': 'successful', 'task': 'get_notif' , 'notification': result} )
+            
+        return json.dumps( defaultResponse )
+
+    return json.dumps( defaultResponse )
+def get_notif( db, key):
+    return db.get_notif( key )
+
+def store_notification( db, key, value ):
+    db.store_notif( key, value)
+    return json.dumps( {'task': 'notification', 'status': 'successful'})
 
 
 
@@ -121,7 +136,7 @@ def get_suggestion( gender,  number, last_suggestion = None, segment_index = 0 )
         user_response['age'] = result['age']
         user_response['name'] = result['firstName']
         user_response['motto'] = result['motto']
-        print( user_response )            
+        # print( user_response )            
         user_response['image'] = result['image'] 
         final_response.append( user_response )
     return json.dumps( final_response ), last_key, segment_index
@@ -131,21 +146,14 @@ def get_suggestion( gender,  number, last_suggestion = None, segment_index = 0 )
 
 async def main( websocket, path):
     global LEN
-    # connected.add( websocket )
-    # if( len( connected ) > LEN ):           
-    #     LEN = LEN + 1
-    print( 'A client just connected ')
+    connected.add( websocket )
+    if( len( connected ) > LEN ):           
+        print( 'A client just connected ')
+        LEN = LEN + 1
     try:
         async for message in websocket:
-            print( websocket )
-            print( 'this is my  work')
-            # print( 'Received message from the client ' + str(message) )
             message = json.loads( message )
-            # user_session_dict[ message['id']]
             response = task( db, message, websocket ) 
-            # dict_response = json.loads( response )
-            # if( dict_response['task'] == 'verify' and dict_response['status'] == 'successful'):
-            #     user_session
             await websocket.send( response )
 
 
