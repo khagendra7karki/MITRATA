@@ -1,15 +1,16 @@
 import {
     List,
     ListItem,
-    Typography,
     ListItemIcon,
     ListItemText,
     Avatar,Button,
     Grid,
-    Divider,
   } from "@mui/material";
 
 import { useState } from 'react'
+
+//css
+import '../assets/css/notification.css'
 const NotificationItem = () =>{
     const [notify,SetNotify] = useState('')
   function acceptedFunc(){
@@ -33,7 +34,7 @@ const NotificationItem = () =>{
     alignItems: 'center',
     overflow: 'auto',
     margin: '5px 5px',
-    padding: '20px'}}>
+    padding: '20px'}} className = 'notification-item'>
       <Grid container>
         <Grid item xs={2}><ListItemIcon>
                 <Avatar  sx={{ width: 56, height: 56 }}
@@ -63,7 +64,7 @@ const NotificationItem = () =>{
     alignItems: 'center',
     overflow: 'auto',
     margin: '5px 5px',
-    padding: '20px'}}>
+    padding: '20px'}} className = 'notification-item'>
       <Grid container>
         <Grid item xs={2}><ListItemIcon>
                 <Avatar  sx={{ width: 56, height: 56 }}

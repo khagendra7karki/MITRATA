@@ -1,13 +1,7 @@
 import React from 'react'
 import {
-    List,
-    ListItem,
     Typography,
-    ListItemIcon,
-    ListItemText,
-    Avatar,
     Grid,
-    Divider,
   } from "@mui/material";
 import NotificationItem from './NotificationItems';
   export default function Notification({ display }) {

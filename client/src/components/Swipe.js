@@ -27,10 +27,6 @@ const Swipe = ( { image1, image2 , handleSwipe } ) => {
             x: 0,           //with reference to center
             y: 0,           //with refernce to center
         },
-        center: {
-            xo: 0,
-            yo: 0
-        },
         isDrag: false,
         height: 0,
         width: 0,
@@ -42,8 +38,8 @@ const Swipe = ( { image1, image2 , handleSwipe } ) => {
     
     const style = { transform: `rotate(${cordinate.currentAngle}deg)`,
                     position: 'relative',
-                    left: cordinate.currentX - cordinate.reference.x,
-                    bottom: cordinate.currentY - cordinate.reference.y,
+                    left: cordinate.currentX,
+                    bottom: cordinate.currentY,
                     opacity: 1
                 }
 
@@ -51,25 +47,18 @@ const Swipe = ( { image1, image2 , handleSwipe } ) => {
         isDragged = true
         console.log( isDragged )
         e.dataTransfer.setDragImage( new Image() , e.clienttX, e.clientY)
-        let center =  {
-            xo: e.target.offsetLeft + e.target.offsetWidth / 2.0 ,
-            yo: e.target.offsetTop + e.target.offsetHeight
-        }
-        let x = e.clientX - center.xo 
-        let y = -e.clientY + center.yo
         let evaluatedState = {
-            currentX: x,
-            currentY: y,
+            currentX: 0,
+            currentY: 0,
             currentAngle : 0,
             reference: {
-                x: x,
-                y: y,
+                x: e.clientX,
+                y: e.clientY,
             },
-            center: center,
             isDrag: true, 
             isSwiped: false,
-            height: e.target.offsetHeight,
-            width: e.target.offsetHeight,
+            // height: e.target.offsetHeight,
+            // width: e.target.offsetHeight,
             leftSwiped: false,
             rightSwiped: false,
         }
@@ -83,17 +72,16 @@ const Swipe = ( { image1, image2 , handleSwipe } ) => {
             e.preventDefault()
             if( !(e.clientX *  e.clientY))
                 return
-                const x = e.clientX - cordinate.center.xo
-                const y = -e.clientY + cordinate.center.yo
-                const distanceInX = x - cordinate.reference.x
-                const distanceInY  = y - cordinate.reference.y
-            const base = cordinate.height / 2
+                // const x = e.clientX - cordinate.center.xo
+                // const y = -e.clientY + cordinate.center.yo
+                const distanceInX = e.clientX - cordinate.reference.x
+                const distanceInY  = e.clientY - cordinate.reference.y
 
             let angle = distanceInX * 0.1 
             
             const evaluated = {
-                currentX: x,
-                currentY: y,
+                currentX: distanceInX,
+                currentY: distanceInY,
                 currentAngle: angle,
             }
             setCordinate((prev) => {
