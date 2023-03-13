@@ -108,12 +108,15 @@ def task( db, message, websocket):
     if( message['task'] == 'get_notif'):
         # print( message)
         result = get_notif( db, message['requester'])
-        print( result )
+        # print( result )
         if result:
             return json.dumps( { 'status': 'successful', 'task': 'get_notif' , 'notification': result} )
             
         return json.dumps( defaultResponse )
-
+    if message['task'] == 'add_friend':
+        # print( message )
+        add_friend( db, message)
+        return json.dumps({ 'task': 'add_friend', 'status': 'successful'})
     return json.dumps( defaultResponse )
 def get_notif( db, key):
     return db.get_notif( key )
@@ -135,12 +138,21 @@ def get_suggestion( gender,  number, last_suggestion = None, segment_index = 0 )
         user_response['email'] = result['key']
         user_response['age'] = result['age']
         user_response['name'] = result['firstName']
-        user_response['motto'] = result['motto']
-        # print( user_response )            
+        user_response['motto'] = result['motto']       
         user_response['image'] = result['image'] 
         final_response.append( user_response )
     return json.dumps( final_response ), last_key, segment_index
 
+def add_friend( db, message ):
+    key1 = message['email1']
+    key2 = message['email2']
+    print( key1, key2 )
+    image1 = message['image1']
+    image2 = message['image2']
+
+    db.add_friend( key1, key2, image1, image2 )
+
+    
 
 
 

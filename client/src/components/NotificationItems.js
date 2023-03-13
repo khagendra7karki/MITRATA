@@ -11,16 +11,20 @@ import { useState } from 'react'
 
 //css
 import '../assets/css/notification.css'
-const NotificationItem = ({image, content}) =>{
-  console.log(  image )
+const NotificationItem = ({notification, handleAccept, handleDecline}) =>{
     // const [notify,SetNotify] = useState('')
     // console.log( ' i habe been called to disla')
+  // console.log( notification )
   function acceptedFunc(){
     console.log( 'notification has been accepted')
+    console.log( notification )
+    handleAccept( notification )
     
   }
   function rejectedFunc(){
     console.log( 'notification has been rejected')  
+    // console.log( notification )
+    handleDecline( notification)
   }
     return <>
         <List sx={{
@@ -38,11 +42,11 @@ const NotificationItem = ({image, content}) =>{
         <Grid item xs={2}><ListItemIcon>
                 <Avatar  sx={{ width: 56, height: 56 }}
                   alt="Remy Sharp"
-                  src={ image }
+                  src={ notification.image }
                 />
               </ListItemIcon></Grid>
         <Grid item xs={10}>
-          <ListItemText sx={{ overflowWrap: "break-word", width: "100%",  }}><b>{`${content}`}</b></ListItemText>
+          <ListItemText sx={{ overflowWrap: "break-word", width: "100%",  }}><b>{`${notification.content}`}</b></ListItemText>
    
    </Grid >
    <Grid container sx={{display:'flex' , width: "100%", flexDirection: 'row',

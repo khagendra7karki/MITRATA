@@ -68,10 +68,11 @@ const UserFeed = ({ wsObject, user, setUser }) => {
             sendMessage( {task: 'get_notif', requester: user.user.email})
     }, [] )
 
-    const sendNotif = async (id , name, image) =>{
+    const sendNotif = async (id , name, image, fromEmail) =>{
         let message = { task: 'store_notif',key: id , value : {
-            image: image,
-            content: `${name} is looking for a match.`
+            email: fromEmail,
+            content: `${name} is looking for a match.`,
+            image: image
         }}
         console.log( message )
         sendMessage(  message )
@@ -108,7 +109,7 @@ const UserFeed = ({ wsObject, user, setUser }) => {
     const onSwipe = (left, right ) =>{      //do certain task on swipe
         sendMessage( { task: 'getData', gender: user.gender, number: 1, requester: user.user.email } )
         if( right ){
-            handleApproval( suggestion[0].email, user.user.name, user.user.image[0])
+            handleApproval( suggestion[0].email, user.user.name, user.user.image[0], user.user.email)
         }
         else {
             handleRejection( suggestion[0].email )
@@ -142,11 +143,14 @@ const UserFeed = ({ wsObject, user, setUser }) => {
     const handleRejection = ( id ) =>{
         console.log( 'i have been rejected')
     }
-    const handleApproval = ( id, name, image ) =>{
-        sendNotif( id, name , image)
+    const handleApproval = ( id, name, image, fromEmail ) =>{
+        sendNotif( id, name , image, fromEmail)
     }
     const handleLike = () =>{
         console.log( 'i have been liked' )
+    }
+    const addFriend = ( profile2, image2 ) =>{
+        sendMessage( { task: 'add_friend', email1: user.user.email, image1: user.user.image[0] , email2: profile2, image2: image2})
     }
     return <>
     <CustomContainer sx = {{ display: 'flex'}}>
@@ -161,7 +165,7 @@ const UserFeed = ({ wsObject, user, setUser }) => {
             <Grid container>
                 <Grid item xs = { 5 } sx = {{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                     <Box>
-                        < Swipe images = {[ suggestion[0].image[0] , suggestion[1].image[0] ]} handleSwipe = { onSwipe } />
+                        < Swipe images = {[ suggestion[1].image[0],  suggestion[0].image[0]  ]} handleSwipe = { onSwipe } />
                         <Option sx = {{backgroundColor: '#b0b0b0', borderRadius: '20px' , py: 1.5, mx: 2}}
                                 handleRejection ={ handleRejection }
                                 handleApproval = { handleApproval }
@@ -173,7 +177,7 @@ const UserFeed = ({ wsObject, user, setUser }) => {
                 <Grid item xs = { 7 } sx  ={{ display: 'flex', overflowY: 'hidden', height: '100%', alignSelf: 'center', justifyContent: 'center'}}>
                     <UserInfo display = { navBarControl } suggestion = {{ name: suggestion[0].name, motto: suggestion[0].motto, age: suggestion[0].age , image: suggestion[0].image }}/>
                     <Chat display = { navBarControl } />
-                    <Notification display = { navBarControl } notifications = { user.notification}  />
+                    <Notification display = { navBarControl } notifications = { user.notification}  setUser = { setUser } addFriend = { addFriend }/>
                 </Grid>
                 
             </Grid>

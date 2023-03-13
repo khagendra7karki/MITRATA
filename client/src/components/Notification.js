@@ -4,9 +4,22 @@ import {
     Grid,
   } from "@mui/material";
 import NotificationItem from './NotificationItems';
-  export default function Notification({ display, notifications }) {
-    // console.log( notifications )
-  return (
+  export default function Notification({ display, notifications , setUser, addFriend}) {
+    console.log( notifications )
+    const handleAccept = ( targetNotification  ) =>{
+        setUser( ( prev ) =>{
+          return { ...prev, notification: notifications.filter( notification => notification.email != targetNotification.email )}
+        })
+        addFriend( targetNotification.email, targetNotification.image)
+    }
+    const handleDecline = (targetNotification ) =>{
+      setUser( ( prev ) =>{
+        return { ...prev, notification: notifications.filter( notification => {
+                                                                                console.log( targetNotification )
+                                                                              return notification.email != targetNotification.email} )}
+      })
+    }
+    return (
     <>
     <Grid container  sx ={{ width: '50vh',height: '65vh', bgcolor:'#b0b0b0', borderRadius:'50px', display: `${ display & 16 ? 'flex': 'none'}` }} >
     <Typography variant="h5" sx={{ m : 'auto' , padding:'10px 50px 0px '}} className="header-message">
@@ -20,7 +33,7 @@ import NotificationItem from './NotificationItems';
               if (notifications) {
                   return <>
                   {  notifications.map( notification =>{
-                      return <NotificationItem image = { notification.image } content = { notification.content } />
+                      return <NotificationItem notification = { notification } handleAccept = { handleAccept } handleDecline = { handleDecline } />
                     } )}
                   </>
               }

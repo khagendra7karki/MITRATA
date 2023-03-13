@@ -41,13 +41,32 @@ class Database():
 
     def get_user( self , key ):
         result = self.lsm.db_get( key )
-        if not result:
-            return None
-        return json.loads( result )
+        if result:
+            return json.loads( result )
+        return None
     
-    def add_friend( self, key ):
+    def retrieve_chat( self, key ):
         pass
+    
+    def update_chat( self, key ):
+        pass
+    #adds the given key to the friendlis of both the objects
+    def add_friend( self, key1, key2, image1, image2 ):
+        profile1 = (self.chat.db_get( key1 ))
+        profile2 = (self.chat.db_get( key2 ))
+        if profile1:
+            profile1 = profile1.json.loads( profile1 )
+            profile1.append( { key2 :[{}],'image': image2 })
+        else:
+            self.chat.db_set( key1, json.dumps([{ key2 :[{}],'image': image2 }]))
+        if profile2: 
+            profile2  = json.loads( profile2 )
+            profile2.append( { key1 :[{}],'image': image1 })
+        else:
+            self.chat.db_set( key2, json.dumps([{ key1 :[{}],'image': image1 }]))
 
+        
+        pass
 
     def store_notif( self,key, value ):
         result = []
@@ -58,7 +77,7 @@ class Database():
             self.notif.db_set( key, json.dumps(result) )
             return
         result.append( value )
-        print( type(result) )
+        # print( type(result) )
         self.notif.db_set( key, json.dumps( result ))
     
     def get_notif( self, key ):
@@ -66,7 +85,7 @@ class Database():
         if search_result:
             return json.loads(search_result)
         return None
-    def update_notif( self, key, value ):
+    def delete_notif( self, key, value ):
         final_result = [] 
         search_result = self.notif.db_get( key )
         if search_result:
