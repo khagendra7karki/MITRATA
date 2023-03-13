@@ -47,7 +47,7 @@ const Login = ({wsObject, setUser, socket }) => {
             userPassword: credential.password,
           };
           localStorage.setItem("chat-app-user", JSON.stringify(userdata));
-        socket.emit("newUser", { useremail : credential.email, socketID: socket.id });
+        
         console.log("helllo i reach2");
      }
     return <>

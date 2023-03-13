@@ -10,14 +10,14 @@ import {
   Grid,
 } from "@mui/material";
 
-const Contacts = ({ socket, changeChat }) => {
+const Contacts = ({ changeChat }) => {
   const [users, setUsers] = useState([]);
   const [currentSelected, setCurrentSelected] = useState(undefined);
   const data = JSON.parse(localStorage.getItem("chat-app-user")).userEmail;
-  useEffect(() => {
-    socket.on("newUserResponse", (data) => setUsers(data));
-    console.log("inside socket recieve", data)
-  }, [socket, users]);
+  // useEffect(() => {
+  //   socket.on("newUserResponse", (data) => setUsers(data));
+  //   console.log("inside socket recieve", data)
+  // }, [socket, users]);
 
   const changeCurrentChat = (user, index) => {
     changeChat(user);
@@ -51,24 +51,26 @@ const Contacts = ({ socket, changeChat }) => {
             overflowY: "auto",
           }}
         >
-          {console.log("inside contacts", users)}
-          {users.map(
+      
+          {/* {users.map(
             (user, index) =>
             
-              (user.useremail !== data) && (
+              (user.useremail !== data) && ( */}
+             
                 <ListItem
                   // button
-                  key={user.socketID}
-                  onClick={() => changeCurrentChat(user, index)}
+                  // key={user.socketID}
+                  // onClick={() => changeCurrentChat(user, index)}
                   sx={{
                     display: "flex",
                     flexDirection: "column",
                     alignItems: "center",
                     overflow: "auto",
                     margin: "10px 0",
-                    backgroundColor: `${
-                      index === currentSelected ? "#455a64" : "#FFFFFF"
-                    }`,
+                    backgroundColor: '#455a64',
+                    // `${
+                    //   index === currentSelected ? "#455a64" : "#FFFFFF"
+                    // }`,
                     padding: "5px",
                     borderRadius: "12px",
                   }}
@@ -84,21 +86,106 @@ const Contacts = ({ socket, changeChat }) => {
                       </ListItemIcon>
                     </Grid>
                     <Grid item xs={9}>
-                      {" "}
+                    
                       <ListItemText
                         sx={{
                           overflowWrap: "break-word",
                           maxWidth: "100%",
                           color: "black",
                         }}
-                        primary={`${user.email}`}
+                        primary='kripesh'
                       ></ListItemText>
                     </Grid>
                   </Grid>
                   {/* <ListItemText secondary="online" align="right"></ListItemText> */}
                 </ListItem>
-              )
-          )}
+                <ListItem
+                  // button
+                  // key={user.socketID}
+                  // onClick={() => changeCurrentChat(user, index)}
+                  sx={{
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    overflow: "auto",
+                    margin: "10px 0",
+                    backgroundColor: '#455a64',
+                    // `${
+                    //   index === currentSelected ? "#455a64" : "#FFFFFF"
+                    // }`,
+                    padding: "5px",
+                    borderRadius: "12px",
+                  }}
+                >
+                  <Grid container>
+                    <Grid item xs={3}>
+                      <ListItemIcon>
+                        <Avatar
+                          sx={{ width: 30, height: 30 }}
+                          alt="Remy Sharp"
+                          src="https://material-ui.com/static/images/avatar/1.jpg"
+                        />
+                      </ListItemIcon>
+                    </Grid>
+                    <Grid item xs={9}>
+                    
+                      <ListItemText
+                        sx={{
+                          overflowWrap: "break-word",
+                          maxWidth: "100%",
+                          color: "black",
+                        }}
+                        primary='kripesh'
+                      ></ListItemText>
+                    </Grid>
+                  </Grid>
+                  {/* <ListItemText secondary="online" align="right"></ListItemText> */}
+                </ListItem>
+                <ListItem
+                  // button
+                  // key={user.socketID}
+                  // onClick={() => changeCurrentChat(user, index)}
+                  sx={{
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    overflow: "auto",
+                    margin: "10px 0",
+                    backgroundColor: '#455a64',
+                    // `${
+                    //   index === currentSelected ? "#455a64" : "#FFFFFF"
+                    // }`,
+                    padding: "5px",
+                    borderRadius: "12px",
+                  }}
+                >
+                  <Grid container>
+                    <Grid item xs={3}>
+                      <ListItemIcon>
+                        <Avatar
+                          sx={{ width: 30, height: 30 }}
+                          alt="Remy Sharp"
+                          src="https://material-ui.com/static/images/avatar/1.jpg"
+                        />
+                      </ListItemIcon>
+                    </Grid>
+                    <Grid item xs={9}>
+                    
+                      <ListItemText
+                        sx={{
+                          overflowWrap: "break-word",
+                          maxWidth: "100%",
+                          color: "black",
+                        }}
+                        primary='kripesh'
+                      ></ListItemText>
+                    </Grid>
+                  </Grid>
+                  {/* <ListItemText secondary="online" align="right"></ListItemText> */}
+                </ListItem>
+                
+              {/* )
+          )} */}
         </List>
         {/* <Grid
           container

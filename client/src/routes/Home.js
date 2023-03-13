@@ -1,8 +1,8 @@
 import Login from "./Login"
 
-const Home = ({wsObject, setUser, socket}) =>{
+const Home = ({wsObject, setUser}) =>{
     return (<>
-      <Login wsObject = { wsObject } setUser = { setUser } socket={socket}/>
+      <Login wsObject = { wsObject } setUser = { setUser } />
     </>
     )
 }

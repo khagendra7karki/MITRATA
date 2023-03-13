@@ -4,20 +4,20 @@ import { Button } from "@mui/material";
 // import Fab from '@mui/material/Fab';
 import SendIcon from "@mui/icons-material/Send";
 import { Grid, TextField } from "@mui/material";
-export default function Chatinput({ socket, currentUser }) {
+export default function Chatinput({  currentUser }) {
   const [message, setMessage] = useState("");
   const handleOnSubmit = (event) => {
     event.preventDefault();
     const data = JSON.parse(localStorage.getItem("chat-app-user"));
-    if (message.trim() && data.userEmail) {
-      socket.emit("message", {
-        text: message,
-        from: data.userEmail,
-        to: currentUser.email,
-        id: `${socket.id}${Math.random()}`,
-        socketID: socket.id,
-      });
-    }
+    // if (message.trim() && data.userEmail) {
+    //   socket.emit("message", {
+    //     text: message,
+    //     from: data.userEmail,
+    //     to: currentUser.email,
+    //     id: `${socket.id}${Math.random()}`,
+    //     socketID: socket.id,
+    //   });
+    // }
     setMessage("");
   };
   return (

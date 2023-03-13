@@ -4,7 +4,7 @@ import { useState } from 'react';
 import Contacts from '../chatcomponents/Contacts';
 import Chatcontainer from '../chatcomponents/Chatcontainer';
 
-const ChatApp=({socket})=> {
+const ChatApp=({})=> {
   const [currentChat, setCurrentChat] = useState(undefined);
   const changeChat = (chat) => {
     setCurrentChat(chat);
@@ -16,8 +16,8 @@ const ChatApp=({socket})=> {
     <Grid container  sx ={{ width: '70vh',height: '60vh', }} >
     
     {/* {currentChat &&  <Chatcontainer socket={socket} currentChat={currentChat}/>} */}
-    <Chatcontainer socket={socket} currentChat={currentChat}/>
-    <Contacts socket={socket} changeChat={changeChat}/>
+    <Chatcontainer  currentChat={currentChat}/>
+    <Contacts  changeChat={changeChat}/>
     </Grid>
 
 

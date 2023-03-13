@@ -14,17 +14,17 @@ import {
   Grid,
 } from "@mui/material";
 import Chatinput from "./Chatinput";
-const Chatcontainer = ({ socket, currentChat }) => {
+const Chatcontainer = ({  currentChat }) => {
   const scrollRef = useRef();
   const navigate = useNavigate();
   const [chatMessages, setChatMessages] = useState([]);
 
-  useEffect(() => {
-    socket.on("messageResponse", (data) =>
-      setChatMessages([...chatMessages, data])
-    );
-    console.log(chatMessages);
-  }, [socket, chatMessages]);
+  // useEffect(() => {
+  //   socket.on("messageResponse", (data) =>
+  //     setChatMessages([...chatMessages, data])
+  //   );
+  //   console.log(chatMessages);
+  // }, [socket, chatMessages]);
 
   useEffect(() => {
     scrollRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -78,13 +78,13 @@ const Chatcontainer = ({ socket, currentChat }) => {
         </Grid>
         <Grid item xs={12}>
           <List sx={{ height: "40vh", overflowY: "auto" }}>
-            {chatMessages.map((message) => {
+            {/* {chatMessages.map((message) => {
               return (
                 // message.name === currentChat
                 message.from ===
                   JSON.parse(localStorage.getItem("chat-app-user")).userEmail
-                  ? message.to === currentChat.email && (
-                      <ListItem ref={scrollRef} key={message.id}>
+                  ? message.to === currentChat.email && ( */}
+                      <ListItem ref={scrollRef}  key='1' >
                         <Grid container>
                           <Grid
                             item
@@ -108,7 +108,7 @@ const Chatcontainer = ({ socket, currentChat }) => {
                                   borderRadius: "2px",
                                   padding: "5px 15px",
                                 }}
-                                primary={`${message.text}`}
+                                primary='hello my fried'
                               />
                             </Box>
                           </Grid>
@@ -124,12 +124,93 @@ const Chatcontainer = ({ socket, currentChat }) => {
             </Grid> */}
                         </Grid>
                       </ListItem>
-                    )
+                     
+                      <ListItem ref={scrollRef} key='2'>
+                        <Grid container>
+                          <Grid
+                            item
+                            xs={11.5}
+                            sx={{
+                              display: "flex",
+                              flexDirection: "row-reverse",
+                            }}
+                          >
+                            <Box
+                              sx={{
+                                overflowWrap: "break-word",
+                                maxWidth: "60%",
+                              }}
+                            >
+                              <ListItemText
+                                align="right"
+                                sx={{
+                                  bgcolor: "#002680",
+                                  color: "white",
+                                  borderRadius: "2px",
+                                  padding: "5px 15px",
+                                }}
+                                primary='how r u?'
+                              />
+                            </Box>
+                          </Grid>
+                          <Grid item xs={0.5} sx={{ display: "flex" }}>
+                            <Avatar
+                              sx={{ width: 15, height: 15, marginTop: "auto" }}
+                              alt="Remy Sharp"
+                              src="https://material-ui.com/static/images/avatar/1.jpg"
+                            />
+                          </Grid>
+                          {/* <Grid item xs={12}>
+                <ListItemText align="right" secondary="10:30"></ListItemText>
+            </Grid> */}
+                        </Grid>
+                      </ListItem>
+                      <ListItem ref={scrollRef} key='3'>
+                        <Grid container>
+                          <Grid
+                            item
+                            xs={11.5}
+                            sx={{
+                              display: "flex",
+                              flexDirection: "row-reverse",
+                            }}
+                          >
+                            <Box
+                              sx={{
+                                overflowWrap: "break-word",
+                                maxWidth: "60%",
+                              }}
+                            >
+                              <ListItemText
+                                align="right"
+                                sx={{
+                                  bgcolor: "#002680",
+                                  color: "white",
+                                  borderRadius: "2px",
+                                  padding: "5px 15px",
+                                }}
+                                primary='i am fine '
+                              />
+                            </Box>
+                          </Grid>
+                          <Grid item xs={0.5} sx={{ display: "flex" }}>
+                            <Avatar
+                              sx={{ width: 15, height: 15, marginTop: "auto" }}
+                              alt="Remy Sharp"
+                              src="https://material-ui.com/static/images/avatar/1.jpg"
+                            />
+                          </Grid>
+                          {/* <Grid item xs={12}>
+                <ListItemText align="right" secondary="10:30"></ListItemText>
+            </Grid> */}
+                        </Grid>
+                      </ListItem>
+                    {/* )
                   : message.to ===
                       JSON.parse(localStorage.getItem("chat-app-user"))
                         .userEmail &&
-                      message.from === currentChat.email && (
-                        <ListItem key={message.id}>
+                      message.from === currentChat.email && ( */}
+                        <ListItem key='5'>
                           <Grid container>
                             <Grid item xs={0.5} sx={{ display: "flex" }}>
                               <Avatar
@@ -155,7 +236,7 @@ const Chatcontainer = ({ socket, currentChat }) => {
                               >
                                 <ListItemText
                                   align="left"
-                                  primary={`${message.text}`}
+                                  primary='i am  good too'
                                   sx={{
                                     bgcolor: "#ffffff",
                                     borderRadius: 2,
@@ -169,12 +250,93 @@ const Chatcontainer = ({ socket, currentChat }) => {
                 </Grid> */}
                           </Grid>
                         </ListItem>
-                      )
+                        <ListItem key='5'>
+                          <Grid container>
+                            <Grid item xs={0.5} sx={{ display: "flex" }}>
+                              <Avatar
+                                sx={{
+                                  width: 15,
+                                  height: 15,
+                                  marginTop: "auto",
+                                }}
+                                alt="Remy Sharp"
+                                src="https://material-ui.com/static/images/avatar/1.jpg"
+                              />
+                            </Grid>
+                            <Grid
+                              item
+                              xs={11.5}
+                              sx={{ display: "flex", flexDirection: "row" }}
+                            >
+                              <Box
+                                sx={{
+                                  overflowWrap: "break-word",
+                                  maxWidth: "40%",
+                                }}
+                              >
+                                <ListItemText
+                                  align="left"
+                                  primary='i am  good too'
+                                  sx={{
+                                    bgcolor: "#ffffff",
+                                    borderRadius: 2,
+                                    padding: "10px 15px",
+                                  }}
+                                />
+                              </Box>
+                            </Grid>
+                            {/* <Grid item xs={12}>
+                    <ListItemText align="right" secondary="10:30"></ListItemText>
+                </Grid> */}
+                          </Grid>
+                        </ListItem>
+                        <ListItem key='5'>
+                          <Grid container>
+                            <Grid item xs={0.5} sx={{ display: "flex" }}>
+                              <Avatar
+                                sx={{
+                                  width: 15,
+                                  height: 15,
+                                  marginTop: "auto",
+                                }}
+                                alt="Remy Sharp"
+                                src="https://material-ui.com/static/images/avatar/1.jpg"
+                              />
+                            </Grid>
+                            <Grid
+                              item
+                              xs={11.5}
+                              sx={{ display: "flex", flexDirection: "row" }}
+                            >
+                              <Box
+                                sx={{
+                                  overflowWrap: "break-word",
+                                  maxWidth: "40%",
+                                }}
+                              >
+                                <ListItemText
+                                  align="left"
+                                  primary='GHANTA ENGINEERING'
+                                  sx={{
+                                    bgcolor: "#ffffff",
+                                    borderRadius: 2,
+                                    padding: "10px 15px",
+                                  }}
+                                />
+                              </Box>
+                            </Grid>
+                            {/* <Grid item xs={12}>
+                    <ListItemText align="right" secondary="10:30"></ListItemText>
+                </Grid> */}
+                          </Grid>
+                        </ListItem>
+                        
+                      {/* )
               );
-            })}
+            })} */}
           </List>
 
-          <Chatinput socket={socket} currentUser={currentChat} />
+          <Chatinput  currentUser={currentChat} />
         </Grid>
       </Grid>
     </Grid>
