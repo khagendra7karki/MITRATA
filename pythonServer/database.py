@@ -45,6 +45,8 @@ class Database():
             return None
         return json.loads( result )
     
+    def add_friend( self, key ):
+        pass
 
 
     def store_notif( self,key, value ):

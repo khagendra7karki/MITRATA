@@ -1,6 +1,7 @@
 import React from 'react';
 import '../assets/css/swipe.css';
 import { useEffect } from 'react'
+import { ImagesearchRoller } from '@mui/icons-material';
   
 // Card component with destructured props
 //things we need
@@ -11,22 +12,16 @@ import { useEffect } from 'react'
 
 //reference origin ( this will be respect to the frame )
 //this is to calculate the angle of rotation
-const maxDisplacement = 300
-
-
-function distance( x, y ){
-    return Math.sqrt( x * x + y * y )
-}
 let isDragged = false
-const Swipe = ( { image1, image2 , handleSwipe } ) => {
+const maxDisplacement = 200
+
+
+const Card = ({ image, handleSwipe }) =>{
     const initialValue = {
         currentX: 0,        //with refernce to the center
         currentY: 0,        //with the refernce to the center
         currentAngle: 0,    //with refernce to the initial angle
-        reference: {
-            x: 0,           //with reference to center
-            y: 0,           //with refernce to center
-        },
+        reference: null,
         isDrag: false,
         height: 0,
         width: 0,
@@ -36,16 +31,13 @@ const Swipe = ( { image1, image2 , handleSwipe } ) => {
     const [ cordinate, setCordinate ] = React.useState( initialValue )
     
     const style = { transform: `rotate(${cordinate.currentAngle}deg)`,
-                    position: 'relative',
                     left: cordinate.currentX,
                     top: cordinate.currentY,
-                    opacity: 1
                 }
 
     const handleDragStart = (e) => {
         isDragged = true
         console.log( isDragged )
-        e.dataTransfer.setDragImage( new Image() , e.clienttX, e.clientY)
         let evaluatedState = {
             currentX: 0,
             currentY: 0,
@@ -63,8 +55,7 @@ const Swipe = ( { image1, image2 , handleSwipe } ) => {
     }
     const handleDrag = (e) => {
         // console.log( cordinate )
-        console.log( isDragged)
-        if( isDragged ){
+        if( isDragged && cordinate.reference){
             e.preventDefault()
             if( !(e.clientX *  e.clientY))
                 return
@@ -84,7 +75,7 @@ const Swipe = ( { image1, image2 , handleSwipe } ) => {
                 return ({ ...prev, ...evaluated})
             })
 
-            if( distance( distanceInX, distanceInY )  > maxDisplacement ) {
+            if( Math.abs( distanceInX )  > maxDisplacement ) {
                 isDragged = false
                 let rightSwiped = false
                 let leftSwiped = false
@@ -105,21 +96,23 @@ const Swipe = ( { image1, image2 , handleSwipe } ) => {
     }
 
     return<>
-        <div style = {{ display: 'flex' , justifyContent: 'center', alignItems: 'center'}} draggable =  {false} >
-            <div className = 'user-suggestion-image-wrapper' draggable style = { {...style } }  onDragStart = { handleDragStart } onDrag = { handleDrag }  onDragEnd  = { handleDragEnd }>
+            <div className = 'card' draggable style = { {...style } }  onDragStart = { (e) =>{e.preventDefault()} } onMouseMove = { handleDrag }  onMouseUp  = { handleDragEnd } onMouseDown = { handleDragStart }>
                 {(() =>{
-                        if( !image1 )
-                            return <></>
-                        return <img src = { image1 }  draggable ={ false }/>
+                        if( image )
+                            return <img src = { image }  draggable ={ false }/>
+                        return <></>
                         })()}
             </div>
-            <div className = 'user-suggestion-image-wrapper' style = {{ background: `url(${ image1 })`, position: 'absolute', zIndex : '-1' }}>
-                    {(() =>{
-                        if( !image2 )
-                            return <></>
-                        return <img src = { image2 }  draggable ={ false }/>
-                        })()}
-            </div>
+
+    </>
+}
+
+const Swipe = ( { images, handleSwipe } ) => {
+    return<>
+        <div className = 'swipe-wraper' draggable =  {false} >
+            { images.map( (image, index ) =>{
+                return <Card image = { image } handleSwipe = { handleSwipe } key = { index }/>
+            }) }
         </div>
     </>
 };

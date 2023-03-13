@@ -161,7 +161,7 @@ const UserFeed = ({ wsObject, user, setUser }) => {
             <Grid container>
                 <Grid item xs = { 5 } sx = {{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                     <Box>
-                        < Swipe image1 = { suggestion[0].image[0] } image2 = { suggestion[1].image[0] } handleSwipe = { onSwipe } />
+                        < Swipe images = {[ suggestion[0].image[0] , suggestion[1].image[0] ]} handleSwipe = { onSwipe } />
                         <Option sx = {{backgroundColor: '#b0b0b0', borderRadius: '20px' , py: 1.5, mx: 2}}
                                 handleRejection ={ handleRejection }
                                 handleApproval = { handleApproval }
