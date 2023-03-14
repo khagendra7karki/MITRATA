@@ -48,16 +48,9 @@ const Contacts = ({ changeChat }) => {
             overflowY: "auto",
           }}
         >
-      
-          {/* {users.map(
-            (user, index) =>
-            
-              (user.useremail !== data) && ( */}
              
                 <ListItem
-                  // button
-                  // key={user.socketID}
-                  // onClick={() => changeCurrentChat(user, index)}
+
                   sx={{
                     display: "flex",
                     flexDirection: "column",

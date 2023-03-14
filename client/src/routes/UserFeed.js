@@ -149,6 +149,11 @@ const UserFeed = ({ wsObject, user, setUser }) => {
     const handleLike = () =>{
         console.log( 'i have been liked' )
     }
+    
+    const rejectNotification = (rejectionId ) =>{
+        sendMessage ( { task: 'reject', fromEmail: user.user.email, rejectionEmail: rejectionId})
+    }
+    
     const addFriend = ( profile2, image2 ) =>{
         sendMessage( { task: 'add_friend', email1: user.user.email, image1: user.user.image[0] , email2: profile2, image2: image2})
     }
@@ -177,7 +182,7 @@ const UserFeed = ({ wsObject, user, setUser }) => {
                 <Grid item xs = { 7 } sx  ={{ display: 'flex', overflowY: 'hidden', height: '100%', alignSelf: 'center', justifyContent: 'center'}}>
                     <UserInfo display = { navBarControl } suggestion = {{ name: suggestion[0].name, motto: suggestion[0].motto, age: suggestion[0].age , image: suggestion[0].image }}/>
                     <Chat display = { navBarControl } />
-                    <Notification display = { navBarControl } notifications = { user.notification}  setUser = { setUser } addFriend = { addFriend }/>
+                    <Notification display = { navBarControl } notifications = { user.notification}  setUser = { setUser } addFriend = { addFriend } rejectNotification = { rejectNotification }/>
                 </Grid>
                 
             </Grid>

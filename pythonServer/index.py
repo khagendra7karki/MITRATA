@@ -101,10 +101,13 @@ def task( db, message, websocket):
     
     
     if ( message['task'] == 'store_notif'):
-        # print( message['key'])
+        # print( message)
         result = store_notification( db, message['key'] , message['value'] )
         return result 
 
+    if( message['task'] == 'reject'):
+        print( message)
+        db.delete_notif( message['fromEmail'], message['rejectionEmail'] )
     if( message['task'] == 'get_notif'):
         # print( message)
         result = get_notif( db, message['requester'])

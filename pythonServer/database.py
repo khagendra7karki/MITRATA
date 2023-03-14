@@ -79,8 +79,8 @@ class Database():
         search_result = self.notif.db_get( key )
         if search_result:
             search_result = json.loads( search_result )
-            result.append( search_result )
-            self.notif.db_set( key, json.dumps(result) )
+            search_result.append( value )
+            self.notif.db_set( key, json.dumps(search_result) )
             return
         result.append( value )
         # print( type(result) )
