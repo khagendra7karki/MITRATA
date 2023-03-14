@@ -183,7 +183,7 @@ const UserFeed = ({ wsObject, user, setUser }) => {
             </Grid>
         </Container>
 
-        <Card sx = {{background: 'none', position: 'absolute', bottom: '20px', left: '50%', transform: 'translateX(-50%)', zIndex: '-1'}}>
+        <Card sx = {{background: 'none', position: 'absolute', bottom: '20px', left: '50%', transform: 'translateX(-50%)', zIndex: '-1', boxShadow: 'none'}}>
             <CardMedia component = 'img'
                         image = {logo}
                         sx = {{width: '150px', border: '0'}}
