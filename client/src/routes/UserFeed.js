@@ -119,9 +119,7 @@ const UserFeed = ({ wsObject, user, setUser }) => {
         toggleControl( 1 )
 
     }
-    const onUserClick = () =>{
-        
-    }
+
     const onMesageClick = () =>{
         if( navBarControl & 8){
             toggleControl( 1 )
@@ -162,7 +160,6 @@ const UserFeed = ({ wsObject, user, setUser }) => {
         <UserNavBar sx = {{ position: 'relative' , borderRadius: '20px 0 0  20px ', backgroundColor: '#b0b0b0', position: 'absolute', right: '0', top: '50%', transform:'translateY(-50%)'}}
                     onMessageClick = { onMesageClick }
                     onHomeClick = { onHomeClick } 
-                    onUserClick = { onUserClick }
                     onNotificationClick = { onNotificationClick }
                     onSettingClick = { onSettingClick }
         />
@@ -181,7 +178,7 @@ const UserFeed = ({ wsObject, user, setUser }) => {
                 </Grid>
                 <Grid item xs = { 7 } sx  ={{ display: 'flex', overflowY: 'hidden', height: '100%', alignSelf: 'center', justifyContent: 'center'}}>
                     <UserInfo display = { navBarControl } suggestion = {{ name: suggestion[0].name, motto: suggestion[0].motto, age: suggestion[0].age , image: suggestion[0].image }}/>
-                    <Chat display = { navBarControl } />
+                    <Chat display = { navBarControl }  user = { user }/>
                     <Notification display = { navBarControl } notifications = { user.notification}  setUser = { setUser } addFriend = { addFriend } rejectNotification = { rejectNotification }/>
                 </Grid>
                 

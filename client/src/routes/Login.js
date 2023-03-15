@@ -27,11 +27,13 @@ const Login = ({wsObject, setUser }) => {
     const sendMessage = ( message ) =>{
         wsObject.send( JSON.stringify( message ))
     }
-    const handleSubmit = () =>{
+    const handleSubmit = (e) =>{
+        e.preventDefault()
         sendMessage({ task: 'verify', email: credential.email, password: credential.password })
     }
     return <>
         <CustomContainer sx = {{ backgroundImage : `url(${login_bg})`, backgroundSize: 'cover' , justifyContent: 'center'}}>
+                <form onSubmit = { handleSubmit }>
             <Stack>
                 <CardMedia component = 'img'
                             image = {logo}
@@ -40,24 +42,26 @@ const Login = ({wsObject, setUser }) => {
                 <Typography variant = 'h3' align = 'center' color = 'white'>
                     Login
                 </Typography>
-                <TextField sx = {{ background: 'white', borderRadius: '12px', my: 2}}
-                           label = 'Email'
-                           value = { credential.email }
-                           onChange = { ( event ) => setCredential(( prev ) => {return  {...prev, email: event.target.value}}) }
-                 />
-                <TextField  sx = {{background: 'white', borderRadius: '12px', my: 2}} 
-                            label = 'Password' 
-                            type = 'password'
-                            onChange = {(event) => setCredential((prev) => {return {...prev, password: event.target.value}})} />
+                    <TextField sx = {{ background: 'white', borderRadius: '12px', my: 2}}
+                            label = 'Email'
+                            value = { credential.email }
+                            onChange = { ( event ) => setCredential(( prev ) => {return  {...prev, email: event.target.value}}) }
+                    />
+                    <TextField  sx = {{background: 'white', borderRadius: '12px', my: 2}} 
+                                label = 'Password' 
+                                type = 'password'
+                                onChange = {(event) => setCredential((prev) => {return {...prev, password: event.target.value}})} />
 
-                <Button variant = 'contained' sx = {{ borderRadius: '20px !important', py : 1, my: 1 }} onClick = { handleSubmit }>
-                    <Typography variant = 'h5'>Login</Typography>
-                </Button>
+                    <Button variant = 'contained' sx = {{ borderRadius: '20px !important', py : 1, my: 1 }} onClick = { handleSubmit } type = 'submit'>
+                        <Typography variant = 'h5'>Login</Typography>
+                    </Button>
+
                 <Typography align = 'center' variant = 'h5' color = 'white' sx = {{ my: 1}}>
                     New User ? 
                     <CustomLink to = '/signup' sx = {{ color: 'white' }}  text = 'Sign Up'/>
                 </Typography>
             </Stack>
+                </form>
 
         </CustomContainer>
     </>
