@@ -52,13 +52,13 @@ const Login = ({wsObject, setUser }) => {
                                 type = 'password'
                                 onChange = {(event) => setCredential((prev) => {return {...prev, password: event.target.value}})} />
 
-                    <Button variant = 'contained' sx = {{ borderRadius: '20px !important', py : 1, my: 1 }} onClick = { handleSubmit } type = 'submit'>
-                        <Typography variant = 'h5'>Login</Typography>
-                    </Button>
-
+                <Button variant = 'contained' sx = {{ borderRadius: '20px !important', py : 1, my: 1 }} onClick = { handleSubmit }>
+                    <Typography variant = 'h5'>Login</Typography>
+                </Button>
+             
                 <Typography align = 'center' variant = 'h5' color = 'white' sx = {{ my: 1}}>
-                    New User ? 
-                    <CustomLink to = '/signup' sx = {{ color: 'white' }}  text = 'Sign Up'/>
+                    New User?  
+                    <CustomLink to = '/signup' sx = {{ color: 'white',marginLeft:'6px',fontWeight:'bold'}}  text = 'Sign Up'/>
                 </Typography>
             </Stack>
                 </form>
