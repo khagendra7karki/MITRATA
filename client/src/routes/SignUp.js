@@ -2,15 +2,15 @@
 import {  useState } from 'react'
 
 //custom imports
-
+import {  useNavigate } from 'react-router-dom'
 import userInfo from '../Utilities/userInfo'
 
-import First from '../components/signupcomponent/First'
-import Second from '../components/signupcomponent/Second'
+import First from '../components/SignUpChild'
+
 
 
 const SignUp = ({ wsObject }) =>{
-    
+    const navigate = useNavigate()
     const newUser = new userInfo(wsObject);
 
     const [ isFirst , setFirst ] = useState(1)
@@ -42,14 +42,14 @@ const SignUp = ({ wsObject }) =>{
     const handleSignUp = () => {
         console.log( credential )
         newUser.createUser( credential )
+        navigate('/login')
     }
     const settingFirst=(rem)=>{
         setFirst(rem)
     }
     
         return <>
-            <First  credential = { credential } handleChange = { handleChange } />
-            <Second  credential = { credential } handleChange = { handleChange } setCredential = { setCredential } handleSignUp = { handleSignUp }/>
+            <First  credential = { credential } handleChange = { handleChange } setCredential = { setCredential } handleSignUp = { handleSignUp } />
             </>
     
             

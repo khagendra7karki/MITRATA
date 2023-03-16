@@ -7,12 +7,22 @@ import logo from '../assets/images/logo-with-name.png'
 import CustomLink from '../components/Link'
 import { useState } from 'react'
 import { json, useNavigate } from 'react-router-dom'
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Login = ({wsObject, setUser }) => {
     const navigate = useNavigate()
+    
     const [credential, setCredential] = useState({email:'', password:''})
     wsObject.onmessage = ({ data }) => { handleMessages( data ) }
-
+    //
+    const toastOptions = {
+        position: "bottom-right",
+        autoClose: 8000,
+        pauseOnHover: true,
+        draggable: true,
+        theme: "dark",
+      };
 
     const handleMessages = (message) =>{
         message = JSON.parse( message )
@@ -23,12 +33,15 @@ const Login = ({wsObject, setUser }) => {
             setUser( { ...rest } )
             navigate( '/user' )
         }
+        else {if(credential.email != '' && credential.password !='')
+        toast.error("Incorrect email or password, please try again", toastOptions);}
     } 
     const sendMessage = ( message ) =>{
         wsObject.send( JSON.stringify( message ))
     }
     const handleSubmit = (e) =>{
         e.preventDefault()
+        if(credential.email == '' && credential.password ==''){toast.error("Email or password is missing", toastOptions);}
         sendMessage({ task: 'verify', email: credential.email, password: credential.password })
     }
     return <>
@@ -64,6 +77,7 @@ const Login = ({wsObject, setUser }) => {
                 </form>
 
         </CustomContainer>
+        <ToastContainer />
     </>
     
 }
