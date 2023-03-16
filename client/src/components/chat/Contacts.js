@@ -49,7 +49,7 @@ const Contacts = ({ chatList, setActiveChat }) => {
           }}
         >
              {
-              chatList.map(  ( chat ) => {
+              chatList.map(  ( chat, index ) => {
                 return <ListItem
                   sx={{
                     display: "flex",
@@ -61,7 +61,7 @@ const Contacts = ({ chatList, setActiveChat }) => {
                     margin: '0px',
                     ...style
                   }}
-
+                  key = { index }
                   onClick = {( e ) =>{ handleClick( chat )} }
                 >
                   <Grid container>

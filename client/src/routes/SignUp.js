@@ -17,7 +17,7 @@ const SignUp = ({ wsObject }) =>{
 
     const userInfoModel = {
         email: '',
-        passoword:'',
+        password:'',
         confirmPassword:'',
         firstName: '',
         lastName: '',

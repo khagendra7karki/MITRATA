@@ -25,10 +25,13 @@ const ChatApp=({display, user })=> {
     const [ activeChat , setActiveChat ] = useState( currentChat[0] )
     
     const updateChat = (chat, message) =>{
+      setActiveChat( prev =>{
+        return { ...prev, text: [ ...prev.text, message ]}
+      })
       
       for ( let i = 0; i < currentChat.length; i++ ){
         
-        if(  currentChat[ i ] == chat){
+        if(  currentChat[ i ].email == chat.email){
           let newChat = currentChat
           newChat[ i ].text.push( message )
           setCurrentChat( newChat )
@@ -36,9 +39,6 @@ const ChatApp=({display, user })=> {
         }
         
       }
-      setActiveChat( prev =>{
-        return { ...prev, text: [ ...prev.text, message ]}
-      })
     }
 
   // maintains an active chat 

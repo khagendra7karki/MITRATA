@@ -71,6 +71,7 @@ const UserFeed = ({ wsObject, user, setUser }) => {
     const sendNotif = async (id , name, image, fromEmail) =>{
         let message = { task: 'store_notif',key: id , value : {
             email: fromEmail,
+            name: name,
             content: `${name} is looking for a match.`,
             image: image
         }}
@@ -80,7 +81,6 @@ const UserFeed = ({ wsObject, user, setUser }) => {
 
 
     const sendMessage = ( message ) =>{
-        console.log( 'i am about to send a message')
         wsObject.send( JSON.stringify( message ))
     }
 
@@ -152,8 +152,8 @@ const UserFeed = ({ wsObject, user, setUser }) => {
         sendMessage ( { task: 'reject', fromEmail: user.user.email, rejectionEmail: rejectionId})
     }
     
-    const addFriend = ( profile2, image2 ) =>{
-        sendMessage( { task: 'add_friend', email1: user.user.email, image1: user.user.image[0] , email2: profile2, image2: image2})
+    const addFriend = ( profile2, image2, name2 ) =>{
+        sendMessage( { task: 'add_friend', email1: user.user.email, image1: user.user.image[0] , email2: profile2, image2: image2, name1: user.user.name, name2: name2})
     }
     return <>
     <CustomContainer sx = {{ display: 'flex'}}>
