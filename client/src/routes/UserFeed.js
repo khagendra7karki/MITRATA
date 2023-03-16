@@ -8,6 +8,7 @@ import UserNavBar from '../components/UserNavBar'
 import CustomContainer from '../components/CustomContaier'
 import Option from '../components/Option'
 import Notification from '../components/Notification'
+import Setting from '../components/Setting'
 import UserInfo from '../components/UserInfo'
 //image
 import logo from '../assets/images/logo-with-name.png'
@@ -137,6 +138,12 @@ const UserFeed = ({ wsObject, user, setUser }) => {
         toggleControl( 16 )         // 00010000
     }
     const onSettingClick = () =>{
+        if( navBarControl & 32 ){
+            toggleControl( 1 )
+            return
+        }
+        toggleControl( 32 )  
+
     }
     const handleRejection = ( id ) =>{
         console.log( 'i have been rejected')
@@ -180,6 +187,7 @@ const UserFeed = ({ wsObject, user, setUser }) => {
                     <UserInfo display = { navBarControl } suggestion = {{ name: suggestion[0].name, motto: suggestion[0].motto, age: suggestion[0].age , image: suggestion[0].image }}/>
                     <Chat display = { navBarControl }  user = { user }/>
                     <Notification display = { navBarControl } notifications = { user.notification}  setUser = { setUser } addFriend = { addFriend } rejectNotification = { rejectNotification }/>
+                    <Setting display = {navBarControl} />
                 </Grid>
                 
             </Grid>

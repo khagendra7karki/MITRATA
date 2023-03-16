@@ -1,11 +1,13 @@
 import React from "react"
 import {  useNavigate } from 'react-router-dom'
 import {  useState } from 'react'
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import logo from '../assets/images/logo-with-name.png'
 import CustomLink from './Link'
 import Input from "./Input"
 
-import { Container, Grid, Button, CardMedia, FormControlLabel, Box, Typography , Checkbox,OutlinedInput, FormControl, InputLabel, TextField} from "@mui/material"
+import { Container, Grid, Button, CardMedia, Box, Typography } from "@mui/material"
 import { Stack } from "@mui/system"
 
 
@@ -18,6 +20,13 @@ import Gender from './Gender'
 
 
 const First = ({credential, handleChange, setCredential, handleSignUp}) => {
+    const toastOptions = {
+        position: "bottom-right",
+        autoClose: 8000,
+        pauseOnHover: true,
+        draggable: true,
+        theme: "dark",
+      };
     const navigate = useNavigate()
     // const [empty, isEmpty ] = useState(false)
     const [ hobbies , setHobbies ] = useState([0, 0, 0, 0, 0, 0, 0, 0, 0])
@@ -31,8 +40,12 @@ const First = ({credential, handleChange, setCredential, handleSignUp}) => {
     }
     const handleSubmitForm = (e) =>{
         e.preventDefault()
-      
-        handleSubmit()
+        if(credential.password == credential.confirmPassword)
+        {handleSubmit()}
+        else
+        { 
+            toast.error("password and confirm password must be same, please try again", toastOptions)}
+            
     }
     return <>
             <Container>
@@ -126,7 +139,7 @@ const First = ({credential, handleChange, setCredential, handleSignUp}) => {
                             </Grid>
                         </Grid>
                        
-                        <Grid container spacing = {3}>
+                        <Grid container spacing = {3} sx={{my:0.75}}>
                         <Grid item sm = {6} xs = {12}sx = {{display: 'flex',justifyContent: 'center', px: 4}}>
 
                            <Stack direction = 'column' sx = { { width: '100%' }}>

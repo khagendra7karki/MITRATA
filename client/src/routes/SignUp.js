@@ -1,6 +1,7 @@
 
 import {  useState } from 'react'
-
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 //custom imports
 import {  useNavigate } from 'react-router-dom'
 import userInfo from '../Utilities/userInfo'
@@ -10,14 +11,22 @@ import First from '../components/SignUpChild'
 
 
 const SignUp = ({ wsObject }) =>{
+    const toastOptions = {
+        position: "bottom-right",
+        autoClose: 8000,
+        pauseOnHover: true,
+        draggable: true,
+        theme: "dark",
+      };
+
     const navigate = useNavigate()
     const newUser = new userInfo(wsObject);
 
-    const [ isFirst , setFirst ] = useState(1)
+   
 
     const userInfoModel = {
         email: '',
-        passoword:'',
+        password:'',
         confirmPassword:'',
         firstName: '',
         lastName: '',
@@ -42,11 +51,10 @@ const SignUp = ({ wsObject }) =>{
     const handleSignUp = () => {
         console.log( credential )
         newUser.createUser( credential )
-        navigate('/login')
+       
+    navigate('/login')
     }
-    const settingFirst=(rem)=>{
-        setFirst(rem)
-    }
+   
     
         return <>
             <First  credential = { credential } handleChange = { handleChange } setCredential = { setCredential } handleSignUp = { handleSignUp } />
