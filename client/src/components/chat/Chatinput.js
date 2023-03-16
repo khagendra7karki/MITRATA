@@ -5,9 +5,15 @@ import { Button } from "@mui/material";
 import SendIcon from "@mui/icons-material/Send";
 import { Grid, TextField } from "@mui/material";
 export default function Chatinput({  activeChat, updateChat }) {
+export default function Chatinput({  activeChat, updateChat }) {
   const [message, setMessage] = useState("");
   const handleOnSubmit = (event) => {
     event.preventDefault();
+    if( message ){
+      updateChat( activeChat, { from: message, time: ''})
+      setMessage( '' )
+
+    }
     if( message ){
       updateChat( activeChat, { from: message, time: ''})
       setMessage( '' )
@@ -38,6 +44,7 @@ export default function Chatinput({  activeChat, updateChat }) {
           type="text"
           onChange={(e) => setMessage(e.target.value)}
           fullWidth
+          sx = {{ borderRadius: '0 4px 4px 0px'}}
           sx = {{ borderRadius: '0 4px 4px 0px'}}
         />
       </Grid>

@@ -120,9 +120,7 @@ const UserFeed = ({ wsObject, user, setUser }) => {
         toggleControl( 1 )
 
     }
-    const onUserClick = () =>{
-        
-    }
+
     const onMesageClick = () =>{
         if( navBarControl & 8){
             toggleControl( 1 )
@@ -158,7 +156,6 @@ const UserFeed = ({ wsObject, user, setUser }) => {
         <UserNavBar sx = {{ position: 'relative' , borderRadius: '20px 0 0  20px ', backgroundColor: '#b0b0b0', position: 'absolute', right: '0', top: '50%', transform:'translateY(-50%)'}}
                     onMessageClick = { onMesageClick }
                     onHomeClick = { onHomeClick } 
-                    onUserClick = { onUserClick }
                     onNotificationClick = { onNotificationClick }
                     onSettingClick = { onSettingClick }
         />

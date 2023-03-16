@@ -8,7 +8,7 @@ const CustomAvatar = styled( Avatar,{} )({
         height: '60px',
         margin: '20px !important',
 })
-const UserNavBar = ({ onHomeClick, onUserClick, onSettingClick, onNotificationClick , onMessageClick }) => {
+const UserNavBar = ({ onHomeClick, onSettingClick, onNotificationClick , onMessageClick }) => {
     const sx = { position: 'relative' , borderRadius: '20px 0 0  20px ', position: 'absolute', right: '0', top: '50%', transform:'translateY(-50%)', overflow: 'hidden'}
     const itemStyle = { height: '60px', width: '60px', color: 'black'}
     const buttonStyle = {
@@ -26,11 +26,7 @@ const UserNavBar = ({ onHomeClick, onUserClick, onSettingClick, onNotificationCl
                         <HomeOutlined sx = {itemStyle}/>
                     </CustomAvatar>
                 </Button>
-                <Button onClick = { onUserClick } sx = { buttonStyle }>
-                    <CustomAvatar> 
-                        <AccountCircleOutlined sx = {itemStyle}/>
-                    </CustomAvatar>
-                </Button>
+
                 <Button onClick = { onMessageClick } sx = { buttonStyle }>
                     <CustomAvatar> 
                         <EmailOutlined sx = {itemStyle}/>
