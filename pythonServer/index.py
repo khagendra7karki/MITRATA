@@ -4,6 +4,11 @@ import json
 
 #custom database module
 from database import Database
+from src.lsm_tree import LSMTree
+
+
+# chat = LSMTree( 'CHATt-1', 'Chat/' , 'chat_memtable_backup')
+
 
 LEN = 0
 PORT = 6969
@@ -28,16 +33,42 @@ userDataSample= {
     'chat': '',
 
 }
-def store_chat( db, chat ):
-    db.store_chat( chat )
+# def add_friend( db,  message):
+#     key1 = message['email1']
+#     key2 = message['email2']
+#     image1 = message['image1']
+#     image2 = message['image2']
+#     name1 = message['name1']
+#     name2  = message['name2']
+#     profile1 = chat.db_get( key1 )
+#     profile2 = chat.db_get( key2 )
 
-def retrieive_chat( requester ):
-    pass
-def store_notification( chat ):
-    pass
-def retrieve_notification():
-    pass
+#     if( profile1 ):
+#         json_profile1 = json.loads( profile1 )
+#         json_profile1.append( { 'email':  key2, 'name': name2,  'text':[],'image': image2 } )
 
+#         chat.db_set( key1, json.dumps( profile1 ))
+#     else:
+#         chat.db_set( key1, json.dumps( [{ 'email': key2, 'name': name2, 'text': [], 'image': image2}]))
+#     if( profile2 ):
+#         json_profile2 = json.loads( profile1 )
+#         json_profile2.append( { 'email':  key1, 'name': name1,  'text':[],'image': image1 } )
+
+#         chat.db_set( key2, json.dumps( profile1 ))
+#     else:
+#         chat.db_set( key2, json.dumps( [{ 'email': key1, 'name': name1, 'text': [], 'image': image1}]))
+#     db.delete_notif( key1, key2 )
+
+# def get_chat( key1 ):
+#     result = chat.db_get( key1 )
+#     print ( key1 )
+#     if result:
+#         json_result = json.loads( result ) 
+#         # print('the json result is', json_result[0]['email'] )
+#         return json_result
+#     return None
+
+    
 # update user session 
 def update_user_session(email, last_suggestion, segment_index ):
     user_session_dict[ email ]['last_suggestion']= last_suggestion
@@ -48,7 +79,6 @@ def update_user_session(email, last_suggestion, segment_index ):
 def create_user_session(websocket, email, gender, last_suggestion, segment_index ):
     ''' creates a use session '''
     global user_session_dict
-    # print( 'the genderr is ' + gender )
     temp_user_session = {
                         ''+ email + '': {'socket' : websocket, 
                                          'gender': gender,
@@ -101,9 +131,19 @@ def task( db, message, websocket):
     
     
     if ( message['task'] == 'store_notif'):
-        # print( message['key'])
         result = store_notification( db, message['key'] , message['value'] )
         return result 
+
+    if( message['task'] == 'get_chat'):
+        # print( 'the requester is ', message['requester'])
+        result = db.get_chat( message['requester'])
+        # print( 'the result is ', result[0]['email'])
+        if result:
+            response = { 'task' :'get_chat', 'content': result }
+            final_response = { 'task': 'get_chat'} | response
+            return ( json.dumps( final_response) ) 
+        return json.dumps( { 'task': 'get_chat'} | defaultResponse )
+    
 
     if( message['task'] == 'get_notif'):
         # print( message)
@@ -114,12 +154,13 @@ def task( db, message, websocket):
             
         return json.dumps( defaultResponse )
     if message['task'] == 'add_friend':
-        # print( message )
-        add_friend( db, message)
+        db.add_friend( db, message)
         return json.dumps({ 'task': 'add_friend', 'status': 'successful'})
     return json.dumps( defaultResponse )
+
 def get_notif( db, key):
     return db.get_notif( key )
+
 
 def store_notification( db, key, value ):
     db.store_notif( key, value)
@@ -143,19 +184,6 @@ def get_suggestion( gender,  number, last_suggestion = None, segment_index = 0 )
         final_response.append( user_response )
     return json.dumps( final_response ), last_key, segment_index
 
-def add_friend( db, message ):
-    key1 = message['email1']
-    key2 = message['email2']
-    print( key1, key2 )
-    image1 = message['image1']
-    image2 = message['image2']
-    name1 = message['name1']
-    name2  = message['name2']
-
-    db.add_friend( key1, key2, image1, image2 , name1, name2)
-
-    
-
 
 
 async def main( websocket, path):
@@ -167,8 +195,32 @@ async def main( websocket, path):
     try:
         async for message in websocket:
             message = json.loads( message )
-            response = task( db, message, websocket ) 
-            await websocket.send( response )
+            if message['task'] == 'update_chat':
+                incoming_message = message['text']
+                from_email = message['from']
+                to_email = message['to'] 
+                output = { 'task': 'update_chat','from': from_email , 'content': {'to': incoming_message, 'time': ''}}
+                if to_email in user_session_dict:
+                    await user_session_dict[to_email ]['socket'].send( json.dumps( output))
+                    
+                from_profile = db.get_chat( from_email )
+                to_profile = db.get_chat( to_email )
+                for texts in from_profile:
+                    if texts['email'] == to_email:
+                        texts['text'].append( {'from': incoming_message, 'time': ''} )
+
+                for texts in to_profile:
+                    if texts['email'] == from_email:
+                        texts['text'].append({'to': incoming_message, 'time': ''})
+
+                db.chat.db_set( to_email , json.dumps( to_profile) )
+                db.chat.db_set( from_email, json.dumps( from_profile) )
+                
+
+            else:
+                response = task( db, message, websocket ) 
+                await websocket.send( response )
+            
 
 
     except websockets.exceptions.ConnectionClosed as  e:
@@ -185,6 +237,3 @@ print( 'Server is listening on port ' + str( PORT ))
 
 asyncio.get_event_loop().run_until_complete( start_server )
 asyncio.get_event_loop().run_forever()
-
-
-

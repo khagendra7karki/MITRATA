@@ -4,54 +4,36 @@ import { useState } from 'react';
 import Contacts from './chat/Contacts';
 import Chatcontainer from './chat/Chatcontainer';
 
-import Alexandria from '../assets/images/alexandria_daddario.jpg'
-import image1 from '../assets/images/image1.jpg'
 
-const ChatApp=({display, user })=> {
+const ChatApp=({display, chat, setChat, user , sendChat })=> {
 
-
-  const [ currentChat, setCurrentChat ] = useState( [ 
-    { email: '',name: 'Alexandria', text: [ { from: 'hello there', time: '2023/03/14 2:24'}, { to: 'hi how are you ', 
-        time: '2023/03/14 2: 25'},
-        
-        ], image : Alexandria},
-        
-    { email: '', name: 'George',  text : [ { from: 'Shut the fuck up Bitch', time: '2023/03/14 2:24'}, { to: 'hi how are you ', 
-        time: '2023/03/14 2:25'},
-        
-        ], image: image1 }
-    ])
-
-    const [ activeChat , setActiveChat ] = useState( currentChat[0] )
+  const [ activeChat , setActiveChat ] = useState(  (chat ? chat[0]: null) )
     
     const updateChat = (chat, message) =>{
-      
-      for ( let i = 0; i < currentChat.length; i++ ){
+      console.log( chat )
+      for ( let i = 0; i < chat.length; i++ ){
         setActiveChat( prev =>{
           return { ...prev, text: [ ...prev.text, message ]}
         })
         
-        if(  currentChat[ i ].email == chat.email ){
-          let newChat = currentChat
+        if(  chat[ i ].email == chat.email ){
+          let newChat = chat
           newChat[ i ].text.push( message )
-          setCurrentChat( newChat )
+          setChat( newChat )
           break
         }
-        
       }
+      
     }
 
-  // maintains an active chat 
-  // whose values will be displayed in the chat container
 
   if( display & 8){
   return (
   
     
     <Grid container  sx ={{ width: '45vw',height: '60vh', }} >
-  
-        <Chatcontainer  activeChat ={ activeChat } user = { user } updateChat = { updateChat }/>
-        <Contacts  chatList = { currentChat }  setActiveChat = { setActiveChat } />
+        <Chatcontainer user = { user } activeChat ={ activeChat } chat = { chat } updateChat = { updateChat } sendChat = { sendChat }/>
+        <Contacts  chatList = { chat }  setActiveChat = { setActiveChat } />
   
     </Grid>
 

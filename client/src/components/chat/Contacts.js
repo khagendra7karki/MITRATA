@@ -48,41 +48,49 @@ const Contacts = ({ chatList, setActiveChat }) => {
             overflowY: "auto",
           }}
         >
-             {
-              chatList.map(  ( chat, index ) => {
-                return <ListItem
-                  sx={{
-                    display: "flex",
-                    flexDirection: "column",
-                    alignItems: "center",
-                    overflow: "auto",
-                    backgroundColor: 'lightblue',
-                    padding: "5px",
-                    margin: '0px',
-                    ...style
-                  }}
-                  key = { index }
+             {(() =>{
+              if (chatList) {
+                return<>
+                  {chatList.map(  ( chat, index ) => {
+                      return <ListItem
+                        sx={{
+                          display: "flex",
+                          flexDirection: "column",
+                          alignItems: "center",
+                          overflow: "auto",
+                          backgroundColor: 'lightblue',
+                          padding: "5px",
+                          margin: '0px',
+                          ...style
+                        }}
+                        key = { index }
+      
+                        onClick = {( e ) =>{ handleClick( chat )} }
+                      >
+                        <Grid container>
+                          <Grid item xs={5}>
+                            <ListItemIcon>
+                              <Avatar
+                                sx={{ width: 45, height: 45 }}
+                                alt="Remy Sharp"
+                                src={ chat.image }
+                              />
+                            </ListItemIcon>
+                          </Grid>
+                          <Grid item xs={7} sx = {{ alignSelf: 'center'}}>
+                              <Typography variant = 'h6'>
+                                { chat.name }
+                              </Typography>                   
+                          </Grid>
+                        </Grid>
+                      </ListItem>
+                    })
 
-                  onClick = {( e ) =>{ handleClick( chat )} }
-                >
-                  <Grid container>
-                    <Grid item xs={5}>
-                      <ListItemIcon>
-                        <Avatar
-                          sx={{ width: 45, height: 45 }}
-                          alt="Remy Sharp"
-                          src={ chat.image }
-                        />
-                      </ListItemIcon>
-                    </Grid>
-                    <Grid item xs={7} sx = {{ alignSelf: 'center'}}>
-                        <Typography variant = 'h6'>
-                          { chat.name }
-                        </Typography>                   
-                     </Grid>
-                  </Grid>
-                </ListItem>
-              })
+                  }
+                </>
+              }
+              else return<></>
+             })()
              }
         </List>
       </Grid>

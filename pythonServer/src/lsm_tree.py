@@ -38,6 +38,7 @@ class LSMTree():
         if not (Path(segments_directory).exists() and Path(segments_directory).is_dir):
             Path(segments_directory).mkdir()
 
+        self.wal_object = AppendLog( self.segments_directory + self.wal_basename )
         # Attempt to load metadata and a pre-existing memtable
         self.load_metadata()
         self.restore_memtable()
@@ -153,7 +154,7 @@ class LSMTree():
         ''' (self) -> str
         Returns an instance of the write ahead log.
         '''
-        return AppendLog.instance(self.memtable_wal_path())
+        return self.wal_object
 
     def search_all_segments(self, key):
         ''' (self, str) -> str

@@ -13,12 +13,13 @@ CHAT_WAL_BASENAME = 'chat_memtable_bkup'
 
 
 NOTIF_DIRECTORY = 'Notification/'
-NOTIF_BASENAME = 'notif-1'
+NOTIF_BASENAME = 'NOTIF-1'
 NOTIF_WAL_BASENAME = 'notif_memtable_bkup'
 
 '''
 converts the string to python dictionary sending it to backend API handler
 '''
+
 
 class Database():
     def __init__( self ):
@@ -35,6 +36,9 @@ class Database():
         self.notif.set_sparsity_factor( 300000 )
         # self.lsm.get_memtable()
         
+        # self.random = LSMTree( 'random-1', 'random/' , 'random_memtable_backup')
+        # self.random.set_threshold( 1000000 )
+        # self.random.set_sparsity_factor( 300000 )
 
     def create_new_user( self, key , value ):
         self.lsm.db_set( key, value )
@@ -44,35 +48,6 @@ class Database():
         if result:
             return json.loads( result )
         return None
-    
-    def retrieve_chat( self, key ):
-        pass
-    
-    def update_chat( self, key ):
-        pass
-    #adds the given key to the friendlis of both the objects
-    def add_friend( self, key1, key2, image1, image2, name1, name2 ):
-
-        #adding friend follows up with deltetion of the notification 
-        profile1 = (self.chat.db_get( key1 ))
-        profile2 = (self.chat.db_get( key2 ))
-        if profile1:
-            
-            profile1 = json.loads( profile1 )
-            profile1.append( { 'email':  key2, 'name': name2,  'text':[{}],'image': image2 })
-
-
-        else:
-            self.chat.db_set( key1, json.dumps([{ 'email': key2, 'name': name2, 'text' :[{}], 'image': image2 }]))
-
-        if profile2: 
-            profile2  = json.loads( profile2 )
-            profile2.append( {'email': key1, 'name':name1, 'text' :[{}],'image': image1 })
-        else:
-            self.chat.db_set( key2, json.dumps([{ 'email': key1, 'name': name1, 'text':[{}],'image': image1 }]) )
-
-        self.delete_notif( key1, key2)
-
 
     def store_notif( self,key, value ):
         result = []
@@ -83,14 +58,49 @@ class Database():
             self.notif.db_set( key, json.dumps(search_result) )
             return
         result.append( value )
-        # print( type(result) )
         self.notif.db_set( key, json.dumps( result ))
     
     def get_notif( self, key ):
-        search_result = self.notif.db_get(key )
+        search_result = self.notif.db_get( key )
         if search_result:
             return json.loads(search_result)
         return None
+    def get_chat( self, key1 ):
+        result = self.chat.db_get( key1 )
+        print ( key1 )
+        if result:
+            json_result = json.loads( result ) 
+            return json_result
+        return None
+    
+    def add_friend( self, db,  message):
+        key1 = message['email1']
+        key2 = message['email2']
+        image1 = message['image1']
+        image2 = message['image2']
+        name1 = message['name1']
+        name2  = message['name2']
+
+        profile1 = self.chat.db_get( key1 )
+        profile2 = self.chat.db_get( key2 )
+
+        if( profile1 ):
+            json_profile1 = json.loads( profile1 )
+            json_profile1.append( { 'email':  key2, 'name': name2,  'text':[],'image': image2 } )
+
+            self.chat.db_set( key1, json.dumps( profile1 ))
+        else:
+            self.chat.db_set( key1, json.dumps( [{ 'email': key2, 'name': name2, 'text': [], 'image': image2}]))
+        if( profile2 ):
+            json_profile2 = json.loads( profile1 )
+            json_profile2.append( { 'email':  key1, 'name': name1,  'text':[],'image': image1 } )
+
+            self.chat.db_set( key2, json.dumps( profile1 ))
+        else:
+           self. chat.db_set( key2, json.dumps( [{ 'email': key1, 'name': name1, 'text': [], 'image': image1}]))
+
+        self.delete_notif( key1, key2 )
+    
     def delete_notif( self, from_key, key_to_delete ):
         final_result = [] 
         search_result = self.notif.db_get(from_key )

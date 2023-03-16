@@ -5,7 +5,6 @@ import {
   } from "@mui/material";
 import NotificationItem from './NotificationItems';
   export default function Notification({ display, notifications , setUser, addFriend}) {
-    console.log( notifications )
     const handleAccept = ( targetNotification  ) =>{
         setUser( ( prev ) =>{
           return { ...prev, notification: notifications.filter( notification => notification.email != targetNotification.email )}
@@ -14,9 +13,7 @@ import NotificationItem from './NotificationItems';
     }
     const handleDecline = (targetNotification ) =>{
       setUser( ( prev ) =>{
-        return { ...prev, notification: notifications.filter( notification => {
-                                                                                console.log( targetNotification )
-                                                                              return notification.email != targetNotification.email} )}
+        return { ...prev, notification: notifications.filter( notification => { return notification.email != targetNotification.email} )}
       })
     }
     return (
