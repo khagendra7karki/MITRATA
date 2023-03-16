@@ -12,9 +12,7 @@ import { useState } from 'react'
 //css
 import '../assets/css/notification.css'
 const NotificationItem = ({notification, handleAccept, handleDecline}) =>{
-    // const [notify,SetNotify] = useState('')
-    // console.log( ' i habe been called to disla')
-  // console.log( notification )
+
   function acceptedFunc(){
     console.log( 'notification has been accepted')
     console.log( notification )

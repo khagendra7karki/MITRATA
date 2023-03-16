@@ -149,8 +149,10 @@ def add_friend( db, message ):
     print( key1, key2 )
     image1 = message['image1']
     image2 = message['image2']
+    name1 = message['name1']
+    name2  = message['name2']
 
-    db.add_friend( key1, key2, image1, image2 )
+    db.add_friend( key1, key2, image1, image2 , name1, name2)
 
     
 

@@ -71,6 +71,7 @@ const UserFeed = ({ wsObject, user, setUser }) => {
     const sendNotif = async (id , name, image, fromEmail) =>{
         let message = { task: 'store_notif',key: id , value : {
             email: fromEmail,
+            name: name,
             content: `${name} is looking for a match.`,
             image: image
         }}
@@ -149,8 +150,8 @@ const UserFeed = ({ wsObject, user, setUser }) => {
     const handleLike = () =>{
         console.log( 'i have been liked' )
     }
-    const addFriend = ( profile2, image2 ) =>{
-        sendMessage( { task: 'add_friend', email1: user.user.email, image1: user.user.image[0] , email2: profile2, image2: image2})
+    const addFriend = ( profile2, image2, name2 ) =>{
+        sendMessage( { task: 'add_friend', email1: user.user.email, image1: user.user.image[0] , email2: profile2, image2: image2, name1: user.user.name, name2: name2})
     }
     return <>
     <CustomContainer sx = {{ display: 'flex'}}>

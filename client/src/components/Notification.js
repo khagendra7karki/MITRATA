@@ -10,7 +10,7 @@ import NotificationItem from './NotificationItems';
         setUser( ( prev ) =>{
           return { ...prev, notification: notifications.filter( notification => notification.email != targetNotification.email )}
         })
-        addFriend( targetNotification.email, targetNotification.image)
+        addFriend( targetNotification.email, targetNotification.image, targetNotification.name)
     }
     const handleDecline = (targetNotification ) =>{
       setUser( ( prev ) =>{

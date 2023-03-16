@@ -51,7 +51,7 @@ class Database():
     def update_chat( self, key ):
         pass
     #adds the given key to the friendlis of both the objects
-    def add_friend( self, key1, key2, image1, image2 ):
+    def add_friend( self, key1, key2, image1, image2, name1, name2 ):
 
         #adding friend follows up with deltetion of the notification 
         profile1 = (self.chat.db_get( key1 ))
@@ -59,28 +59,28 @@ class Database():
         if profile1:
             
             profile1 = json.loads( profile1 )
-            profile1.append( { key2 :[{}],'image': image2 })
+            profile1.append( { 'email':  key2, 'name': name2,  'text':[{}],'image': image2 })
 
-            self.delete_notif( key1, key2)
 
         else:
-            self.chat.db_set( key1, json.dumps([{ key2 :[{}],'image': image2 }]))
+            self.chat.db_set( key1, json.dumps([{ 'email': key2, 'name': name2, 'text' :[{}], 'image': image2 }]))
+
         if profile2: 
             profile2  = json.loads( profile2 )
-            profile2.append( { key1 :[{}],'image': image1 })
+            profile2.append( {'email': key1, 'name':name1, 'text' :[{}],'image': image1 })
         else:
-            self.chat.db_set( key2, json.dumps([{ key1 :[{}],'image': image1 }]))
+            self.chat.db_set( key2, json.dumps([{ 'email': key1, 'name': name1, 'text':[{}],'image': image1 }]) )
 
-        
-        pass
+        self.delete_notif( key1, key2)
+
 
     def store_notif( self,key, value ):
         result = []
         search_result = self.notif.db_get( key )
         if search_result:
             search_result = json.loads( search_result )
-            result.append( search_result )
-            self.notif.db_set( key, json.dumps(result) )
+            search_result.append( value )
+            self.notif.db_set( key, json.dumps(search_result) )
             return
         result.append( value )
         # print( type(result) )
