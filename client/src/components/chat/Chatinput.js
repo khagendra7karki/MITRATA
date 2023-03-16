@@ -4,21 +4,15 @@ import { Button } from "@mui/material";
 // import Fab from '@mui/material/Fab';
 import SendIcon from "@mui/icons-material/Send";
 import { Grid, TextField } from "@mui/material";
-export default function Chatinput({  currentUser }) {
+export default function Chatinput({  activeChat, updateChat }) {
   const [message, setMessage] = useState("");
   const handleOnSubmit = (event) => {
     event.preventDefault();
-    const data = JSON.parse(localStorage.getItem("chat-app-user"));
-    // if (message.trim() && data.userEmail) {
-    //   socket.emit("message", {
-    //     text: message,
-    //     from: data.userEmail,
-    //     to: currentUser.email,
-    //     id: `${socket.id}${Math.random()}`,
-    //     socketID: socket.id,
-    //   });
-    // }
-    setMessage("");
+    if( message ){
+      updateChat( activeChat, { from: message, time: ''})
+      setMessage( '' )
+
+    }
   };
   return (
     <Grid
@@ -44,20 +38,19 @@ export default function Chatinput({  currentUser }) {
           type="text"
           onChange={(e) => setMessage(e.target.value)}
           fullWidth
+          sx = {{ borderRadius: '0 4px 4px 0px'}}
         />
       </Grid>
-      <Grid xs={3} align="right">
-        {/* <Button type="submit" ><SendIcon/></Button> */}
+      <Grid align = 'center'>
         <Button
           type="submit"
           variant="contained"
           size="small"
           endIcon={<SendIcon />}
-          sx={{ marginTop: "10px" }}
+          sx={{ marginTop: '10px', height: '39px'}} 
         >
           Send
         </Button>
-        {/* <Fab color="primary" aria-label="add"><SendIcon /></Fab> */}
       </Grid>
     </Grid>
   );

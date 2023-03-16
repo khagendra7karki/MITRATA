@@ -116,6 +116,8 @@ class LSMTree():
                     for letter in line:
                         if( flag == 0 and letter == ','):
                             flag = 1
+                            if( key != k ):
+                                break
                             continue
                         if( flag == 0 ):
                             k = k + letter
@@ -481,10 +483,8 @@ class LSMTree():
         main_flag = False
         if not last_suggestion:
             main_flag  = True
-        # print( segments )
         while( len( segments )):
             segment = segments.pop()
-            # print( 'the name of the segment is' + segment )
             with open( self.segment_path( segment ), 'r') as s:
                 for line in s:
                     k =''
@@ -494,7 +494,6 @@ class LSMTree():
                         if( flag == 0 and letter == ',' ):
                             flag = 1
                             if( not main_flag and (k == last_suggestion) ):       #break out of the loop if key is less or equal
-                                # print( 'the key is' , k)
                                 main_flag = True
                                 break
                             continue

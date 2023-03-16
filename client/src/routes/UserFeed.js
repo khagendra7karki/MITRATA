@@ -177,7 +177,7 @@ const UserFeed = ({ wsObject, user, setUser }) => {
                 </Grid>
                 <Grid item xs = { 7 } sx  ={{ display: 'flex', overflowY: 'hidden', height: '100%', alignSelf: 'center', justifyContent: 'center'}}>
                     <UserInfo display = { navBarControl } suggestion = {{ name: suggestion[0].name, motto: suggestion[0].motto, age: suggestion[0].age , image: suggestion[0].image }}/>
-                    <Chat display = { navBarControl } />
+                    <Chat display = { navBarControl } user = {user} />
                     <Notification display = { navBarControl } notifications = { user.notification}  setUser = { setUser } addFriend = { addFriend }/>
                 </Grid>
                 
