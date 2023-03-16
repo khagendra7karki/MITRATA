@@ -28,15 +28,6 @@ userDataSample= {
     'chat': '',
 
 }
-def store_chat( db, chat ):
-    db.store_chat( chat )
-
-def retrieive_chat( requester ):
-    pass
-def store_notification( chat ):
-    pass
-def retrieve_notification():
-    pass
 
 # update user session 
 def update_user_session(email, last_suggestion, segment_index ):
@@ -149,11 +140,13 @@ def get_suggestion( gender,  number, last_suggestion = None, segment_index = 0 )
 def add_friend( db, message ):
     key1 = message['email1']
     key2 = message['email2']
-    print( key1, key2 )
+    # print( key1, key2 )
     image1 = message['image1']
     image2 = message['image2']
 
-    db.add_friend( key1, key2, image1, image2 )
+    name1 = message['name1']
+    name2 = message['name2']
+    db.add_friend( key1, key2, image1, image2, name1, name2 )
 
     
 
@@ -168,8 +161,12 @@ async def main( websocket, path):
     try:
         async for message in websocket:
             message = json.loads( message )
+            if message['task'] == 'update_chat':
+                pass
             response = task( db, message, websocket ) 
             await websocket.send( response )
+
+            
 
 
     except websockets.exceptions.ConnectionClosed as  e:

@@ -45,45 +45,61 @@ class Database():
             return json.loads( result )
         return None
     
+    #retrieve chat retrieves the chat data from the datbase and also loads the chat data into memory for faster access
     def retrieve_chat( self, key ):
-        pass
-    
-    def update_chat( self, key ):
-        pass
-    #adds the given key to the friendlis of both the objects
-    def add_friend( self, key1, key2, image1, image2 ):
-
-        #adding friend follows up with deltetion of the notification 
-        profile1 = (self.chat.db_get( key1 ))
-        profile2 = (self.chat.db_get( key2 ))
-        if profile1:
-            
-            profile1 = json.loads( profile1 )
-            profile1.append( { key2 :[{}],'image': image2 })
-
-            self.delete_notif( key1, key2)
-
-        else:
-            self.chat.db_set( key1, json.dumps([{ key2 :[{}],'image': image2 }]))
-        if profile2: 
-            profile2  = json.loads( profile2 )
-            profile2.append( { key1 :[{}],'image': image1 })
-        else:
-            self.chat.db_set( key2, json.dumps([{ key1 :[{}],'image': image1 }]))
-
+        retrieval_result = self.chat.db_get( key )
+        if retrieval_result:
+            self.chat.db_set( key , retrieval_result )
+            return json.loads(retrieval_result)
+        return None
         
-        pass
+    def update_chat( self, key, fromUser ,   message ):
+        chat_value = self.chat.db_get( key )
+        chat_value = json.loads( chat_value )
+        for chat in chat_value :
+            if chat['email'] == fromUser:
+                chat['text'].append( message )
+                break
+        self.chat.db_set( key, chat_value )
+            
+
+    #adds the given key to the friendlis of both the objects
+    def add_friend( self, key1, key2, image1, image2, name1, name2 ):
+        print( 'i am adding friend ')
+        #adding friend follows up with deltetion of the notification 
+        profile1 = self.chat.db_get( key1 )
+        profile2 = self.chat.db_get( key2 )
+        if profile1:
+            json_profile1 = json.loads( profile1 )
+            print( type( json_profile1 ) )
+            json_profile1.append( { 'email': key2, 'name': name1, 'text': [{}] ,'image': image2 })
+            self.chat.db_set( key1, json_profile1)
+
+        else:
+            self.chat.db_set( key1, json.dumps( { 'email': key2, 'name': name2, 'text': [{}] ,'image': image2 } ))
+        if profile2: 
+            json_profile2  = json.loads( profile2 )
+            print( profile2) 
+            json_profile2.append( { 'email': key1 ,'name': name1, 'text':[{}],'image': image1 })
+            json_profile2.db_set( key2, json_profile2)
+        else:
+            self.chat.db_set( key2, json.dumps([{ 'email': key1 ,'name': name1, 'text':[{}],'image': image1 }]))
+
+        self.delete_notif( key1, key2)
+        
 
     def store_notif( self,key, value ):
         result = []
         search_result = self.notif.db_get( key )
+        if 'text' in  value:
+            print( value['text'])
         if search_result:
             search_result = json.loads( search_result )
             search_result.append( value )
             self.notif.db_set( key, json.dumps(search_result) )
             return
         result.append( value )
-        # print( type(result) )
+
         self.notif.db_set( key, json.dumps( result ))
     
     def get_notif( self, key ):
@@ -93,11 +109,13 @@ class Database():
         return None
     def delete_notif( self, from_key, key_to_delete ):
         final_result = [] 
+        print( 'delete notification has been invoked')
         search_result = self.notif.db_get(from_key )
         if search_result:
             search_result= json.loads( search_result )
             for result in search_result:
                 if result['email'] == key_to_delete:
+                    print( key_to_delete )
                     continue
                 final_result.append( result )
             self.notif.db_set( from_key, json.dumps(final_result) )
