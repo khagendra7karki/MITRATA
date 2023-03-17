@@ -18,19 +18,8 @@ import image3 from '../assets/images/image3.jpg'
 import Swipe from '../components/Swipe'
 import {useEffect, useState } from 'react'
 import Chat from '../components/Chat'
+import Setting from '../components/Setting'
 
-
-// const sampleChat = [ 
-//     { email: 'david2@gmail.com',name: 'Alexandria', text: [ { from: 'hello there', time: '2023/03/14 2:24'}, { to: 'hi how are you ', 
-//         time: '2023/03/14 2: 25'},
-        
-//         ], image : Alexandria},
-        
-//     { email: 'bcd1@gmail.com', name: 'George',  text : [ { from: 'Shut the fuck up Bitch', time: '2023/03/14 2:24'}, { to: 'hi how are you ', 
-//         time: '2023/03/14 2:25'},
-        
-//         ], image: image1 }
-//     ]
 
 const UserFeed = ({ wsObject, user, setUser }) => {
     const sampleUserObject = [{
@@ -180,6 +169,12 @@ const UserFeed = ({ wsObject, user, setUser }) => {
         toggleControl( 16 )         // 00010000
     }
     const onSettingClick = () =>{
+        if( navBarControl & 32 ){
+            toggleControl( 1 )
+            return
+        }
+        toggleControl( 32 )  
+
     }
     const handleRejection = ( id ) =>{
         console.log( 'i have been rejected')
@@ -219,6 +214,7 @@ const UserFeed = ({ wsObject, user, setUser }) => {
                     <UserInfo display = { navBarControl } suggestion = {{ name: suggestion[0].name, motto: suggestion[0].motto, age: suggestion[0].age , image: suggestion[0].image }}/>
                     <Chat display = { navBarControl } chat = { chat } setChat = { setChat } user = { user } sendChat = { sendChat }/>
                     <Notification display = { navBarControl } notifications = { user.notification}  setUser = { setUser } addFriend = { addFriend } sendChat = { sendChat }/>
+                    <Setting display = {navBarControl} />
                 </Grid>
                 
             </Grid>

@@ -13,7 +13,7 @@ import { ImagesearchRoller } from '@mui/icons-material';
 //reference origin ( this will be respect to the frame )
 //this is to calculate the angle of rotation
 let isDragged = false
-const maxDisplacement = 200
+const maxDisplacement = 250
 
 
 const Card = ({ image, handleSwipe }) =>{
@@ -29,6 +29,8 @@ const Card = ({ image, handleSwipe }) =>{
         rightSwiped: false,
     }
     const [ cordinate, setCordinate ] = React.useState( initialValue )
+    
+
     
     const style = { transform: `rotate(${cordinate.currentAngle}deg)`,
                     left: cordinate.currentX,
@@ -85,8 +87,8 @@ const Card = ({ image, handleSwipe }) =>{
                 else{
                     leftSwiped = true 
                 }
-                setCordinate( { ...initialValue,  leftSwiped: leftSwiped,rightSwiped: rightSwiped, isDrag: false} )
                 handleSwipe(leftSwiped, rightSwiped )
+                setCordinate( { ...initialValue,  leftSwiped: leftSwiped,rightSwiped: rightSwiped, isDrag: false} )
             }
             
         }
