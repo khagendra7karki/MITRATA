@@ -108,6 +108,8 @@ def task( db, message, websocket):
                 create_user_session(  websocket , id,verification_result['gender'], last_key, segment_index )
 
                 return json.dumps( response )
+            else:
+                return json.dumps( { 'task': 'unsuccessful', 'reason': 'wrong_password'})
         
         return json.dumps( defaultResponse )
     
