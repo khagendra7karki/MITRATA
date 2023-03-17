@@ -90,6 +90,7 @@ const Chatcontainer = ({  activeChat ,user,  chat, sendChat, updateChat }) => {
                                     color: "white",
                                     borderRadius: "10px",
                                     padding: "5px 15px",
+                                    textAlign: 'left'
                                   }}
                                   primary= {`${ chat.from ? chat.from : chat.to }`}
                                 />
