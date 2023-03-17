@@ -4,7 +4,7 @@ const Input = ({label, value, onChange, ...props }) => {
     return <>
         <div className = 'customInputWraper'>
             <label className = 'customInputLabel'>{label}</label>
-            <input {...props} className = 'customInput' value = {value} onChange = {onChange}/>
+            <input {...props} className = 'customInput' value = {value} onChange = {onChange} required/>
 
         </div>
     </>
