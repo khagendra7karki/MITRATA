@@ -7,19 +7,32 @@ import logo from '../assets/images/logo-with-name.png'
 import CustomLink from '../components/Link'
 import { useState } from 'react'
 import { json, useNavigate } from 'react-router-dom'
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Login = ({wsObject, setUser, socket }) => {
     const navigate = useNavigate()
-    var temp = ''
+    
     const [credential, setCredential] = useState({email:'', password:''})
-    const [ response, setResponse ] = useState('')
     wsObject.onmessage = ({ data }) => { handleMessages( data ) }
-
+    //
+    const toastOptions = {
+        position: "bottom-right",
+        autoClose: 8000,
+        pauseOnHover: true,
+        draggable: true,
+        theme: "dark",
+      };
 
     const handleMessages = (message) =>{
         message = JSON.parse( message )
-        console.log( message )
         if( message.status == 'successful'  && message.task == 'verify'){
+<<<<<<< HEAD
+        
+              const{ task, status, ...rest }  = message
+            console.log( rest )
+            setUser( { ...rest } )
+=======
             //successfull verification follows up with,
             // request to get the profile suggestion
             console.log( message.gender )
@@ -33,14 +46,22 @@ const Login = ({wsObject, setUser, socket }) => {
             // console.log( 'value of temp is' , temp)
             // console.log( { task : 'getData' , gender: temp } )
             sendMessage( { task : 'getData' , gender: response.gender } )
+>>>>>>> 761c23820aeaa92924ccd06cf17f74a6f3200b6e
             navigate( '/user' )
         }
+        else {if(credential.email != '' && credential.password !='')
+        toast.error("Incorrect email or password, please try again", toastOptions);}
     } 
     const sendMessage = ( message ) =>{
         wsObject.send( JSON.stringify( message ))
     }
     const handleSubmit = (e) =>{
+<<<<<<< HEAD
+        e.preventDefault()
+        if(credential.email == '' && credential.password ==''){toast.error("Email or password is missing", toastOptions);}
+=======
         e.preventDefault();
+>>>>>>> 761c23820aeaa92924ccd06cf17f74a6f3200b6e
         sendMessage({ task: 'verify', email: credential.email, password: credential.password })
         const userdata = {
             userEmail: credential.email,
@@ -51,7 +72,8 @@ const Login = ({wsObject, setUser, socket }) => {
         console.log("helllo i reach2");
      }
     return <>
-        <CustomContainer sx = {{ backgroundImage : `url(${login_bg})`, backgroundSize: 'contain' , justifyContent: 'center'}}>
+        <CustomContainer sx = {{ backgroundImage : `url(${login_bg})`, backgroundSize: 'cover' , justifyContent: 'center'}}>
+                <form onSubmit = { handleSubmit }>
             <Stack>
                 <CardMedia component = 'img'
                             image = {logo}
@@ -60,26 +82,29 @@ const Login = ({wsObject, setUser, socket }) => {
                 <Typography variant = 'h3' align = 'center' color = 'white'>
                     Login
                 </Typography>
-                <TextField sx = {{ background: 'white', borderRadius: '12px', my: 2}}
-                           label = 'Email'
-                           value = { credential.email }
-                           onChange = { ( event ) => setCredential(( prev ) => {return  {...prev, email: event.target.value}}) }
-                 />
-                <TextField  sx = {{background: 'white', borderRadius: '12px', my: 2}} 
-                            label = 'Password' 
-                            type = 'password'
-                            onChange = {(event) => setCredential((prev) => {return {...prev, password: event.target.value}})} />
+                    <TextField sx = {{ background: 'white', borderRadius: '12px', my: 2}}
+                            label = 'Email'
+                            value = { credential.email }
+                            onChange = { ( event ) => setCredential(( prev ) => {return  {...prev, email: event.target.value}}) }
+                    />
+                    <TextField  sx = {{background: 'white', borderRadius: '12px', my: 2}} 
+                                label = 'Password' 
+                                type = 'password'
+                                onChange = {(event) => setCredential((prev) => {return {...prev, password: event.target.value}})} />
 
                 <Button variant = 'contained' sx = {{ borderRadius: '20px !important', py : 1, my: 1 }} onClick={(e)=>  handleSubmit(e) }>
                     <Typography variant = 'h5'>Login</Typography>
                 </Button>
+             
                 <Typography align = 'center' variant = 'h5' color = 'white' sx = {{ my: 1}}>
-                    New User ? 
-                    <CustomLink to = '/signup' sx = {{ color: 'white' }}  text = 'Sign Up'/>
+                    New User?  
+                    <CustomLink to = '/signup' sx = {{ color: 'white',marginLeft:'6px',fontWeight:'bold'}}  text = 'Sign Up'/>
                 </Typography>
             </Stack>
+                </form>
 
         </CustomContainer>
+        <ToastContainer />
     </>
     
 }

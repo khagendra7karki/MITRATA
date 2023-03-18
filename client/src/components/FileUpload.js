@@ -26,7 +26,7 @@ const ImageWraper = ({imageURL}) =>{
   return <>
     
       {
-        [...imageURL].map( ( url  ) => <Image key = { 12345 } url = { url } />)
+        [...imageURL].map( ( url , index ) => <Image key = { index } url = { url } />)
       }
   </>
 }
@@ -52,7 +52,7 @@ function FileUploadComponent({ setCredential }) {
         const reader = new FileReader()
         reader.addEventListener('load', () => {
             setCredential( ( prev ) => {
-              prev.image.push( { data: reader.result} )
+              prev.image.push(  reader.result )
               return prev
             })
           })

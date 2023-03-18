@@ -43,7 +43,16 @@ class userInfo{
         this.hobbies = object.hobbies
         this.image =object.image
         let requestObject = JSON.stringify({task: 'create', key : this.email, value: {...this.createJSON()}})
+<<<<<<< HEAD
+        console.log( requestObject )
+        this.wsObject.send( requestObject )
+    }
+
+    verifyUser( credential ){
+        this.wsObject.sendMessage( credential )
+=======
         this.wsObject.send( requestObject)
+>>>>>>> 761c23820aeaa92924ccd06cf17f74a6f3200b6e
     }
 }
 

@@ -5,7 +5,7 @@ import image2 from '../assets/images/image2.jpg'
 import image3 from '../assets/images/image3.jpg'
 const Photo = ({ wsObject }) =>{
     const sendMessage = () =>{
-        wsObject.send( JSON.stringify({'task': 'getData', 'gender': 'Male'}))
+        wsObject.send( JSON.stringify({'task': 'getData', 'gender': 'Female', number: 1}))
     }
     const [ url , setURL ] = useState( Alexandria )
     wsObject.onmessage = async ({data}) =>{
@@ -13,15 +13,14 @@ const Photo = ({ wsObject }) =>{
         // console.log( data[0] )
         // console.log( data[0] )
         console.log( data )
-        data.forEach( ( data ) =>{
-            
-        })
-        const base64Response = await fetch(data.image[0].data)
-        let temp = await base64Response.blob()
-        console.log(temp)
-        temp = window.URL.createObjectURL( temp )
-        setURL( temp )
-        console.log( temp )
+        console.log( data.content[0].image )
+ 
+        // const base64Response = await fetch(data.content[0].image[0])
+        // let temp = await base64Response.blob()
+        // console.log(temp)
+        // temp = window.URL.createObjectURL( temp )
+        setURL( data.content[0].image[0] )
+        console.log( data.content[0].image[0] )
     }
     return <>
         <h2>Hello I display Pictures.</h2>

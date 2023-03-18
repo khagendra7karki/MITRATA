@@ -1,25 +1,14 @@
-import { Container, Grid, Button, CardMedia, FormControlLabel, Box, Typography , Checkbox,OutlinedInput, FormControl, InputLabel, TextField} from "@mui/material"
-import { Stack } from "@mui/system"
-import { useEffect, useState } from 'react'
+
+import {  useState } from 'react'
 
 //custom imports
-import logo from '../assets/images/logo-with-name.png'
-import CustomLink from '../components/Link'
-import Input from "../components/Input"
-import HobbiesButton from "../components/HobbiesButton"
+import {  useNavigate } from 'react-router-dom'
 import userInfo from '../Utilities/userInfo'
-import FileUpload from "../components/FileUpload"
-import Birthdate from "../components/Birthdate"
-import Gender from '../components/Gender'
 
-const First = ({setFirst, credential, handleChange}) => {
-    return <>
-            <Container>
-                <Stack justifyContent  ='center' sx = {{borderBottom: '2px solid black', pb: 3}}>
-                    <CardMedia component = 'img'
-                                image = { logo }
-                                sx = {{width: '175px', margin: 'auto', pb: 2, pt: 4}}>
+import First from '../components/SignUpChild'
 
+<<<<<<< HEAD
+=======
                     </CardMedia>    
                     <Typography align = 'center' variant = 'h5'>Sign up to Mitrata</Typography>
                     <Button variant = 'contained'
@@ -259,12 +248,15 @@ const Second = ({ credential, handleChange, setCredential, handleSignUp }) => {
         
     </>
 }
+>>>>>>> 761c23820aeaa92924ccd06cf17f74a6f3200b6e
 
 
 const SignUp = ({ wsObject }) =>{
+    const navigate = useNavigate()
     const newUser = new userInfo(wsObject);
 
-    const [ isFirst , setFirst ] = useState(true)
+    const [ isFirst , setFirst ] = useState(1)
+
     const userInfoModel = {
         email: '',
         passoword:'',
@@ -275,7 +267,7 @@ const SignUp = ({ wsObject }) =>{
         motto: '',
         birthday: '',
         address: '',
-        gender: '',
+        gender: 'Female',
         hobbies: [],
         image: []
     }
@@ -287,21 +279,21 @@ const SignUp = ({ wsObject }) =>{
             return { ...prev, [name] : value}
         })
     }
+  
 
     const handleSignUp = () => {
         console.log( credential )
         newUser.createUser( credential )
+        navigate('/login')
     }
-    if( isFirst) {
+    const settingFirst=(rem)=>{
+        setFirst(rem)
+    }
+    
         return <>
-            <First setFirst = { setFirst } credential = { credential } handleChange = { handleChange } />
-        </>
-    }
-    else{
-        return <>
-            <Second credential = { credential } handleChange = { handleChange } setCredential = { setCredential } handleSignUp = { handleSignUp }/>
-        </>
-    }
+            <First  credential = { credential } handleChange = { handleChange } setCredential = { setCredential } handleSignUp = { handleSignUp } />
+            </>
+    
             
 }
 export default SignUp

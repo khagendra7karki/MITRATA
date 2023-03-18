@@ -7,11 +7,16 @@ import Login from './routes/Login'
 import SignUp from './routes/SignUp'
 import Home from './routes/Home'
 import UserFeed from './routes/UserFeed'
+<<<<<<< HEAD
+// import Chat from './routes/Chat'
+=======
 
+>>>>>>> 761c23820aeaa92924ccd06cf17f74a6f3200b6e
 import wss from './Utilities/frontendWebsocketInterface'
 import FileUpload from './components/FileUpload'
 import Swipe from './routes/Swipe'
 import Photo from './routes/Photo'
+import Chat from './components/Chat'
 import { useState } from 'react';
 import socketIO from "socket.io-client"
 const socket = socketIO.connect("http://localhost:4000")
