@@ -7,7 +7,6 @@ import {
     Grid,
   } from "@mui/material";
 
-import { useState } from 'react'
 
 //css
 import '../assets/css/notification.css'
