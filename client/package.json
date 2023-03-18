@@ -6,8 +6,8 @@
     "@emotion/react": "^11.10.6",
     "@emotion/styled": "^11.10.6",
     "@mui/icons-material": "^5.11.0",
-    "@mui/material": "^5.11.12",
-    "@mui/x-date-pickers": "^6.0.0",
+    "@mui/material": "^5.11.11",
+    
     "@react-spring/web": "^9.5.5",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
@@ -18,7 +18,15 @@
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.8.0",
     "react-scripts": "^5.0.1",
+<<<<<<< HEAD
     "react-toastify": "^9.1.1",
+=======
+    "react-tinder-card": "^1.6.2",
+    "socket.io-client": "^4.6.0",
+    "uuid": "^8.3.2",
+    
+    "@mui/x-date-pickers": "^6.0.0",
+>>>>>>> 761c23820aeaa92924ccd06cf17f74a6f3200b6e
     "web-vitals": "^2.1.4"
   },
   "scripts": {

@@ -110,11 +110,19 @@ class Database():
             return None
         return json.loads( result )
     
+<<<<<<< HEAD
     def get_random_data( self, gender,segment_index, last_suggestion, num ):
         '''returns an array of the random result
             size of the array is determined by num
         '''
 
         return (self.lsm.db_get_random( gender, segment_index, last_suggestion,num ))  
+=======
+    def get_random_data( self, gender ):
+        '''returns a randomm value from the database
+           returns a tuple of key and value
+        '''
+        return (self.lsm.db_get_random( gender ))  
+>>>>>>> 761c23820aeaa92924ccd06cf17f74a6f3200b6e
  
     

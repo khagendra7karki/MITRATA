@@ -2,7 +2,7 @@ import Login from "./Login"
 
 const Home = ({wsObject, setUser}) =>{
     return (<>
-      <Login wsObject = { wsObject } setUser = { setUser }/>
+      <Login wsObject = { wsObject } setUser = { setUser } />
     </>
     )
 }

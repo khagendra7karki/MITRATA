@@ -77,6 +77,21 @@ class LSMTree():
         # Write to memtable
         self.memtable.add(key, value)
         self.memtable.total_bytes += additional_size
+<<<<<<< HEAD
+=======
+    def db_get_random( self, gender ):
+
+        # get the new node from memtable
+            # traverse the tree 
+        in_order = self.memtable.in_order()
+        for profile in in_order:
+            key = profile.key
+            value = json.loads( profile.value )
+            if value['gender'] != gender:
+                return key, value 
+        return None
+        #get the random data from 
+>>>>>>> 761c23820aeaa92924ccd06cf17f74a6f3200b6e
 
     def db_get_random( self, gender, segment_index, last_suggestion , num ):
         '''returns an tuple of the result , last_key and  segment number'''

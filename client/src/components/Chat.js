@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { Grid,Box,Paper} from '@mui/material'
 import { useState } from 'react';
+<<<<<<< HEAD
 import Contacts from './chat/Contacts';
 import Chatcontainer from './chat/Chatcontainer';
 
@@ -61,3 +62,32 @@ const ChatApp=({display, user })=> {
 }
 
 export default ChatApp;
+=======
+import Contacts from '../chatcomponents/Contacts';
+import Chatcontainer from '../chatcomponents/Chatcontainer';
+
+const ChatApp=({})=> {
+  const [currentChat, setCurrentChat] = useState(undefined);
+  const changeChat = (chat) => {
+    setCurrentChat(chat);
+  };
+
+  return (
+  
+    
+    <Grid container  sx ={{ width: '70vh',height: '60vh', }} >
+    
+    {/* {currentChat &&  <Chatcontainer socket={socket} currentChat={currentChat}/>} */}
+    <Chatcontainer  currentChat={currentChat}/>
+    <Contacts  changeChat={changeChat}/>
+    </Grid>
+
+
+
+
+
+  );
+}
+
+export default ChatApp;
+>>>>>>> 761c23820aeaa92924ccd06cf17f74a6f3200b6e

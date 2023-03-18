@@ -53,12 +53,19 @@
         
 #         return json.dumps( defaultResponse )
     
+<<<<<<< HEAD
 #     if( message['task'] == 'create' ):
 #         print( 'A record added to the database')
 #         db.create_new_user( message['key'],json.dumps( message['value'] ))        
 #         return json.dumps({ 'task': 'create', 'status': 'successful'})
+=======
+    if( message['task'] == 'create' ):
+        db.create_new_user( message['key'],json.dumps( message['value']) )        
+        return json.dumps({ 'task': 'create', 'status': 'successful'})
+>>>>>>> 761c23820aeaa92924ccd06cf17f74a6f3200b6e
     
     
+<<<<<<< HEAD
 #     if( message['task'] == 'getData'):
 #         print( message )
 #         return get_suggestion( message['task'], )
@@ -107,3 +114,21 @@
     
     
 #     return user_session
+=======
+    if( message['task'] == 'getData'):
+        print( message )
+        key, value = db.get_random_data( message['gender'] )
+        if not key and (not value):
+            return json.dumps( defaultResponse )
+        user_response = randomDataSample
+        user_response['email'] = key
+        user_response['age'] = value['age']
+        user_response['name'] = value['firstName']
+        user_response['motto'] = value['motto']
+        user_response['image'] = value['image'] 
+        user_response['status'] = 'successful'
+        user_response['task'] = 'getData'
+        return json.dumps( user_response )
+        
+    return json.dumps( defaultResponse )
+>>>>>>> 761c23820aeaa92924ccd06cf17f74a6f3200b6e

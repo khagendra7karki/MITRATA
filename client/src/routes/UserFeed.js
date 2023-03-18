@@ -2,6 +2,8 @@
 
 import { ChevronLeft, ChevronRight } from '@mui/icons-material'
 import { Box, Card, CardMedia, Grid, Container, Typography , Avatar} from '@mui/material'
+import Chat from '../components/Chat'
+import Notification from '../components/Notification'
 
 //custom component
 import UserNavBar from '../components/UserNavBar'
@@ -17,12 +19,27 @@ import image2 from '../assets/images/image2.jpg'
 import image3 from '../assets/images/image3.jpg'
 import Swipe from '../components/Swipe'
 import {useEffect, useState } from 'react'
+<<<<<<< HEAD
 import Chat from '../components/Chat'
 
 
 
 const UserFeed = ({ wsObject, user, setUser }) => {
     const sampleUserObject = [{
+=======
+
+// maintains the user data
+const blobToURL = async ( blob ) =>{
+    const base64Response = await fetch( blob )
+    const URL = await base64Response.blob()
+    const returnObject = window.URL.createObjectURL( URL )
+    // console.log( 'from top', returnObject )
+    return returnObject
+}
+
+const UserFeed = ({ wsObject, user, setUser,socket }) => {
+    const sampleUserObject = {
+>>>>>>> 761c23820aeaa92924ccd06cf17f74a6f3200b6e
         name: 'Alisha',
         id: 'alisha773@gmail.comm',
         age: '18',
@@ -45,6 +62,7 @@ const UserFeed = ({ wsObject, user, setUser }) => {
             console.log( 'something went wrong' )
             return
         }    
+<<<<<<< HEAD
 
         setSuggestion(() =>{
             console.log( user )
@@ -66,6 +84,26 @@ const UserFeed = ({ wsObject, user, setUser }) => {
             initialSetup()
             console.log( {task: 'get_notif', requester: user.user.email} )
             sendMessage( {task: 'get_notif', requester: user.user.email})
+=======
+        user.suggestion[0].image.map( ( blob ) => { blobToURL( blob.data ).then( ( value ) => {setSuggestion( ( prev    ) => {
+                                                                                                if( prev.images ){
+                                                                                                    prev.images.push( value )
+                                                                                                    return prev
+                                                                                                }
+                                                                                                return { ...prev, images: [value]}
+                                                                                            })})})
+        setSuggestion(() =>{
+            return {
+            name: user.suggestion[0].name,
+            id: user.suggestion[0].email,
+            age: user.suggestion[0].age,
+            motto: user.suggestion[0].motto, 
+        }})        
+    }
+    useEffect( () =>{
+        initialSetup()
+        console.log( suggestion )
+>>>>>>> 761c23820aeaa92924ccd06cf17f74a6f3200b6e
     }, [] )
 
     const sendNotif = async (id , name, image, fromEmail) =>{
@@ -108,6 +146,7 @@ const UserFeed = ({ wsObject, user, setUser }) => {
 
     }
     const onSwipe = (left, right ) =>{      //do certain task on swipe
+<<<<<<< HEAD
         sendMessage( { task: 'getData', gender: user.gender, number: 1, requester: user.user.email } )
         if( right ){
             handleApproval( suggestion[0].email, user.user.name, user.user.image[0], user.user.email)
@@ -115,13 +154,20 @@ const UserFeed = ({ wsObject, user, setUser }) => {
         else {
             handleRejection( suggestion[0].email )
         }
+=======
+        sendMessage( { task: 'getData', gender: user.gender } )
+>>>>>>> 761c23820aeaa92924ccd06cf17f74a6f3200b6e
     }
+
+    const [toggle,setToggle] = useState(true)
+    const [selected,setSelected] = useState('')
     const onHomeClick = () =>{
         toggleControl( 1 )
 
     }
 
     const onMesageClick = () =>{
+<<<<<<< HEAD
         if( navBarControl & 8){
             toggleControl( 1 )
             return
@@ -136,6 +182,12 @@ const UserFeed = ({ wsObject, user, setUser }) => {
             return
         }
         toggleControl( 16 )         // 00010000
+=======
+        setSelected('message')
+    }
+    const onNotificationClick = () =>{
+        setSelected('notification')
+>>>>>>> 761c23820aeaa92924ccd06cf17f74a6f3200b6e
     }
     const onSettingClick = () =>{
     }
@@ -153,12 +205,18 @@ const UserFeed = ({ wsObject, user, setUser }) => {
     }
     return <>
     <CustomContainer sx = {{ display: 'flex'}}>
-        <UserNavBar sx = {{ position: 'relative' , borderRadius: '20px 0 0  20px ', backgroundColor: '#b0b0b0', position: 'absolute', right: '0', top: '50%', transform:'translateY(-50%)'}}
+        <UserNavBar sx = {{ borderRadius: '20px 0 0  20px ', backgroundColor: '#b0b0b0', position: 'absolute', right: '0', top: '50%', transform:'translateY(-50%)'}}
                     onMessageClick = { onMesageClick }
                     onHomeClick = { onHomeClick } 
                     onNotificationClick = { onNotificationClick }
                     onSettingClick = { onSettingClick }
         />
+         <Box sx={{ zIndex: 'tooltip',position: 'absolute', right: '120px', top: '50%', transform:'translateY(-50%)'}}  >
+        <Chat socket={socket} />
+        </Box>
+        {toggle && (selected==='notification')&& (<Box sx={{ zIndex: 'tooltip',position: 'absolute', right: '120px', top: '50%', transform:'translateY(-50%)'}}  >
+        <Notification socket={socket} />
+        </Box>)}
         <Container sx = {{ padding: '0 !important', display: 'flex' , alignItems: 'center', maxHeight: '800px'}}>
             <Grid container>
                 <Grid item xs = { 5 } sx = {{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
@@ -173,9 +231,66 @@ const UserFeed = ({ wsObject, user, setUser }) => {
                     
                 </Grid>
                 <Grid item xs = { 7 } sx  ={{ display: 'flex', overflowY: 'hidden', height: '100%', alignSelf: 'center', justifyContent: 'center'}}>
+<<<<<<< HEAD
                     <UserInfo display = { navBarControl } suggestion = {{ name: suggestion[0].name, motto: suggestion[0].motto, age: suggestion[0].age , image: suggestion[0].image }}/>
                     <Chat display = { navBarControl } user = {user} />
                     <Notification display = { navBarControl } notifications = { user.notification}  setUser = { setUser } addFriend = { addFriend }/>
+=======
+                    <Box maxWidth='600px'maxHeight='500px'>
+                        <Typography variant = 'h2' component = 'h2' color = 'white' sx = {{marginLeft: 3}}>{`${suggestion.name} ${ suggestion.age }`}</Typography>
+                        <Typography sx = {{ color: '#964c90', lineHeight: '1.2', fontSize: '24px', m: 3}} >
+                            {`${ suggestion.motto }`}
+                        </Typography>
+                        <Box sx = {{ display: 'flex', justifyContent: 'center', borderRadius: '16px' , mx: 3}}>
+                            <Grid container> 
+
+                                {(() =>{
+                                    const fallout = [1, 2, 3]
+                                    if( suggestion.images ){
+                                        return<>
+                                        {suggestion.images.map( (image, index ) =>{
+                                                var img = new Image()
+                                                return <>
+                                                    <Grid item   sm = { 6 }  md = { 4 } sx = {{display: 'flex' , justifyContent: 'center', p: 0}} key = {index}>
+                                                    <Card sx = {{width: '200px', borderRadius: '0'}}>
+                                                        <CardMedia component = 'img'
+                                                                image = { image }
+                                                                sx = {{width: '100%'}}
+                                                        >
+                                                        </CardMedia>
+                                                    </Card>
+                                                    </Grid>        
+                                                </>
+                                            })}
+                                        </>
+                                    }
+                                    else
+                                        return<>{
+                                            fallout.map( ( index ) =>{
+                                                return<>
+                                                <Grid item   sm = { 6 }  md = { 4 } sx = {{display: 'flex' , justifyContent: 'center', p: 0}} key = {index}>
+                                                <Card sx = {{width: '200px', borderRadius: '0'}}>
+                                                    <CardMedia component = 'img'
+                                                            sx = {{width: '100%', width: '150px', height: '150px', background: 'grey'}}
+                                                    >
+                                                    </CardMedia>
+                                                </Card>
+
+                                                </Grid>        
+                                        </>})
+                                        } 
+                                    </>
+                                })()}
+
+                            </Grid>
+                        </Box>
+                    </Box>
+
+                    
+
+                        
+                
+>>>>>>> 761c23820aeaa92924ccd06cf17f74a6f3200b6e
                 </Grid>
                 
             </Grid>
