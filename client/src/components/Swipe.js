@@ -1,6 +1,6 @@
 import React from 'react';
 import '../assets/css/swipe.css';
-
+import { useEffect } from 'react'
   
 // Card component with destructured props
 //things we need
@@ -17,7 +17,7 @@ const maxDisplacement = 300
 function distance( x, y ){
     return Math.sqrt( x * x + y * y )
 }
-const Swipe = ( { image1, image2 } ) => {
+const Swipe = ( { image1, image2 , handleSwipe } ) => {
     const initialValue = {
         currentX: 0,        //with refernce to the center
         currentY: 0,        //with the refernce to the center
@@ -82,7 +82,7 @@ const Swipe = ( { image1, image2 } ) => {
             const distanceInX = x - cordinate.reference.x
             const distanceInY  = y - cordinate.reference.y
             const base = cordinate.height / 2
-            let angle = (Math.atan( distanceInX / base )) * 180/3.14
+            let angle = (Math.atan( distanceInX / base )) * 60/3.14
             if( Math.abs( angle ) > 30 ){
                 if( angle > 0 ){
                     angle = 30
@@ -100,20 +100,21 @@ const Swipe = ( { image1, image2 } ) => {
             setCordinate((prev) => {
                 return ({ ...prev, ...evaluated})
             })
-            console.log( distanceInX, distanceInY)
-            console.log( distance( distanceInX, distanceInY ) )
+            // console.log( distanceInX, distanceInY)
+            // console.log( distance( distanceInX, distanceInY ) )
             if( distance( distanceInX, distanceInY )  > maxDisplacement ) {
                 let rightSwiped = false
                 let leftSwiped = false
                 if( distanceInX > 0 )
-                    rightSwiped = true
+                rightSwiped = true
                 else{
-                   leftSwiped = true 
+                    leftSwiped = true 
                 }
+                console.log( 'i have been swiped ')
+                handleSwipe(leftSwiped, rightSwiped )
                 setCordinate( { ...initialValue, rightSwiped: rightSwiped, leftSwiped: leftSwiped, isDrag: false, isSwiped: true} )
             }
             
-            // console.log( cordinate.leftSwiped, cordinate.rightSwiped )
         }
     }
     const handleDragEnd = (e) => {
@@ -123,10 +124,18 @@ const Swipe = ( { image1, image2 } ) => {
     return<>
         <div style = {{ display: 'flex' , justifyContent: 'center', alignItems: 'center'}} draggable =  {false} >
             <div className = 'user-suggestion-image-wrapper' draggable style = { {...style } }  onDragStart = { handleDragStart } onDrag = { handleDrag }  onDragEnd  = { handleDragEnd }>
-                <img src = { image2 }  draggable ={ false }/>
+                {(() =>{
+                        if( !image1 )
+                            return <></>
+                        return <img src = { image1 }  draggable ={ false }/>
+                        })()}
             </div>
             <div className = 'user-suggestion-image-wrapper' style = {{ background: `url(${ image1 })`, position: 'absolute', zIndex : '-1' }}>
-                <img src = { image1 } draggable = { false } />
+                    {(() =>{
+                        if( !image2 )
+                            return <></>
+                        return <img src = { image2 }  draggable ={ false }/>
+                        })()}
             </div>
         </div>
     </>

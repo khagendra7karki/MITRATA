@@ -12,7 +12,9 @@ const CustomContainer = styled(Box, {} )(({theme}) =>({
     top: '0',
     backgroundColor: '#3f304b',
     display: 'flex',
-    alignItems: 'center'
+    alignItems: 'center', 
+    overflow: 'hidden',
+    zIndex: -2
 
 }))
 

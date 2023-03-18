@@ -1,5 +1,9 @@
+
+
 import { ChevronLeft, ChevronRight } from '@mui/icons-material'
-import { Box, Card, CardMedia, Grid, Container, Typography } from '@mui/material'
+import { Box, Card, CardMedia, Grid, Container, Typography , Avatar} from '@mui/material'
+import Chat from '../components/Chat'
+import Notification from '../components/Notification'
 
 //custom component
 import UserNavBar from '../components/UserNavBar'
@@ -12,85 +16,174 @@ import image1 from '../assets/images/image1.jpg'
 import image2 from '../assets/images/image2.jpg'
 import image3 from '../assets/images/image3.jpg'
 import Swipe from '../components/Swipe'
-const UserFeed = () => {
+import {useEffect, useState } from 'react'
+
+// maintains the user data
+const blobToURL = async ( blob ) =>{
+    const base64Response = await fetch( blob )
+    const URL = await base64Response.blob()
+    const returnObject = window.URL.createObjectURL( URL )
+    // console.log( 'from top', returnObject )
+    return returnObject
+}
+
+const UserFeed = ({ wsObject, user, setUser,socket }) => {
+    const sampleUserObject = {
+        name: 'Alisha',
+        id: 'alisha773@gmail.comm',
+        age: '18',
+        motto: `I'm a foodie, a beer snog , a dog lover, and a proud nerd. I'm not shallow , but you better know how to keep the conversation going, because I have more to offer than just my body . Feel free to drop me a line.`,
+        images: [Alexandria, image1, image2, image3],  
+    }
+    const [ suggestion, setSuggestion ] = useState( sampleUserObject )
+    const initialSetup = () =>{
+        // console.log( user )
+        if( !user ){
+            console.log( 'something went wrong' )
+            return
+        }    
+        user.suggestion[0].image.map( ( blob ) => { blobToURL( blob.data ).then( ( value ) => {setSuggestion( ( prev    ) => {
+                                                                                                if( prev.images ){
+                                                                                                    prev.images.push( value )
+                                                                                                    return prev
+                                                                                                }
+                                                                                                return { ...prev, images: [value]}
+                                                                                            })})})
+        setSuggestion(() =>{
+            return {
+            name: user.suggestion[0].name,
+            id: user.suggestion[0].email,
+            age: user.suggestion[0].age,
+            motto: user.suggestion[0].motto, 
+        }})        
+    }
+    useEffect( () =>{
+        initialSetup()
+        console.log( suggestion )
+    }, [] )
+    const sendMessage = ( message ) =>{
+        wsObject.send( JSON.stringify( message ))
+    }
+
+    wsObject.onmessage = ({data}) => { handleMessages( data )}
+    const handleMessages = ( response ) => {
+        response = JSON.parse( response )
+        if( response.status == 'successful' && response.task == 'getData' ){
+            const{ task, status, ...rest }  = response
+            setUser( ( prev ) =>{
+                prev.suggestion.push( rest )
+                return prev
+            })
+        }
+
+    }
+    const onSwipe = (left, right ) =>{      //do certain task on swipe
+        sendMessage( { task: 'getData', gender: user.gender } )
+    }
+
+    const [toggle,setToggle] = useState(true)
+    const [selected,setSelected] = useState('')
+    const onHomeClick = () =>{
+
+    }
+    const onUserClick = () =>{
+        
+    }
+    const onMesageClick = () =>{
+        setSelected('message')
+    }
+    const onNotificationClick = () =>{
+        setSelected('notification')
+    }
+    const onSettingClick = () =>{
+        
+    }
+    const handleRejection = () =>{
+        console.log( 'i have been rejected')
+    }
+    const handleApproval = () =>{
+        console.log('i have been approved')
+    }
+    const handleLike = () =>{
+        console.log( 'i have been liked' )
+    }
     return <>
     <CustomContainer sx = {{ display: 'flex'}}>
-        <UserNavBar sx = {{ position: 'relative' , borderRadius: '20px 0 0  20px ', backgroundColor: '#b0b0b0', position: 'absolute', right: '0', top: '50%', transform:'translateY(-50%)'}}/>
+        <UserNavBar sx = {{ borderRadius: '20px 0 0  20px ', backgroundColor: '#b0b0b0', position: 'absolute', right: '0', top: '50%', transform:'translateY(-50%)'}}
+                    onMessageClick = { onMesageClick }
+                    onHomeClick = { onHomeClick } 
+                    onUserClick = { onUserClick }
+                    onNotificationClick = { onNotificationClick }
+                    onSettingClick = { onSettingClick }
+        />
+         <Box sx={{ zIndex: 'tooltip',position: 'absolute', right: '120px', top: '50%', transform:'translateY(-50%)'}}  >
+        <Chat socket={socket} />
+        </Box>
+        {toggle && (selected==='notification')&& (<Box sx={{ zIndex: 'tooltip',position: 'absolute', right: '120px', top: '50%', transform:'translateY(-50%)'}}  >
+        <Notification socket={socket} />
+        </Box>)}
         <Container sx = {{ padding: '0 !important', display: 'flex' , alignItems: 'center', maxHeight: '800px'}}>
             <Grid container>
                 <Grid item xs = { 5 } sx = {{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                 <ChevronLeft  color=  'disabled' sx = {{height: '90px', width: '90px'}} />
-                    {/* <Box>
-                        <Card sx = {{ height: '600px' , borderRadius: '20px'}}>
-                            <CardMedia component = 'img' 
-                                        image = {Alexandria}
-                                        sx = {{
-                                            height: '100%',
-                                            alighItems: 'center',
-                                        }}
-                                        >
-
-                            </CardMedia>
-                        </Card>
-                    </Box> */}
                     <Box>
-                        < Swipe image1 = { image3 } image2 = { Alexandria }/>
-                        <Option sx = {{backgroundColor: '#b0b0b0', borderRadius: '20px' , py: 1.5, mx: 2}}/>
+                        < Swipe image1 = { Alexandria } image2 = { image1 } handleSwipe = { onSwipe } />
+                        <Option sx = {{backgroundColor: '#b0b0b0', borderRadius: '20px' , py: 1.5, mx: 2}}
+                                handleRejection ={ handleRejection }
+                                handleApproval = { handleApproval }
+                                handleLike = { handleLike}
+                        />
                     </Box>
                     
                     <ChevronRight  color = 'disabled' sx = {{ height: '90px' , width: '90px' }} />
                 </Grid>
                 <Grid item xs = { 7 } sx  ={{ display: 'flex', overflowY: 'hidden', height: '100%', alignSelf: 'center', justifyContent: 'center'}}>
                     <Box maxWidth='600px'maxHeight='500px'>
-                        <Typography variant = 'h2' component = 'h2' color = 'white' sx = {{marginLeft: 3}}>Alisha  19</Typography>
+                        <Typography variant = 'h2' component = 'h2' color = 'white' sx = {{marginLeft: 3}}>{`${suggestion.name} ${ suggestion.age }`}</Typography>
                         <Typography sx = {{ color: '#964c90', lineHeight: '1.2', fontSize: '24px', m: 3}} >
-                            I'm a foodie, a beer snog , a dog lover, and a proud nerd. I'm not shallow , but you better know how to keep the conversation going, because I have more to offer than just my body . Feel free to drop me a line.
+                            {`${ suggestion.motto }`}
                         </Typography>
                         <Box sx = {{ display: 'flex', justifyContent: 'center', borderRadius: '16px' , mx: 3}}>
                             <Grid container> 
-                                <Grid item   sm = { 6 }  md = { 4 } sx = {{display: 'flex' , justifyContent: 'center', p: 0}}>
-                                    <Card sx = {{width: '200px', borderRadius: '0'}}>
-                                        <CardMedia component = 'img'
-                                                    image = { image1 }
-                                                    sx = {{width: '100%'}}
-                                                    
-                                        >
 
-                                        </CardMedia>
-                                    </Card>
-
-                                </Grid>
-                            
-                                <Grid item  sm = { 6 } md = { 4 } sx = {{display: 'flex' , justifyContent: 'center', p: 0}}>
-                                    <Card sx = {{width: '200px', borderRadius: '0'}}>
-                                        <CardMedia component = 'img'
-                                                        image = { image2 }
-                                                        sx = {{width: '100%'}}
+                                {(() =>{
+                                    const fallout = [1, 2, 3]
+                                    if( suggestion.images ){
+                                        return<>
+                                        {suggestion.images.map( (image, index ) =>{
+                                                var img = new Image()
+                                                return <>
+                                                    <Grid item   sm = { 6 }  md = { 4 } sx = {{display: 'flex' , justifyContent: 'center', p: 0}} key = {index}>
+                                                    <Card sx = {{width: '200px', borderRadius: '0'}}>
+                                                        <CardMedia component = 'img'
+                                                                image = { image }
+                                                                sx = {{width: '100%'}}
                                                         >
-                                        </CardMedia>
-                                    </Card>
-                                </Grid>
+                                                        </CardMedia>
+                                                    </Card>
+                                                    </Grid>        
+                                                </>
+                                            })}
+                                        </>
+                                    }
+                                    else
+                                        return<>{
+                                            fallout.map( ( index ) =>{
+                                                return<>
+                                                <Grid item   sm = { 6 }  md = { 4 } sx = {{display: 'flex' , justifyContent: 'center', p: 0}} key = {index}>
+                                                <Card sx = {{width: '200px', borderRadius: '0'}}>
+                                                    <CardMedia component = 'img'
+                                                            sx = {{width: '100%', width: '150px', height: '150px', background: 'grey'}}
+                                                    >
+                                                    </CardMedia>
+                                                </Card>
 
-                                <Grid item  sm = { 6 } md = { 4 }  sx = {{display: 'flex' , justifyContent: 'center', p: 0}}>
-                                    <Card sx = {{width: '200px', borderRadius: '0'}}>
-                                        <CardMedia component = 'img'
-                                                        image = { image3 }
-                                                        sx = {{width: '100%'}}
-                                                        >
+                                                </Grid>        
+                                        </>})
+                                        } 
+                                    </>
+                                })()}
 
-                                        </CardMedia>
-                                    </Card>
-                                </Grid>
-                                <Grid item  sm = { 6 } md = { 4 }  sx = {{display: 'flex' , justifyContent: 'center', p: 0}}>
-                                    <Card sx = {{width: '200px', borderRadius: '0'}}>
-                                        <CardMedia component = 'img'
-                                                        image = { Alexandria }
-                                                        sx = {{width: '100%'}}
-                                                        >
-
-                                        </CardMedia>
-                                    </Card>
-                                </Grid>
                             </Grid>
                         </Box>
                     </Box>
