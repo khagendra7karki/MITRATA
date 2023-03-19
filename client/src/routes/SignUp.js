@@ -1,6 +1,7 @@
 
 import {  useState } from 'react'
-
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 //custom imports
 
 import userInfo from '../Utilities/userInfo'
@@ -10,10 +11,22 @@ import Second from '../components/signupcomponent/Second'
 
 
 const SignUp = ({ wsObject }) =>{
+<<<<<<< HEAD
     
+=======
+    const toastOptions = {
+        position: "bottom-right",
+        autoClose: 8000,
+        pauseOnHover: true,
+        draggable: true,
+        theme: "dark",
+      };
+
+    const navigate = useNavigate()
+>>>>>>> e45375f71783379f9b3d7ef85c75fb7d63b49d52
     const newUser = new userInfo(wsObject);
 
-    const [ isFirst , setFirst ] = useState(1)
+   
 
     const userInfoModel = {
         email: '',
@@ -42,10 +55,16 @@ const SignUp = ({ wsObject }) =>{
     const handleSignUp = () => {
         console.log( credential )
         newUser.createUser( credential )
+<<<<<<< HEAD
     }
     const settingFirst=(rem)=>{
         setFirst(rem)
+=======
+       
+    navigate('/login')
+>>>>>>> e45375f71783379f9b3d7ef85c75fb7d63b49d52
     }
+   
     
         return <>
             <First  credential = { credential } handleChange = { handleChange } />
