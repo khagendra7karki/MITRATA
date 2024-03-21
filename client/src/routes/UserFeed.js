@@ -1,7 +1,4 @@
-
-
-import { ChevronLeft, ChevronRight } from '@mui/icons-material'
-import { Box, Card, CardMedia, Grid, Container, Typography , Avatar} from '@mui/material'
+import { Box, Card, CardMedia, Grid, Container } from '@mui/material'
 
 //custom component
 import UserNavBar from '../components/UserNavBar'
@@ -136,12 +133,12 @@ const UserFeed = ({ wsObject, user, setUser }) => {
         const  message = { task: 'update_chat', from: user.user.email,to: to,  text: text }
         sendMessage( message )
     }
-    const onSwipe = (left, right ) =>{      //do certain task on swipe
+    const onSwipe = (dir ) =>{      //do certain task on swipe
         sendMessage( { task: 'getData', gender: user.gender, number: 1, requester: user.user.email } )
-        if( right ){
+        if( dir == 'right' ){
             handleApproval( suggestion[0].email, user.user.name, user.user.image[0], user.user.email)
         }
-        else {
+        else if (dir == 'left') {
             handleRejection( suggestion[0].email )
         }
     }

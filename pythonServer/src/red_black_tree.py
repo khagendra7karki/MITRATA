@@ -1,5 +1,3 @@
-
-
 # The possible Node colors
 BLACK = 'BLACK'
 RED = 'RED'
@@ -136,7 +134,7 @@ class RedBlackTree:
     def contains(self, key) -> bool:
         return bool(self.find_node(key))
 
-    def ceil(self, key) -> int or None:
+    def ceil(self, key) -> int or None: # type: ignore
         if self.root is None: return None
         last_found_val = None if self.root.key < key else self.root.key
 
@@ -158,7 +156,7 @@ class RedBlackTree:
         find_ceil(self.root)
         return last_found_val
 
-    def floor(self, key) -> int or None:
+    def floor(self, key) -> int or None: # type: ignore
         if self.root is None: return None
         last_found_val = None if self.root.key > key else self.root.key
 
