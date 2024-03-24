@@ -48,10 +48,9 @@ const Contacts = ({ chatList, setActiveChat }) => {
             overflowY: "auto",
           }}
         >
-             {(() =>{
-              if (chatList) {
-                return<>
-                  {chatList.map(  ( chat, index ) => {
+          {
+            chatList ?
+            (chatList.map(  ( chat, index ) => {
                       return <ListItem
                         sx={{
                           display: "flex",
@@ -65,7 +64,7 @@ const Contacts = ({ chatList, setActiveChat }) => {
                         }}
                         key = { index }
       
-                        onClick = {( e ) =>{ handleClick( chat )} }
+                        onClick = {( e ) =>{ handleClick( chat.email )} }
                       >
                         <Grid container>
                           <Grid item xs={5}>
@@ -86,12 +85,9 @@ const Contacts = ({ chatList, setActiveChat }) => {
                       </ListItem>
                     })
 
-                  }
-                </>
-              }
-              else return<></>
-             })()
-             }
+            ):
+            <></>
+          }
         </List>
       </Grid>
     </Grid>

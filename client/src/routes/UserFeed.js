@@ -98,27 +98,16 @@ const UserFeed = ({ wsObject, user, setUser }) => {
             })
         }
         else if( response.task == 'get_chat'){
+            console.log(response.content)
             setChat( response.content )
         }
 
         else if( response.task == 'update_chat'){
-            updateChat( response.from, response.content)
+            setChat(response.content)
         }
 
     }
-    const updateChat  = ( email, text) =>{
-        setChat( prev =>{
-            let newValue = prev.map( ( chat ) =>{
-                if(chat.email == email){
-                    chat.text.push( text )
-                } 
-                return chat
-            })
-            console.log( newValue )
-            
-            return newValue
-        })
-    }
+
 
     const sendChat = (to ,  text)=>{
         const  message = { task: 'update_chat', from: user.user.email,to: to,  text: text }
@@ -200,7 +189,7 @@ const UserFeed = ({ wsObject, user, setUser }) => {
                 </Grid>
                 <Grid item xs = { 7 } sx  ={{ display: 'flex', overflowY: 'hidden', height: '100%', alignSelf: 'center', justifyContent: 'center'}}>
                     <UserInfo display = { navBarControl } suggestion = {{ name: suggestion[0].name, motto: suggestion[0].motto, age: suggestion[0].age , image: suggestion[0].image }}/>
-                    <Chat display = { navBarControl } chat = { chat } setChat = { setChat } user = { user } sendChat = { sendChat }/>
+                    <Chat display = { navBarControl } chat = { chat } user = { user } sendChat = { sendChat }/>
                     <Notification display = { navBarControl } notifications = { user.notification}  setUser = { setUser } addFriend = { addFriend } sendChat = { sendChat }/>
                     <Setting display = {navBarControl} />
                 </Grid>

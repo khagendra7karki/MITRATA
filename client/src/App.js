@@ -16,6 +16,7 @@ import Chat from './components/Chat'
 import { useState } from 'react';
 
 const ws = wss.webSocketObject 
+
 function App() {
   const [ user, setUser] = useState( {})
   return (<>

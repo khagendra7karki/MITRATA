@@ -1,8 +1,8 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
-import MenuItem from '@mui/material/MenuItem';
-
+import wsObject from '../Utilities/frontendWebsocketInterface';
+import { Link } from 'react-router-dom';
 const currencies = [
   {
     value: 'Male',
@@ -15,6 +15,7 @@ const currencies = [
 ];
 
 export default function Gender({ setCredential }) {
+  const ws = wsObject.webSocketObject
   const [ gender, setGender ] = React.useState( 'Female' ) 
   const handleChange = ( newValue ) =>{
     setGender( newValue )
@@ -26,24 +27,27 @@ export default function Gender({ setCredential }) {
   }
   
   return (
+    <>
     <TextField
           select
           SelectProps={{
             native: true,
           }}
-        
+          
           value = { gender }
           onChange = { (e) =>{
             console.log( e.target.value )
             handleChange( e.target.value )
           }}
           
-        >
+          >
           {currencies.map((option) => (
             <option key={option.value} value={option.value}>
                 {option.label}
             </option>
           ))}
         </TextField>
+      <Link to = '/login'>Click Me</Link>
+          </>
   );
 }

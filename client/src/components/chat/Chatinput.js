@@ -4,15 +4,13 @@ import { Button } from "@mui/material";
 // import Fab from '@mui/material/Fab';
 import SendIcon from "@mui/icons-material/Send";
 import { Grid, TextField } from "@mui/material";
-export default function Chatinput({  activeChat, updateChat, sendChat }) {
+export default function Chatinput({  activeChat, sendChat }) {
   const [message, setMessage] = useState("");
   const handleOnSubmit = (event) => {
     event.preventDefault();
     if( message ){
-      updateChat( activeChat, { from: message, time: ''})
-      
       setMessage( '' )
-      sendChat( activeChat.email,  message )
+      sendChat( activeChat,  message )
     }
   };
   return (

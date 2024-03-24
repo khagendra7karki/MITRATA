@@ -1,7 +1,7 @@
 import websockets
 import asyncio
 import json
-
+import time
 #custom database module
 from database import Database
 from src.lsm_tree import LSMTree
@@ -33,40 +33,7 @@ userDataSample= {
     'chat': '',
 
 }
-# def add_friend( db,  message):
-#     key1 = message['email1']
-#     key2 = message['email2']
-#     image1 = message['image1']
-#     image2 = message['image2']
-#     name1 = message['name1']
-#     name2  = message['name2']
-#     profile1 = chat.db_get( key1 )
-#     profile2 = chat.db_get( key2 )
 
-#     if( profile1 ):
-#         json_profile1 = json.loads( profile1 )
-#         json_profile1.append( { 'email':  key2, 'name': name2,  'text':[],'image': image2 } )
-
-#         chat.db_set( key1, json.dumps( profile1 ))
-#     else:
-#         chat.db_set( key1, json.dumps( [{ 'email': key2, 'name': name2, 'text': [], 'image': image2}]))
-#     if( profile2 ):
-#         json_profile2 = json.loads( profile1 )
-#         json_profile2.append( { 'email':  key1, 'name': name1,  'text':[],'image': image1 } )
-
-#         chat.db_set( key2, json.dumps( profile1 ))
-#     else:
-#         chat.db_set( key2, json.dumps( [{ 'email': key1, 'name': name1, 'text': [], 'image': image1}]))
-#     db.delete_notif( key1, key2 )
-
-# def get_chat( key1 ):
-#     result = chat.db_get( key1 )
-#     print ( key1 )
-#     if result:
-#         json_result = json.loads( result ) 
-#         # print('the json result is', json_result[0]['email'] )
-#         return json_result
-#     return None
 
     
 # update user session 
@@ -201,19 +168,25 @@ async def main( websocket, path):
                 incoming_message = message['text']
                 from_email = message['from']
                 to_email = message['to'] 
-                output = { 'task': 'update_chat','from': from_email , 'content': {'to': incoming_message, 'time': ''}}
-                if to_email in user_session_dict:
-                    await user_session_dict[to_email ]['socket'].send( json.dumps( output))
                     
                 from_profile = db.get_chat( from_email )
                 to_profile = db.get_chat( to_email )
+                str_time = time.asctime(time.localtime())
                 for texts in from_profile:
                     if texts['email'] == to_email:
-                        texts['text'].append( {'from': incoming_message, 'time': ''} )
-
+                        text_object = {'from': incoming_message, 'time': str_time}
+                        texts['text'].append( text_object )
                 for texts in to_profile:
                     if texts['email'] == from_email:
-                        texts['text'].append({'to': incoming_message, 'time': ''})
+                        text_object = {'to': incoming_message, 'time': str_time}
+                        texts['text'].append(text_object)
+
+                # output = { 'task': 'update_chat', 'content': {'to': incoming_message, 'time': str_time}}
+                if to_email in user_session_dict:
+                    await user_session_dict[to_email ]['socket'].send( json.dumps({'task': 'update_chat', 'content': to_profile}))
+                if from_email in user_session_dict: 
+                    await user_session_dict[from_email]['socket'].send(json.dumps({'task': 'update_chat', 'content': from_profile}))
+
 
                 db.chat.db_set( to_email , json.dumps( to_profile) )
                 db.chat.db_set( from_email, json.dumps( from_profile) )

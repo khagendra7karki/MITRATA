@@ -1,8 +1,5 @@
 import React from "react";
-// import { css } from "@emotion/react";
-import { useNavigate } from "react-router-dom";
-import CloseIcon from "@mui/icons-material/Close";
-import { useState, useEffect, useRef } from "react";
+import {  useEffect, useRef } from "react";
 import {
   List,
   Box,
@@ -14,7 +11,7 @@ import {
   Grid,
 } from "@mui/material";
 import Chatinput from "./Chatinput";
-const Chatcontainer = ({  activeChat ,user,  chat, sendChat, updateChat }) => {
+const Chatcontainer = ({  activeChat ,user,  chat, sendChat }) => {
   const scrollRef = useRef();
 
   useEffect(() => {
@@ -43,7 +40,7 @@ const Chatcontainer = ({  activeChat ,user,  chat, sendChat, updateChat }) => {
                 <Avatar
                   sx={{ width: 40, height: 40, margin: "5px 5px" }}
                   alt="Remy Sharp"
-                  src= { activeChat ? activeChat.image : '' }
+                  src= { activeChat ? chat.filter(v => v.email == activeChat )[0].image : '' }
                 />
               </ListItemAvatar>
             </Grid>
@@ -53,7 +50,7 @@ const Chatcontainer = ({  activeChat ,user,  chat, sendChat, updateChat }) => {
                 variant="h6"
                 className="header-message"
               >
-                {activeChat ? activeChat.name : '' }
+                {activeChat ? chat.filter(v => v.email == activeChat )[0].name : '' }
 
               </Typography>
             </Grid>
@@ -62,13 +59,12 @@ const Chatcontainer = ({  activeChat ,user,  chat, sendChat, updateChat }) => {
         </Grid>
         <Grid item xs={12}>
           <List sx={{ height: "40vh", overflowY: "auto" }}>
-
-              {(() =>{
-                if( activeChat  )
-                return<>{activeChat.text.map( ( (chat, index, { length }) =>{
+              {
+                activeChat ?
+                (chat.filter((v) => v.email == activeChat))[0].text.map( ( (cht, index, { length }) =>{
                     return <>
-                        <ListItem ref={ length - 1 == index ? scrollRef : null}  key= {index} >
-                          <Grid container flexDirection = { `${ chat.from  ? 'row' : 'row-reverse'}`}>
+                        <ListItem ref={ length - 1 == index ? scrollRef : null}  key= {cht.time} >
+                          <Grid container flexDirection = { `${ cht.from  ? 'row' : 'row-reverse'}`}>
                             <Grid
                               item
                               xs={11}
@@ -80,7 +76,7 @@ const Chatcontainer = ({  activeChat ,user,  chat, sendChat, updateChat }) => {
                                 sx={{
                                   overflowWrap: "break-word",
                                   maxWidth: "60%",
-                                  marginLeft: `${ chat.from ? 'auto': 'none'}`
+                                  marginLeft: `${ cht.from ? 'auto': 'none'}`
                                 }}
                               >
                                 <ListItemText
@@ -92,7 +88,7 @@ const Chatcontainer = ({  activeChat ,user,  chat, sendChat, updateChat }) => {
                                     padding: "5px 15px",
                                     textAlign: 'left'
                                   }}
-                                  primary= {`${ chat.from ? chat.from : chat.to }`}
+                                  primary= {`${ cht.from ? cht.from : cht.to }`}
                                 />
                               </Box>
                             </Grid>
@@ -100,25 +96,20 @@ const Chatcontainer = ({  activeChat ,user,  chat, sendChat, updateChat }) => {
                               <Avatar
                                 sx={{ width: 30, height: 30, marginTop: "auto" }}
                                 alt="Remy Sharp"
-                                src=  {chat.from ? user.user.image[0] : activeChat.image }
+                                src=  {cht.from ? user.user.image[0] : chat.filter(v => v.email == activeChat )[0].image }
                               />
                             </Grid>
   
                           </Grid>
                         </ListItem>
                     </>
-                  }))
-                  
-                }</>
-                else return <></>
+                  })):
+                <></>
 
-              })()
-                              }
-                     
-
+              }                  
           </List>
 
-          <Chatinput  activeChat={ activeChat } updateChat = { updateChat } sendChat = {sendChat }/>
+          <Chatinput  activeChat={ activeChat } sendChat = {sendChat }/>
         </Grid>
       </Grid>
     </Grid>
