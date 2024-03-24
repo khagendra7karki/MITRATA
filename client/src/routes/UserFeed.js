@@ -61,7 +61,6 @@ const UserFeed = ({ wsObject, user, setUser }) => {
     }
     useEffect( () =>{
             initialSetup()
-            console.log( {task: 'get_notif', requester: user.user.email} )
             sendMessage( {task: 'get_notif', requester: user.user.email})
             sendMessage( { task: 'get_chat', requester: user.user.email})
     }, [] )
@@ -73,13 +72,11 @@ const UserFeed = ({ wsObject, user, setUser }) => {
             content: `${name} is looking for a match.`,
             image: image
         }}
-        console.log( message )
         sendMessage(  message )
     }
 
 
     const sendMessage = ( message ) =>{
-        console.log( 'i am about to send a message')
         wsObject.send( JSON.stringify( message ))
     }
 
@@ -89,11 +86,8 @@ const UserFeed = ({ wsObject, user, setUser }) => {
 
     const handleMessages = ( response ) => {
         response = JSON.parse( response )
-        console.log( response.task )
 
         if( response.status == 'successful' && response.task == 'getData' ){
-            console.log( 'about to change suggestion ')
-            console.log( response.content[0])
             setSuggestion( ( prev ) =>{
                 return [ prev[1], response.content[0]]
             })
@@ -104,13 +98,10 @@ const UserFeed = ({ wsObject, user, setUser }) => {
             })
         }
         else if( response.task == 'get_chat'){
-            console.log( response.content )
             setChat( response.content )
         }
 
         else if( response.task == 'update_chat'){
-            console.log( response.from )
-            console.log( response.content )
             updateChat( response.from, response.content)
         }
 
